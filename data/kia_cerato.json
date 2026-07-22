@@ -1,0 +1,50 @@
+[
+    {
+        "No.":1,
+        "Trim Level":null,
+        "Year of Manufacture":2014,
+        "Make":"KIA",
+        "Model":"CERATO",
+        "HDV":16283.01,
+        "Currency":"USD",
+        "Origin Code":"AU",
+        "HS Code":8703232000,
+        "Excange Rate":7.3082,
+        "Receipt Date":"15\/07\/2022",
+        "Assessment Date":44719,
+        "CIF NCY":60277.23,
+        "Total Tax":21728.93
+    },
+    {
+        "No.":"No.",
+        "Trim Level":"Trim Level",
+        "Year of Manufacture":"Year of Manufacture",
+        "Make":"Make",
+        "Model":"Model",
+        "HDV":"HDV",
+        "Currency":"Currency",
+        "Origin Code":"Origin Code",
+        "HS Code":"HS Code",
+        "Excange Rate":"Excange Rate",
+        "Receipt Date":"Receipt Date",
+        "Assessment Date":"Assessment Date",
+        "CIF NCY":"CIF NCY",
+        "Total Tax":"Total Tax"
+    },
+    {
+        "No.":1,
+        "Trim Level":null,
+        "Year of Manufacture":2018,
+        "Make":"KIA",
+        "Model":"CERATO",
+        "HDV":16700,
+        "Currency":"USD",
+        "Origin Code":"AU",
+        "HS Code":8703232000,
+        "Excange Rate":10.5053,
+        "Receipt Date":46357,
+        "Assessment Date":"17\/01\/2026",
+        "CIF NCY":97483.83,
+        "Total Tax":36931.89
+    }
+]

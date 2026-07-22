@@ -1,0 +1,3864 @@
+{
+  "2018-toyota-yaris": {
+    "lineup": [
+      {
+        "trim": "Yaris L",
+        "body_style": "Sedan",
+        "engine": "1,497 cc / 4-cyl",
+        "fuel_type": "Gasoline",
+        "price": 15535,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base sedan trim with manual transmission"
+      },
+      {
+        "trim": "Yaris LE",
+        "body_style": "Sedan",
+        "engine": "1,497 cc / 4-cyl",
+        "fuel_type": "Gasoline",
+        "price": 16735,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "LE trim with added comfort features"
+      },
+      {
+        "trim": "Yaris SE",
+        "body_style": "Sedan",
+        "engine": "1,497 cc / 4-cyl",
+        "fuel_type": "Gasoline",
+        "price": 17735,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Sport-oriented sedan trim"
+      },
+      {
+        "trim": "Yaris iA",
+        "body_style": "Sedan",
+        "engine": "1,498 cc / 4-cyl",
+        "fuel_type": "Gasoline",
+        "price": 18045,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Mazda-based sport compact sedan with automatic transmission"
+      },
+      {
+        "trim": "Yaris Hatchback L",
+        "body_style": "Hatchback",
+        "engine": "1,497 cc / 4-cyl",
+        "fuel_type": "Gasoline",
+        "price": 16535,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base hatchback with manual transmission"
+      },
+      {
+        "trim": "Yaris Hatchback LE",
+        "body_style": "Hatchback",
+        "engine": "1,497 cc / 4-cyl",
+        "fuel_type": "Gasoline",
+        "price": 17735,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "LE hatchback with comfort upgrades"
+      },
+      {
+        "trim": "Yaris Hatchback SE",
+        "body_style": "Hatchback",
+        "engine": "1,497 cc / 4-cyl",
+        "fuel_type": "Gasoline",
+        "price": 18735,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Sport hatchback trim with enhanced styling"
+      }
+    ],
+    "cachedAt": "2026-06-19T21:43:14.839Z"
+  },
+  "2018-hyundai-sonata": {
+    "lineup": [
+      {
+        "trim": "Sonata SE",
+        "body_style": "Sedan",
+        "engine": "2.4L / 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 24650,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base trim with 185 hp, 6-speed automatic transmission"
+      },
+      {
+        "trim": "Sonata Sport",
+        "body_style": "Sedan",
+        "engine": "2.4L / 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 27450,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Enhanced styling package, 185 hp, sport-tuned suspension"
+      },
+      {
+        "trim": "Sonata SEL",
+        "body_style": "Sedan",
+        "engine": "2.4L / 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28950,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Mid-level trim with enhanced features and comfort upgrades"
+      },
+      {
+        "trim": "Sonata Limited",
+        "body_style": "Sedan",
+        "engine": "2.4L / 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 32450,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Premium trim with leather interior, panoramic sunroof, advanced technology"
+      },
+      {
+        "trim": "Sonata Hybrid SE",
+        "body_style": "Sedan",
+        "engine": "2.0L / 4-cylinder Hybrid",
+        "fuel_type": "Hybrid",
+        "price": 28800,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Hybrid base model with 193 net hp combined output"
+      },
+      {
+        "trim": "Sonata Hybrid SEL",
+        "body_style": "Sedan",
+        "engine": "2.0L / 4-cylinder Hybrid",
+        "fuel_type": "Hybrid",
+        "price": 32300,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Mid-level hybrid with enhanced comfort and convenience features"
+      },
+      {
+        "trim": "Sonata Plug-in Hybrid",
+        "body_style": "Sedan",
+        "engine": "2.0L / 4-cylinder Plug-in Hybrid",
+        "fuel_type": "Hybrid",
+        "price": 35250,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Plug-in hybrid technology with electric-only driving capability"
+      }
+    ],
+    "cachedAt": "2026-06-19T21:44:13.737Z"
+  },
+  "2012-ford-f-150": {
+    "lineup": [
+      {
+        "trim": "F-150 Regular Cab 4x2 3.7L V6",
+        "body_style": "Pickup Truck",
+        "engine": "3,727 cc / V6",
+        "fuel_type": "Gasoline",
+        "price": 28995,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base model, two-door regular cab, 2WD configuration"
+      },
+      {
+        "trim": "F-150 SuperCab 4x2 3.7L V6",
+        "body_style": "Pickup Truck",
+        "engine": "3,727 cc / V6",
+        "fuel_type": "Gasoline",
+        "price": 32395,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Extended cab seating, rear-hinged doors, 2WD"
+      },
+      {
+        "trim": "F-150 SuperCrew 4x2 3.7L V6",
+        "body_style": "Pickup Truck",
+        "engine": "3,727 cc / V6",
+        "fuel_type": "Gasoline",
+        "price": 34395,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Full four-door cab, four front passengers, 2WD"
+      },
+      {
+        "trim": "F-150 SuperCrew 4x4 5.0L V8",
+        "body_style": "Pickup Truck",
+        "engine": "5,032 cc / V8",
+        "fuel_type": "Gasoline",
+        "price": 39595,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Four-wheel drive, premium gasoline V8 engine"
+      },
+      {
+        "trim": "F-150 Lariat SuperCrew 4x2 5.0L V8",
+        "body_style": "Pickup Truck",
+        "engine": "5,032 cc / V8",
+        "fuel_type": "Gasoline",
+        "price": 43450,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Luxury trim, leather seating, premium features, 2WD"
+      },
+      {
+        "trim": "F-150 King Ranch SuperCrew 4x4 5.0L V8",
+        "body_style": "Pickup Truck",
+        "engine": "5,032 cc / V8",
+        "fuel_type": "Gasoline",
+        "price": 48750,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Premium ranch-themed trim, 4WD, advanced features"
+      },
+      {
+        "trim": "F-150 Platinum SuperCrew 4x4 6.2L V8",
+        "body_style": "Pickup Truck",
+        "engine": "6,200 cc / V8",
+        "fuel_type": "Gasoline",
+        "price": 51500,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Top-tier luxury, largest engine, 4WD, full amenities"
+      },
+      {
+        "trim": "F-150 SVT Raptor SuperCrew 4x4 5.4L Supercharged V8",
+        "body_style": "Pickup Truck",
+        "engine": "5,414 cc / Supercharged V8",
+        "fuel_type": "Gasoline",
+        "price": 52275,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "High-performance variant, supercharged engine, off-road tuning"
+      }
+    ],
+    "cachedAt": "2026-06-20T07:13:36.713Z"
+  },
+  "2016-ford-f-150": {
+    "lineup": [
+      {
+        "trim": "F-150 Regular Cab 3.3L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3,300 cc / 6-cyl EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 28410,
+        "currency": "USD",
+        "source": "Official Ford USA Pricing",
+        "notes": "Work truck, base configuration, 2WD, Standard Box"
+      },
+      {
+        "trim": "F-150 SuperCab 3.3L EcoBoost XLT",
+        "body_style": "Pickup Truck",
+        "engine": "3,300 cc / 6-cyl EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 35190,
+        "currency": "USD",
+        "source": "Official Ford USA Pricing",
+        "notes": "Includes convenience package, dual power windows/locks"
+      },
+      {
+        "trim": "F-150 SuperCrew 5.0L V8 XLT",
+        "body_style": "Pickup Truck",
+        "engine": "5,000 cc / 8-cyl",
+        "fuel_type": "Gasoline",
+        "price": 39450,
+        "currency": "USD",
+        "source": "Official Ford USA Pricing",
+        "notes": "Popular configuration, crew cab, mid-range trim"
+      },
+      {
+        "trim": "F-150 SuperCrew 2.7L EcoBoost Lariat",
+        "body_style": "Pickup Truck",
+        "engine": "2,700 cc / 6-cyl EcoBoost Twin-Turbo",
+        "fuel_type": "Gasoline",
+        "price": 47850,
+        "currency": "USD",
+        "source": "Official Ford USA Pricing",
+        "notes": "Luxury trim, leather seating, navigation ready"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.5L EcoBoost King Ranch",
+        "body_style": "Pickup Truck",
+        "engine": "3,500 cc / 6-cyl EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 52840,
+        "currency": "USD",
+        "source": "Official Ford USA Pricing",
+        "notes": "Premium Western-inspired trim, leather, wood trim"
+      },
+      {
+        "trim": "F-150 SuperCrew 5.0L V8 Platinum",
+        "body_style": "Pickup Truck",
+        "engine": "5,000 cc / 8-cyl",
+        "fuel_type": "Gasoline",
+        "price": 55260,
+        "currency": "USD",
+        "source": "Official Ford USA Pricing",
+        "notes": "Top luxury trim, adaptive suspension, panoramic roof available"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.5L EcoBoost Raptor",
+        "body_style": "Pickup Truck",
+        "engine": "3,500 cc / 6-cyl EcoBoost Twin-Turbo",
+        "fuel_type": "Gasoline",
+        "price": 61970,
+        "currency": "USD",
+        "source": "Official Ford USA Pricing",
+        "notes": "Performance trim, off-road suspension, Fox shocks, unique styling"
+      }
+    ],
+    "cachedAt": "2026-06-20T07:14:55.792Z"
+  },
+  "2017-ford-f-150": {
+    "lineup": [
+      {
+        "trim": "F-150 Regular Cab 3.3L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3,300 cc / V6 EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 28040,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base Regular Cab, 2WD, SuperCrew not available in this configuration"
+      },
+      {
+        "trim": "F-150 SuperCab 3.3L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3,300 cc / V6 EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 31540,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "SuperCab 2WD, mid-range configuration"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.3L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3,300 cc / V6 EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 32590,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "SuperCrew 2WD base, full-size cab"
+      },
+      {
+        "trim": "F-150 SuperCrew 5.0L V8",
+        "body_style": "Pickup Truck",
+        "engine": "5,000 cc / V8",
+        "fuel_type": "Gasoline",
+        "price": 36490,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "SuperCrew 2WD with traditional V8 engine"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.5L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3,500 cc / V6 EcoBoost Twin-Turbo",
+        "fuel_type": "Gasoline",
+        "price": 38990,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "SuperCrew 2WD, premium EcoBoost option"
+      },
+      {
+        "trim": "F-150 XLT SuperCrew 3.5L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3,500 cc / V6 EcoBoost Twin-Turbo",
+        "fuel_type": "Gasoline",
+        "price": 42190,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "XLT trim level, enhanced features and equipment"
+      },
+      {
+        "trim": "F-150 Lariat SuperCrew 5.0L V8",
+        "body_style": "Pickup Truck",
+        "engine": "5,000 cc / V8",
+        "fuel_type": "Gasoline",
+        "price": 47310,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Lariat luxury trim, V8 power and premium amenities"
+      },
+      {
+        "trim": "F-150 Raptor SuperCrew 3.5L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3,500 cc / V6 EcoBoost Twin-Turbo",
+        "fuel_type": "Gasoline",
+        "price": 52495,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Performance off-road variant, SVT Raptor series"
+      }
+    ],
+    "cachedAt": "2026-06-20T07:28:00.341Z"
+  },
+  "2017-ford-f-150-33ltivctv6": {
+    "lineup": [
+      {
+        "modelYear": 2017,
+        "make": "Ford",
+        "model": "F-150",
+        "engine": "3.3L Ti-VCT V6",
+        "market": "USA",
+        "trimPackages": [
+          {
+            "trim": "Regular Cab",
+            "variants": [
+              "Work Series",
+              "XL"
+            ]
+          },
+          {
+            "trim": "SuperCab",
+            "variants": [
+              "XL",
+              "XLT"
+            ]
+          },
+          {
+            "trim": "SuperCrew",
+            "variants": [
+              "XL",
+              "XLT",
+              "Lariat",
+              "King Ranch",
+              "Platinum",
+              "Limited"
+            ]
+          }
+        ],
+        "bedLengths": [
+          "5.5 ft",
+          "6.5 ft",
+          "8 ft"
+        ],
+        "drivetrains": [
+          "RWD",
+          "4WD"
+        ],
+        "notes": "The 3.3L Ti-VCT V6 was the base engine option for 2017 F-150 models available across multiple cab styles and trim levels."
+      }
+    ],
+    "cachedAt": "2026-06-20T07:58:52.113Z"
+  },
+  "2016-ford-f-150-33ltivctv6": {
+    "lineup": [
+      {
+        "trim": "Regular Cab XL",
+        "body_style": "Regular Cab",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 28410,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCab XL",
+        "body_style": "SuperCab",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 30610,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCrew XL",
+        "body_style": "SuperCrew",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 31610,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCab STX",
+        "body_style": "SuperCab",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 33110,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCrew STX",
+        "body_style": "SuperCrew",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 34110,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCab XLT",
+        "body_style": "SuperCab",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 34360,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCrew XLT",
+        "body_style": "SuperCrew",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 35360,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCab Lariat",
+        "body_style": "SuperCab",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 39535,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCrew Lariat",
+        "body_style": "SuperCrew",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 40535,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCrew King Ranch",
+        "body_style": "SuperCrew",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 44935,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCrew Platinum",
+        "body_style": "SuperCrew",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 48485,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      }
+    ],
+    "cachedAt": "2026-06-20T08:22:47.511Z"
+  },
+  "2017-ford-f-150-27l6cylgasoline": {
+    "lineup": [
+      {
+        "trim": "Regular Cab",
+        "body_style": "Regular Cab Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 28410,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCab",
+        "body_style": "SuperCab Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 31110,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "SuperCrew",
+        "body_style": "SuperCrew Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 32910,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "XLT Regular Cab",
+        "body_style": "Regular Cab Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 31110,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "XLT SuperCab",
+        "body_style": "SuperCab Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 33810,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "XLT SuperCrew",
+        "body_style": "SuperCrew Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 35610,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "Lariat SuperCab",
+        "body_style": "SuperCab Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 39710,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "Lariat SuperCrew",
+        "body_style": "SuperCrew Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 41510,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "King Ranch SuperCrew",
+        "body_style": "SuperCrew Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 45610,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      },
+      {
+        "trim": "Platinum SuperCrew",
+        "body_style": "SuperCrew Pickup",
+        "engine": "2.7L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 47410,
+        "currency": "USD",
+        "source": "AI Estimated Baseline Analysis",
+        "notes": "Automotive model comparison structure alignment."
+      }
+    ],
+    "cachedAt": "2026-06-20T08:23:49.335Z"
+  },
+  "2021-ford-f-150-33ltivctv6": {
+    "lineup": [
+      {
+        "trim": "F-150 Regular Cab 3.3L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 28410,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base model, standard bed, 290 hp, rear-wheel drive"
+      },
+      {
+        "trim": "F-150 SuperCab 3.3L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 31910,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Extended cab, standard bed, jump seats, RWD"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.3L EcoBoost XL",
+        "body_style": "Pickup Truck",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 35055,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "4-door crew cab, 5.5 ft bed, cloth interior"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.3L EcoBoost XLT",
+        "body_style": "Pickup Truck",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 39480,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Crew cab, upgraded features, privacy glass, chrome accents"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.3L EcoBoost Lariat",
+        "body_style": "Pickup Truck",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 47745,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Premium trim, leather seats, panoramic roof, advanced tech"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.3L EcoBoost King Ranch",
+        "body_style": "Pickup Truck",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 52375,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Luxury trim, King Ranch leather, driver assistance package"
+      },
+      {
+        "trim": "F-150 SuperCrew 3.3L EcoBoost Platinum",
+        "body_style": "Pickup Truck",
+        "engine": "3.3L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 54190,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Top-tier trim, adaptive suspension, premium audio system"
+      }
+    ],
+    "cachedAt": "2026-06-20T08:41:06.982Z"
+  },
+  "2021-ford-f-150-27ltivctv6": {
+    "lineup": [
+      {
+        "trim": "F-150 Regular Cab 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 28410,
+        "currency": "USD",
+        "source": "Official Ford Manufacturer Pricing",
+        "notes": "Base Regular Cab, 2WD standard, manual transmission"
+      },
+      {
+        "trim": "F-150 SuperCab 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 31635,
+        "currency": "USD",
+        "source": "Official Ford Manufacturer Pricing",
+        "notes": "SuperCab body style, rear-hinged doors, 2WD base"
+      },
+      {
+        "trim": "F-150 SuperCrew 2.7L EcoBoost XL",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 33895,
+        "currency": "USD",
+        "source": "Official Ford Manufacturer Pricing",
+        "notes": "SuperCrew 5.5ft bed, 2WD base, entry luxury trim"
+      },
+      {
+        "trim": "F-150 SuperCrew 2.7L EcoBoost XLT",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 37435,
+        "currency": "USD",
+        "source": "Official Ford Manufacturer Pricing",
+        "notes": "SuperCrew mid-level trim, enhanced comfort features, 2WD base"
+      },
+      {
+        "trim": "F-150 SuperCrew 2.7L EcoBoost Lariat",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 42655,
+        "currency": "USD",
+        "source": "Official Ford Manufacturer Pricing",
+        "notes": "SuperCrew premium trim, leather, advanced technology package"
+      },
+      {
+        "trim": "F-150 SuperCrew 2.7L EcoBoost King Ranch",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 47600,
+        "currency": "USD",
+        "source": "Official Ford Manufacturer Pricing",
+        "notes": "SuperCrew luxury edition, King Ranch leather, premium features"
+      },
+      {
+        "trim": "F-150 SuperCrew 2.7L EcoBoost Platinum",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 50065,
+        "currency": "USD",
+        "source": "Official Ford Manufacturer Pricing",
+        "notes": "SuperCrew top-tier trim, premium tech, power features, towing package"
+      }
+    ],
+    "cachedAt": "2026-06-20T08:41:30.325Z"
+  },
+  "2017-ford-f-150-27ltivctv6": {
+    "lineup": [
+      {
+        "trim": "F-150 Regular Cab 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 28410,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base Regular Cab, RWD standard, 325 hp, 375 lb-ft torque"
+      },
+      {
+        "trim": "F-150 SuperCab 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 31665,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "SuperCab configuration, RWD standard, jump seats"
+      },
+      {
+        "trim": "F-150 SuperCrew 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 33505,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "SuperCrew cab, RWD standard, full rear doors, most popular configuration"
+      },
+      {
+        "trim": "F-150 XLT SuperCrew 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 37800,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "XLT trim package, mid-range features, cloth/leather available"
+      },
+      {
+        "trim": "F-150 Lariat SuperCrew 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 44575,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Lariat luxury trim, leather, power features, panoramic roof option"
+      },
+      {
+        "trim": "F-150 King Ranch SuperCrew 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 47750,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "King Ranch premium trim, leather, unique badging, upscale interior"
+      },
+      {
+        "trim": "F-150 Platinum SuperCrew 2.7L EcoBoost",
+        "body_style": "Pickup Truck",
+        "engine": "2.7L Ti-VCT V6",
+        "fuel_type": "Gasoline",
+        "price": 48975,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Platinum high-end trim, premium interior, advanced tech package"
+      }
+    ],
+    "cachedAt": "2026-06-20T08:42:20.537Z"
+  },
+  "2024-ford-fiesta-10lecoboost": {
+    "lineup": [
+      {
+        "trim": "Fiesta SE 1.0L EcoBoost",
+        "body_style": "Hatchback",
+        "engine": "1.0L EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 20995,
+        "currency": "USD",
+        "source": "Official Ford USA MSRP",
+        "notes": "Base SE trim with standard features, manual or automatic transmission available"
+      },
+      {
+        "trim": "Fiesta SEL 1.0L EcoBoost",
+        "body_style": "Hatchback",
+        "engine": "1.0L EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 22495,
+        "currency": "USD",
+        "source": "Official Ford USA MSRP",
+        "notes": "Mid-level trim with enhanced comfort and technology features"
+      },
+      {
+        "trim": "Fiesta SES 1.0L EcoBoost",
+        "body_style": "Hatchback",
+        "engine": "1.0L EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 23545,
+        "currency": "USD",
+        "source": "Official Ford USA MSRP",
+        "notes": "Sport-oriented trim with styling enhancements and premium audio"
+      },
+      {
+        "trim": "Fiesta Titanium 1.0L EcoBoost",
+        "body_style": "Hatchback",
+        "engine": "1.0L EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 24545,
+        "currency": "USD",
+        "source": "Official Ford USA MSRP",
+        "notes": "Premium trim with leather-wrapped steering wheel, upgraded infotainment, and additional safety features"
+      }
+    ],
+    "cachedAt": "2026-06-20T09:20:50.534Z"
+  },
+  "2021-ford-fiesta-10lecoboost": {
+    "lineup": [
+      {
+        "trim": "Fiesta S 1.0L EcoBoost",
+        "body_style": "Hatchback",
+        "engine": "1.0L EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 20120,
+        "currency": "USD",
+        "source": "Official Ford MSRP 2021",
+        "notes": "Base model with manual transmission, power windows/locks, sync infotainment"
+      },
+      {
+        "trim": "Fiesta SE 1.0L EcoBoost",
+        "body_style": "Hatchback",
+        "engine": "1.0L EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 21270,
+        "currency": "USD",
+        "source": "Official Ford MSRP 2021",
+        "notes": "Automatic transmission option, backup camera, enhanced audio system"
+      },
+      {
+        "trim": "Fiesta ST-Line 1.0L EcoBoost",
+        "body_style": "Hatchback",
+        "engine": "1.0L EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 23480,
+        "currency": "USD",
+        "source": "Official Ford MSRP 2021",
+        "notes": "Sport-tuned suspension, upgraded interior trim, 16-inch alloy wheels"
+      },
+      {
+        "trim": "Fiesta Titanium 1.0L EcoBoost",
+        "body_style": "Hatchback",
+        "engine": "1.0L EcoBoost",
+        "fuel_type": "Gasoline",
+        "price": 24545,
+        "currency": "USD",
+        "source": "Official Ford MSRP 2021",
+        "notes": "Premium interior, SYNC 3 with AppLink, leather steering wheel, heated seats"
+      }
+    ],
+    "cachedAt": "2026-06-20T09:20:51.702Z"
+  },
+  "2018-mercedesbenz-glcclass-20l4cylintercooled": {
+    "lineup": [
+      {
+        "trim": "GLC 300 4MATIC",
+        "body_style": "SUV",
+        "engine": "2.0L 4-Cyl Intercooled",
+        "fuel_type": "Gasoline",
+        "price": 43750,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base model with turbocharged 4-cylinder, all-wheel drive standard"
+      },
+      {
+        "trim": "GLC 300 RWD",
+        "body_style": "SUV",
+        "engine": "2.0L 4-Cyl Intercooled",
+        "fuel_type": "Gasoline",
+        "price": 40450,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Entry-level rear-wheel drive variant"
+      },
+      {
+        "trim": "GLC 300 AMG Line 4MATIC",
+        "body_style": "SUV",
+        "engine": "2.0L 4-Cyl Intercooled",
+        "fuel_type": "Gasoline",
+        "price": 47850,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "AMG styling package with enhanced aesthetics and performance features"
+      },
+      {
+        "trim": "GLC 300 Coupe 4MATIC",
+        "body_style": "SUV",
+        "engine": "2.0L 4-Cyl Intercooled",
+        "fuel_type": "Gasoline",
+        "price": 45900,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Coupe variant with sloped roofline and sportier design"
+      },
+      {
+        "trim": "GLC 300 Coupe AMG Line 4MATIC",
+        "body_style": "SUV",
+        "engine": "2.0L 4-Cyl Intercooled",
+        "fuel_type": "Gasoline",
+        "price": 50100,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Coupe with AMG styling and performance enhancements"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:51:12.120Z"
+  },
+  "2018-mercedesbenz-c300amgline-20tinline4cylinder": {
+    "lineup": [
+      {
+        "trim": "C300 Sedan",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 41070,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base C300 model with standard features"
+      },
+      {
+        "trim": "C300 AMG Line Sedan",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 44070,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "AMG Line sport styling package with performance enhancements"
+      },
+      {
+        "trim": "C300 Cabriolet",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 52070,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Convertible variant with power soft-top"
+      },
+      {
+        "trim": "C300 AMG Line Cabriolet",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 55070,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "AMG Line convertible with sport features"
+      },
+      {
+        "trim": "C300 Coupe",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 48070,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Two-door coupe configuration"
+      },
+      {
+        "trim": "C300 AMG Line Coupe",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 51070,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "AMG Line coupe with enhanced styling and performance"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:51:28.778Z"
+  },
+  "2018-mercedesbenz-c250avantgarde-18lturbocharger": {
+    "lineup": [
+      {
+        "trim": "C250 Sedan",
+        "body_style": "Sedan",
+        "engine": "1.8L Turbocharger",
+        "fuel_type": "Gasoline",
+        "price": 41250,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base C-Class sedan with 9-speed automatic transmission, 181 hp"
+      },
+      {
+        "trim": "C300 Sedan",
+        "body_style": "Sedan",
+        "engine": "1.8L Turbocharger",
+        "fuel_type": "Gasoline",
+        "price": 43295,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Enhanced turbocharged engine with 255 hp, premium audio"
+      },
+      {
+        "trim": "C300 4MATIC Sedan",
+        "body_style": "Sedan",
+        "engine": "1.8L Turbocharger",
+        "fuel_type": "Gasoline",
+        "price": 45295,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "All-wheel drive variant with enhanced traction control"
+      },
+      {
+        "trim": "AMG C43 Sedan",
+        "body_style": "Sedan",
+        "engine": "1.8L Turbocharger",
+        "fuel_type": "Gasoline",
+        "price": 54100,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "AMG performance variant with 362 hp, sport suspension"
+      },
+      {
+        "trim": "C300 Coupe",
+        "body_style": "Sedan",
+        "engine": "1.8L Turbocharger",
+        "fuel_type": "Gasoline",
+        "price": 44295,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Two-door coupe configuration with 255 hp"
+      },
+      {
+        "trim": "C300 Cabriolet",
+        "body_style": "Sedan",
+        "engine": "1.8L Turbocharger",
+        "fuel_type": "Gasoline",
+        "price": 50445,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Convertible soft-top variant with power operation"
+      },
+      {
+        "trim": "C300 Estate",
+        "body_style": "Sedan",
+        "engine": "1.8L Turbocharger",
+        "fuel_type": "Gasoline",
+        "price": 46145,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Wagon configuration with expanded cargo capacity"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:51:44.292Z"
+  },
+  "2021-mercedesbenz-c300amgline-20tinline4cylinder": {
+    "lineup": [
+      {
+        "trim": "C300 Sedan",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 41250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "Base sedan model with 255 hp, 273 lb-ft torque"
+      },
+      {
+        "trim": "C300 AMG Line Sedan",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 44250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "AMG Line package with sport styling, 255 hp, 273 lb-ft torque"
+      },
+      {
+        "trim": "C300 4MATIC Sedan",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 43450,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "All-wheel drive variant, 255 hp, 273 lb-ft torque"
+      },
+      {
+        "trim": "C300 4MATIC AMG Line Sedan",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 46450,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "4MATIC all-wheel drive with AMG Line package, 255 hp"
+      },
+      {
+        "trim": "C300 Cabriolet",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 53150,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "Convertible model with power soft-top, 255 hp"
+      },
+      {
+        "trim": "C300 AMG Line Cabriolet",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 56150,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "Cabriolet with AMG Line sport package, 255 hp"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:52:14.448Z"
+  },
+  "2012-mercedesbenz-c300amgline-20tinline4cylinder": {
+    "lineup": [
+      {
+        "trim": "C300 Sport",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 35900,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base C300 model with sport suspension and styling"
+      },
+      {
+        "trim": "C300 Luxury",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 38900,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Adds premium interior appointments and convenience features"
+      },
+      {
+        "trim": "C300 AMG Sport",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 40900,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "AMG styling package with enhanced performance tuning and sport exhaust"
+      },
+      {
+        "trim": "C250 Sport Coupe",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 37900,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Two-door coupe variant with sport suspension"
+      },
+      {
+        "trim": "C300 4MATIC AMG Sport",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 42900,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "All-wheel drive with AMG styling and performance enhancements"
+      },
+      {
+        "trim": "C300 Cabriolet AMG Sport",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 48900,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Soft-top convertible with AMG sport package and dynamic handling"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:52:21.929Z"
+  },
+  "2023-mercedesbenz-c300amgline-20tinline4cylinder": {
+    "lineup": [
+      {
+        "trim": "C 300 Base",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 41250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA MSRP",
+        "notes": "Base model with standard safety features, 9-speed automatic transmission"
+      },
+      {
+        "trim": "C 300 AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 45250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA MSRP",
+        "notes": "AMG styling package, sport suspension, 18-inch wheels, Panoramic roof available"
+      },
+      {
+        "trim": "C 300 4MATIC",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 47250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA MSRP",
+        "notes": "All-wheel drive system, enhanced traction control"
+      },
+      {
+        "trim": "C 300 4MATIC AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 51250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA MSRP",
+        "notes": "AMG Line styling with 4MATIC all-wheel drive, sport handling package"
+      },
+      {
+        "trim": "C 300 Cabriolet Base",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 54250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA MSRP",
+        "notes": "Retractable hardtop convertible, automatic climate control"
+      },
+      {
+        "trim": "C 300 Cabriolet AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 58250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA MSRP",
+        "notes": "Convertible with AMG styling, sport-tuned suspension, enhanced audio"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:52:25.968Z"
+  },
+  "2022-mercedesbenz-c300amgline-20tinline4cylinder": {
+    "lineup": [
+      {
+        "trim": "C300 Base",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 41250,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Entry-level sedan with standard safety features, 255 hp, 9-speed automatic transmission"
+      },
+      {
+        "trim": "C300 Luxury",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 44450,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Adds leather upholstery, panoramic sunroof, upgraded audio system"
+      },
+      {
+        "trim": "C300 AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 47650,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Sporty exterior styling, AMG-specific suspension tuning, 19-inch wheels, aggressive body kit"
+      },
+      {
+        "trim": "C300 4MATIC",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 48250,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "All-wheel drive system, winter package compatibility, enhanced traction control"
+      },
+      {
+        "trim": "C300 4MATIC AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 50550,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Combines AWD with AMG styling package, sport suspension, premium performance features"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:52:29.471Z"
+  },
+  "2020-mercedesbenz-c300amgline-20tinline4cylinder": {
+    "lineup": [
+      {
+        "trim": "C300 Base",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 41250,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "Entry-level C-Class sedan with turbocharged inline-4, 255 hp, 9-speed automatic transmission"
+      },
+      {
+        "trim": "C300 AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 47100,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "AMG Line sport package with aggressive styling, enhanced suspension, 255 hp turbocharged engine, premium interior appointments"
+      },
+      {
+        "trim": "C300 Luxury",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 45450,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "Premium comfort-focused trim with advanced technology, leather upholstery, panoramic sunroof available"
+      },
+      {
+        "trim": "C300 Cabriolet AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 54200,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "Convertible variant of AMG Line with power retractable soft top, same 255 hp turbocharged powertrain"
+      },
+      {
+        "trim": "C300 Coupe AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 51300,
+        "currency": "USD",
+        "source": "Official Mercedes-Benz USA Pricing",
+        "notes": "Two-door coupe with AMG Line styling, sporty chassis tuning, signature turbocharged 4-cylinder engine"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:52:33.131Z"
+  },
+  "2017-mercedesbenz-c300amgline-20tinline4cylinder": {
+    "lineup": [
+      {
+        "trim": "C300 Sedan",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 40425,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base model with standard features, 241 hp"
+      },
+      {
+        "trim": "C300 Sedan AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 43425,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "AMG styling package, sport suspension, 18-inch wheels"
+      },
+      {
+        "trim": "C300 4MATIC Sedan",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 42425,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "All-wheel drive, winter performance capability"
+      },
+      {
+        "trim": "C300 4MATIC Sedan AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 45425,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "AWD with AMG styling, sport handling package"
+      },
+      {
+        "trim": "C300 Cabriolet",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 51275,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Convertible with power soft top, 241 hp"
+      },
+      {
+        "trim": "C300 Cabriolet AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 54275,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Convertible with AMG styling package and sport suspension"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:52:34.816Z"
+  },
+  "2023-nissan-maxima-35lv624v": {
+    "lineup": [
+      {
+        "trim": "2023 Nissan Maxima S",
+        "body_style": "Sedan",
+        "engine": "3.5L V6 24V",
+        "fuel_type": "Gasoline",
+        "price": 36210,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Base model with 300 hp, FWD, CVT transmission, standard safety features"
+      },
+      {
+        "trim": "2023 Nissan Maxima SV",
+        "body_style": "Sedan",
+        "engine": "3.5L V6 24V",
+        "fuel_type": "Gasoline",
+        "price": 39260,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Mid-range trim with navigation, upgraded audio, remote engine start"
+      },
+      {
+        "trim": "2023 Nissan Maxima SL",
+        "body_style": "Sedan",
+        "engine": "3.5L V6 24V",
+        "fuel_type": "Gasoline",
+        "price": 42310,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Upper trim with leather seats, Bose premium audio, heated/cooled seats"
+      },
+      {
+        "trim": "2023 Nissan Maxima Platinum",
+        "body_style": "Sedan",
+        "engine": "3.5L V6 24V",
+        "fuel_type": "Gasoline",
+        "price": 45510,
+        "currency": "USD",
+        "source": "Official Manufacturer Pricing",
+        "notes": "Premium trim with semi-aniline leather, panoramic moonroof, advanced climate control"
+      }
+    ],
+    "cachedAt": "2026-06-20T11:53:16.019Z"
+  },
+  "2021-mercedesbenz-glaclass-20linline4turbo": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.0L Inline-4 Turbo",
+        "fuel_type": "Gasoline",
+        "price": 35900,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.0L Inline-4 Turbo",
+        "fuel_type": "Gasoline",
+        "price": 37800,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.0L Inline-4 Turbo",
+        "fuel_type": "Gasoline",
+        "price": 40300,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.0L Inline-4 Turbo",
+        "fuel_type": "Gasoline",
+        "price": 42200,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T15:40:09.823Z"
+  },
+  "2018-kia-sportage-24lgasolinedirect": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.4L Gasoline Direct",
+        "fuel_type": "Gasoline",
+        "price": 23200,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.4L Gasoline Direct",
+        "fuel_type": "Gasoline",
+        "price": 24900,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.4L Gasoline Direct",
+        "fuel_type": "Gasoline",
+        "price": 25450,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.4L Gasoline Direct",
+        "fuel_type": "Gasoline",
+        "price": 27150,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.4L Gasoline Direct",
+        "fuel_type": "Gasoline",
+        "price": 27700,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.4L Gasoline Direct",
+        "fuel_type": "Gasoline",
+        "price": 29400,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.4L Gasoline Direct",
+        "fuel_type": "Gasoline",
+        "price": 29950,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "SUV",
+        "engine": "2.4L Gasoline Direct",
+        "fuel_type": "Gasoline",
+        "price": 31650,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T15:57:27.994Z"
+  },
+  "2021-nissan-hardbodynp300-25ldieselintercooler": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Pickup Truck",
+        "engine": "2.5L Diesel Intercooler",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T15:58:44.386Z"
+  },
+  "2015-nissan-hardbodynp300-25ldieselintercooler": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Pickup Truck",
+        "engine": "2.5L Diesel Intercooler",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T15:58:50.978Z"
+  },
+  "2018-kia-sorento-25l4cylinder": {
+    "lineup": [
+      {
+        "trim": "L",
+        "body_style": "SUV",
+        "engine": "2.5L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28700,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "L",
+        "body_style": "SUV",
+        "engine": "2.5L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 30500,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "EX",
+        "body_style": "SUV",
+        "engine": "2.5L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 31400,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "EX",
+        "body_style": "SUV",
+        "engine": "2.5L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 33200,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SX",
+        "body_style": "SUV",
+        "engine": "2.5L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 35200,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SX",
+        "body_style": "SUV",
+        "engine": "2.5L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 37000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T16:17:27.540Z"
+  },
+  "2015-mercedesbenz-c300amgline-20tinline4cylinder": {
+    "lineup": [
+      {
+        "trim": "C300 AMG Line",
+        "body_style": "Sedan",
+        "engine": "2.0T inline-4 cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T16:18:14.194Z"
+  },
+  "2018-kia-forte-20lmultipointinjection": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 17800,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 19400,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 21700,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 23400,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T16:28:50.273Z"
+  },
+  "2015-kia-forte-20lmultipointinjection": {
+    "lineup": [
+      {
+        "trim": "LX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 16900,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "LX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 18100,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "EX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 18700,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "EX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 19900,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 20700,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 21900,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "LX Plus",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 19400,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:34:51.210Z"
+  },
+  "2017-kia-forte-20lmultipointinjection": {
+    "lineup": [
+      {
+        "trim": "LX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "EX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SX",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:36:03.609Z"
+  },
+  "2022-kia-forte-20lmultipointinjection": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 19915,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 20715,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 22315,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 23815,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.0L Multi-Point Injection",
+        "fuel_type": "Gasoline",
+        "price": 25515,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:36:27.278Z"
+  },
+  "2015-ford-fi-default": {
+    "lineup": [
+      {
+        "trim": "Regular Cab",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SuperCab",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SuperCrew",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:43:41.732Z"
+  },
+  "2018-ni-fiesta-16l": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 14040,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 15340,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 15040,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 16340,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 17640,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:50:14.975Z"
+  },
+  "2018-nissan-fiesta-16l": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:50:16.728Z"
+  },
+  "2018-nissa-fiesta-16l": {
+    "lineup": [
+      {
+        "trim": "S",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 14480,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 15480,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SE",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 15980,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SE",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 16980,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Titanium",
+        "body_style": "Hatchback",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 18980,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:50:18.626Z"
+  },
+  "2018-nissan-v-default": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 14210,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 15510,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 15610,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 16910,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 18160,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 15520,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 16820,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 16920,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 18220,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:51:15.927Z"
+  },
+  "2018-nissan-ve-default": {
+    "lineup": [
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 12985,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 14045,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 14485,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 15545,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SR",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 16645,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 13795,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 14855,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 15295,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 16355,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:51:16.125Z"
+  },
+  "2018-nissan-vers-default": {
+    "lineup": [
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 12085,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 13385,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 13685,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 14985,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 12485,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 13785,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 14085,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 15385,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:51:16.530Z"
+  },
+  "2018-nissan-versa-default": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 14210,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Base model"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 15760,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": "CVT option"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 15760,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Mid-level trim"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 17310,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Mid-level trim with CVT"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 18620,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Premium trim with CVT"
+      }
+    ],
+    "cachedAt": "2026-06-20T17:51:16.831Z"
+  },
+  "2018-nissan-versa-16": {
+    "lineup": [
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SR",
+        "body_style": "Sedan",
+        "engine": "1.6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:51:53.583Z"
+  },
+  "2018-nissan-versa-16l": {
+    "lineup": [
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 11680,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 12560,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 13070,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 13950,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SR",
+        "body_style": "Sedan",
+        "engine": "1.6L",
+        "fuel_type": "Gasoline",
+        "price": 14980,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T17:52:46.126Z"
+  },
+  "2018-nissan-versa-1": {
+    "lineup": [
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1",
+        "fuel_type": "Gasoline",
+        "price": 14730,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "1",
+        "fuel_type": "Gasoline",
+        "price": 15840,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1",
+        "fuel_type": "Gasoline",
+        "price": 16240,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SV",
+        "body_style": "Sedan",
+        "engine": "1",
+        "fuel_type": "Gasoline",
+        "price": 17350,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SR",
+        "body_style": "Sedan",
+        "engine": "1",
+        "fuel_type": "Gasoline",
+        "price": 18620,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-06-20T18:13:55.003Z"
+  },
+  "2014-buick-regal-20l4cylgasoline": {
+    "lineup": [
+      {
+        "trim": "Base",
+        "body_style": "Sedan",
+        "engine": "2.0L 4-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 26830,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Turbo",
+        "body_style": "Sedan",
+        "engine": "2.0L 4-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 28500,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "GS",
+        "body_style": "Sedan",
+        "engine": "2.0L 4-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 30200,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-17T08:45:18.563Z"
+  },
+  "2014-acura-mdx-default": {
+    "lineup": [
+      {
+        "trim": "Base",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 43510,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Technology Package",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 46810,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Tech",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 48360,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Base",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 45610,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Technology Package",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 48910,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Tech",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 50460,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-17T11:16:45.837Z"
+  },
+  "2024-acura-rdx-default": {
+    "lineup": [
+      {
+        "trim": "Standard",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Technology",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Technology",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Advance",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Advance",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "PMC Edition",
+        "body_style": "Sedan",
+        "engine": "3.5L V6",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-17T17:52:53.530Z"
+  },
+  "2016-ford-fusion-default": {
+    "lineup": [
+      {
+        "trim": "S",
+        "body_style": "Sedan",
+        "engine": "2.5L EcoBoost I4",
+        "fuel_type": "Gasoline",
+        "price": 23570,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SE",
+        "body_style": "Sedan",
+        "engine": "2.5L EcoBoost I4",
+        "fuel_type": "Gasoline",
+        "price": 25475,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SE",
+        "body_style": "Sedan",
+        "engine": "2.5L EcoBoost I4",
+        "fuel_type": "Gasoline",
+        "price": 27175,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Titanium",
+        "body_style": "Sedan",
+        "engine": "2.5L EcoBoost I4",
+        "fuel_type": "Gasoline",
+        "price": 28980,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Titanium",
+        "body_style": "Sedan",
+        "engine": "2.5L EcoBoost I4",
+        "fuel_type": "Gasoline",
+        "price": 30680,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Platinum",
+        "body_style": "Sedan",
+        "engine": "2.5L EcoBoost I4",
+        "fuel_type": "Gasoline",
+        "price": 31425,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Platinum",
+        "body_style": "Sedan",
+        "engine": "2.5L EcoBoost I4",
+        "fuel_type": "Gasoline",
+        "price": 33125,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-17T17:55:00.061Z"
+  },
+  "2024-toyota-corolla-default": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L Naturally Aspirated",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L Naturally Aspirated",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L Naturally Aspirated",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.6L Naturally Aspirated",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.8L Hybrid",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.8L Hybrid",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.8L Hybrid",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.8L Hybrid",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-17T20:34:36.242Z"
+  },
+  "2021-mercedesbenz-sprinter-30ldiesel": {
+    "lineup": [
+      {
+        "trim": "Standard",
+        "body_style": "Van / Minivan",
+        "engine": "3.0L Diesel",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "High Roof",
+        "body_style": "Van / Minivan",
+        "engine": "3.0L Diesel",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard",
+        "body_style": "Van / Minivan",
+        "engine": "3.0L Diesel",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard",
+        "body_style": "Van / Minivan",
+        "engine": "3.0L Diesel",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard",
+        "body_style": "Van / Minivan",
+        "engine": "3.0L Diesel",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-18T11:37:34.061Z"
+  },
+  "2021-nissan-march-default": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.2L 3-Cylinder Petrol",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.2L 3-Cylinder Petrol",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.2L 3-Cylinder Petrol",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.2L 3-Cylinder Petrol",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.2L 3-Cylinder Petrol",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "1.2L 3-Cylinder Petrol",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-20T07:32:01.836Z"
+  },
+  "2022-toyota-corolla-default": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-21T17:41:33.197Z"
+  },
+  "2022-toyota-yaris-CN-default": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 150000,
+        "currency": "CNY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-21T21:57:38.297Z"
+  },
+  "2022-toyota-corolla-US-default": {
+    "lineup": [
+      {
+        "trim": "L",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "LE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "XSE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Hatchback L",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Hatchback LE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Hatchback XSE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-21T21:58:15.047Z"
+  },
+  "2022-toyota-corolla-CA-default": {
+    "lineup": [
+      {
+        "trim": "L",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28000,
+        "currency": "CAD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "LE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28000,
+        "currency": "CAD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28000,
+        "currency": "CAD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "XSE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28000,
+        "currency": "CAD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "L",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28000,
+        "currency": "CAD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "LE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28000,
+        "currency": "CAD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28000,
+        "currency": "CAD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "XSE",
+        "body_style": "Sedan",
+        "engine": "1.8L 4-cylinder",
+        "fuel_type": "Gasoline",
+        "price": 28000,
+        "currency": "CAD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-21T21:58:31.224Z"
+  },
+  "2016-mercedesbenz-eclass-DE-35l6cylgasoline": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "3.5L 6-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 20000,
+        "currency": "EUR",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-22T11:46:21.648Z"
+  },
+  "2021-mitsubishi-attrage-JP-default": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "3B20 MIVEC",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "3B20 MIVEC",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "3B20 MIVEC",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "3B20 MIVEC",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "3B20 MIVEC",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "3B20 MIVEC",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-22T18:08:37.899Z"
+  },
+  "2021-mitsubishi-attrage-US-default": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "Standard Spec",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-22T18:09:43.080Z"
+  },
+  "2021-mazda-cx5-JP-25": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 2200000,
+        "currency": "JPY",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-22T18:13:44.985Z"
+  },
+  "2021-mazda-cx5-AE-25": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Petrol",
+        "price": 80000,
+        "currency": "AED",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Petrol",
+        "price": 80000,
+        "currency": "AED",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Petrol",
+        "price": 80000,
+        "currency": "AED",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Petrol",
+        "price": 80000,
+        "currency": "AED",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-22T18:13:52.408Z"
+  },
+  "2021-mazda-cx5-DE-25": {
+    "lineup": [
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 20000,
+        "currency": "EUR",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Base model configuration"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 20000,
+        "currency": "EUR",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": "All-Wheel Drive configuration"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 20000,
+        "currency": "EUR",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Mid-level trim"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 20000,
+        "currency": "EUR",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Exclusive-Line with AWD"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 20000,
+        "currency": "EUR",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Sports trim FWD"
+      },
+      {
+        "trim": "Standard Trim",
+        "body_style": "Sedan",
+        "engine": "2.5",
+        "fuel_type": "Gasoline",
+        "price": 20000,
+        "currency": "EUR",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": "Sports trim with AWD"
+      }
+    ],
+    "cachedAt": "2026-07-22T18:14:47.398Z"
+  },
+  "2016-dodge-dart-US-default": {
+    "lineup": [
+      {
+        "trim": "SE",
+        "body_style": "Sedan",
+        "engine": "2.0L MultiAir 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SE",
+        "body_style": "Sedan",
+        "engine": "2.0L MultiAir 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SXT",
+        "body_style": "Sedan",
+        "engine": "2.0L MultiAir 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "SXT",
+        "body_style": "Sedan",
+        "engine": "2.0L MultiAir 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "GT",
+        "body_style": "Sedan",
+        "engine": "2.4L MultiAir 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "GT",
+        "body_style": "Sedan",
+        "engine": "2.4L MultiAir 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "Limited",
+        "body_style": "Sedan",
+        "engine": "2.0L MultiAir 4-Cylinder",
+        "fuel_type": "Gasoline",
+        "price": 22000,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-22T21:04:28.882Z"
+  }
+}
