@@ -80,7 +80,7 @@ export default function Home() {
   const [activeContinent, setActiveContinent] = useState('North America');
   const [origin, setOrigin] = useState('USA');
   const [condition, setCondition] = useState('used'); 
-  const [actualCost, setActualCost] = useState('');   
+  const [actualCost, setActualCost] = useState('');    
   const [fields, setFields] = useState({
     year: '', make: '', model: '', trim: '', engine: '', bodyType: 'Sedan'
   });
@@ -244,14 +244,14 @@ export default function Home() {
     try {
       const res = await fetch(`/api/decode-vin?vin=${v}`);
       const data = await res.json();
-           
+            
       if (!res.ok) {
         setVinStatus('');
         setMode('free');
         setVinError('Could not auto-fill details for this VIN. Please enter car details manually.');
         return;
       }
-           
+            
       spendToken();
 
       const v2 = data.vehicle;
@@ -264,7 +264,7 @@ export default function Home() {
         bodyType: normaliseBodyType(v2.bodyType),
       };
       setFields(newFields);
-           
+            
       let detectedOrigin = 'USA';
       if (v2.plantCountry) {
         const plant = v2.plantCountry.toLowerCase();
@@ -429,9 +429,9 @@ export default function Home() {
   return (
     <>
       <style>{`
-        .premium-input-field { transition: all 0.2s ease-in-out !important; border: 1px solid #d1d5db !important; border-radius: 8px !important; }
+        .premium-input-field { transition: all 0.2s ease-in-out !important; border: 1px solid #d1d5db !important; border-radius: 8px !important; width: 100% !important; box-sizing: border-box !important; }
         .premium-input-field:focus { border-color: #05643c !important; box-shadow: 0 0 0 3px rgba(5, 100, 60, 0.18) !important; outline: none !important; }
-        .premium-card-wrapper { border-radius: 16px !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important; background: #ffffff !important; overflow: hidden; }
+        .premium-card-wrapper { border-radius: 16px !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important; background: #ffffff !important; overflow: hidden; width: 100%; box-sizing: border-box; }
         .premium-interactive-tab { transition: all 0.2s ease !important; border-radius: 6px !important; }
         .premium-interactive-tab.active { box-shadow: inset 0 2px 4px rgba(0,0,0,0.06), 0 4px 6px -1px rgba(5, 100, 60, 0.2) !important; }
         .mode-tab:not(.active) { background-color: transparent !important; color: #334155 !important; }
@@ -443,9 +443,66 @@ export default function Home() {
         .total-row td { background: #f0fdf4; font-weight: 700 !important; color: #166534 !important; border-top: 2px solid #bbf7d0; }
         .marketplace-card { border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; transition: all 0.2s ease; }
         .marketplace-card:hover { border-color: #05643c; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        .modal-overlay-blur { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 999; display: flex; alignItems: center; justify-content: center; padding: 16px; box-sizing: border-box; }
+        .modal-overlay-blur { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; }
         .modal-inner-surface { background: #ffffff; width: 100%; max-width: 460px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); overflow: hidden; animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes modalPop { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        /* RESPONSIVE LAYOUT CONTAINER OVERRIDES */
+        .app-container-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 20px;
+          max-width: 1440px;
+          margin: 0 auto;
+          width: 100%;
+          padding: 0 16px;
+          box-sizing: border-box;
+        }
+        @media (min-width: 1200px) {
+          .app-container-grid {
+            grid-template-columns: 280px minmax(0, 1fr) 280px;
+            gap: 24px;
+            padding: 0 24px;
+          }
+        }
+
+        /* FORM GRIDS RESPONSIVE */
+        .responsive-form-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 16px;
+          margin-bottom: 20px;
+        }
+        @media (min-width: 640px) {
+          .responsive-form-grid {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+
+        /* METRICS GRID RESPONSIVE */
+        .metrics-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px;
+          margin: 20px 0;
+        }
+        @media (min-width: 640px) {
+          .metrics-grid {
+            grid-template-columns: 1fr 1fr 1fr;
+          }
+        }
+
+        /* MARKETPLACE & CARDS GRIDS */
+        .responsive-two-cols {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        @media (min-width: 640px) {
+          .responsive-two-cols {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
       `}</style>
 
       {/* BACKGROUND IMAGE & OVERLAY */}
@@ -454,73 +511,59 @@ export default function Home() {
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.20) 0%, rgba(15, 23, 42, 0.40) 100%)' }} />
       </div>
 
-      <div className="hero" style={{ background: 'linear-gradient(135deg, #05643c, #047857)', padding: '40px 24px', color: '#ffffff', textAlign: 'center', marginBottom: '32px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justify: 'center', width: '100%' }}>
+      <div className="hero" style={{ background: 'linear-gradient(135deg, #05643c, #047857)', padding: '32px 16px', color: '#ffffff', textAlign: 'center', marginBottom: '24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         
         {/* HERO BADGE CONTAINER */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px', background: 'rgba(255, 255, 255, 0.12)', padding: '10px 22px', borderRadius: '50px', border: '1px solid rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', background: 'rgba(255, 255, 255, 0.12)', padding: '8px 18px', borderRadius: '50px', border: '1px solid rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
           <img 
             src="/logo.png" 
             alt="GhanaDuty Official Logo" 
-            style={{ 
-              width: '54px', 
-              height: '54px', 
-              borderRadius: '10px', 
-              objectFit: 'contain', 
-              boxShadow: '0 4px 10px rgba(0,0,0,0.25)' 
-            }}
-            onError={(e) => {
-              console.error("Logo failed to load.");
-            }}
+            style={{ width: '44px', height: '44px', borderRadius: '8px', objectFit: 'contain', boxShadow: '0 4px 10px rgba(0,0,0,0.25)' }}
+            onError={(e) => { console.error("Logo failed to load."); }}
           />
-          <span style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '0.06em', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>GHANADUTY</span>
+          <span style={{ fontSize: '18px', fontWeight: '900', letterSpacing: '0.06em', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>GHANADUTY</span>
         </div>
 
-        <h1 style={{ margin: '0 0 8px 0', fontSize: '32px', fontWeight: '800', letterSpacing: '-0.025em', textAlign: 'center', width: '100%' }}>
+        <h1 style={{ margin: '0 0 6px 0', fontSize: 'clamp(24px, 5vw, 32px)', fontWeight: '800', letterSpacing: '-0.025em', textAlign: 'center', width: '100%' }}>
           Ghana Vehicle Import Duty Calculator
         </h1>
-        <p style={{ margin: '0 auto 18px auto', fontSize: '15px', opacity: 0.95, fontWeight: '400', textAlign: 'center', width: '100%' }}>
+        <p style={{ margin: '0 auto 16px auto', fontSize: '14px', opacity: 0.95, fontWeight: '400', textAlign: 'center', maxWidth: '600px', lineHeight: '1.4' }}>
           Instant GRA Customs Tax & Port Duty Estimator • Compliant with Customs Act 2015 (Act 891)
         </p>
         
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap', width: '100%' }}>
+        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap', width: '100%' }}>
           {['Official GRA Formulas', 'Live BoG Exchange Rates', 'Instant VIN Lookup', '100% Free Duty Reports'].map((badge) => (
-            <span key={badge} style={{ fontSize: '12px', fontWeight: '600', background: 'rgba(255, 255, 255, 0.16)', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.25)', backdropFilter: 'blur(4px)', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+            <span key={badge} style={{ fontSize: '11px', fontWeight: '600', background: 'rgba(255, 255, 255, 0.16)', padding: '5px 12px', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.25)', backdropFilter: 'blur(4px)' }}>
               {badge}
             </span>
           ))}
         </div>
       </div>
 
-      <div className="container" style={{ display: 'grid', gridTemplateColumns: '280px 1fr 280px', gap: '24px', maxWidth: '1440px', margin: '0 auto', width: '100%', padding: '0 16px', boxSizing: 'border-box' }}>
+      <div className="app-container-grid">
         
-        <div className="sidebar-left">
-          <div className="premium-card-wrapper" style={{ padding: '20px' }}>
-            <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        {/* LEFT SIDEBAR: QUICK PRESETS */}
+        <div className="sidebar-left" style={{ order: 2 }}>
+          <div className="premium-card-wrapper" style={{ padding: '16px' }}>
+            <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               📊 Quick Vehicle Presets
             </h3>
             <PresetSelector onSelectVehicle={handleLoadVehiclePreset} />
           </div>
         </div>
 
-        <div className="page-content">
+        {/* MAIN CONTENT AREA */}
+        <div className="page-content" style={{ order: 1 }}>
           <div className="premium-card-wrapper">
-            <div className="card-body" style={{ padding: '24px' }}>
+            <div className="card-body" style={{ padding: '20px' }}>
               
               <div className="mode-tabs" style={{ display: 'flex', width: '100%', borderRadius: '10px', padding: '4px', background: '#f1f5f9', marginBottom: '20px', boxSizing: 'border-box' }}>
                 <button 
                   className={`mode-tab premium-interactive-tab ${mode === 'free' ? 'active' : ''}`} 
                   onClick={() => switchMode('free')}
                   style={{ 
-                    flex: 1, 
-                    padding: '12px', 
-                    borderRadius: '8px', 
-                    border: 'none', 
-                    fontSize: '13px', 
-                    fontWeight: '700', 
-                    cursor: 'pointer', 
-                    transition: 'all 0.2s ease', 
-                    backgroundColor: mode === 'free' ? '#05643c' : 'transparent', 
-                    color: mode === 'free' ? '#ffffff' : '#334155' 
+                    flex: 1, padding: '10px', borderRadius: '8px', border: 'none', fontSize: '12px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s ease', 
+                    backgroundColor: mode === 'free' ? '#05643c' : 'transparent', color: mode === 'free' ? '#ffffff' : '#334155' 
                   }}
                 >
                   📋 Manual Search (Free)
@@ -529,80 +572,39 @@ export default function Home() {
                   className={`mode-tab premium-interactive-tab ${mode === 'premium' ? 'active' : ''}`} 
                   onClick={() => switchMode('premium')}
                   style={{ 
-                    flex: 1, 
-                    padding: '12px', 
-                    borderRadius: '8px', 
-                    border: 'none', 
-                    fontSize: '13px', 
-                    fontWeight: '700', 
-                    cursor: 'pointer', 
-                    transition: 'all 0.2s ease', 
-                    backgroundColor: mode === 'premium' ? '#0f172a' : 'transparent', 
-                    color: mode === 'premium' ? '#ffffff' : '#334155', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    gap: '6px' 
+                    flex: 1, padding: '10px', borderRadius: '8px', border: 'none', fontSize: '12px', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s ease', 
+                    backgroundColor: mode === 'premium' ? '#0f172a' : 'transparent', color: mode === 'premium' ? '#ffffff' : '#334155', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' 
                   }}
                 >
                   ⚡ Instant VIN Autofill 
-                  <span style={{ 
-                    backgroundColor: mode === 'premium' ? '#e2e8f0' : '#cbd5e1', 
-                    color: '#0f172a', 
-                    padding: '2px 6px', 
-                    borderRadius: '6px', 
-                    fontSize: '10px', 
-                    fontWeight: '800' 
-                  }}>
+                  <span style={{ backgroundColor: mode === 'premium' ? '#e2e8f0' : '#cbd5e1', color: '#0f172a', padding: '2px 6px', borderRadius: '6px', fontSize: '10px', fontWeight: '800' }}>
                     1 TOKEN
                   </span>
                 </button>
               </div>
 
               {mode === 'premium' && (
-                <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '20px' }}>
+                <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '20px', boxSizing: 'border-box' }}>
                   <div style={{ fontSize: '14px', fontWeight: '600', color: '#1e293b', marginBottom: '4px' }}>Automatic VIN Search</div>
-                  <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '16px' }}>
+                  <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '14px', lineHeight: '1.4' }}>
                     Type in your 17-character Chassis Number (VIN) to automatically fetch your car specifications. Uses 1 token from your balance.
                   </div>
                   <div className="form-group full" style={{ marginBottom: 0 }}>
-                    <div className="vin-row" style={{ display: 'flex', gap: '8px' }}>
-                      <input className="form-input premium-input-field" type="text" placeholder="e.g. 1FTEW1EP9HFC23632" maxLength={17} value={vin} onChange={e => setVin(e.target.value.toUpperCase())} style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
-                      <button className="vin-decode-btn" style={{ borderRadius: '8px', padding: '12px 24px', background: '#05643c', color: '#ffffff', fontWeight: '700', border: 'none', cursor: 'pointer' }} onClick={decodeVin}>Decode VIN</button>
+                    <div className="vin-row" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <input className="form-input premium-input-field" type="text" placeholder="e.g. 1FTEW1EP9HFC23632" maxLength={17} value={vin} onChange={e => setVin(e.target.value.toUpperCase())} style={{ flex: 1, minWidth: '200px', padding: '10px 12px' }} />
+                      <button className="vin-decode-btn" style={{ borderRadius: '8px', padding: '10px 18px', background: '#05643c', color: '#ffffff', fontWeight: '700', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }} onClick={decodeVin}>Decode VIN</button>
                     </div>
-                    {vinStatus && <div className="status-bar" style={{ marginTop: '10px', fontSize: '12px', color: '#05643c' }}>{vinStatus}</div>}
+                    {vinStatus && <div className="status-bar" style={{ marginTop: '8px', fontSize: '12px', color: '#05643c' }}>{vinStatus}</div>}
                     
-                    {/* INSUFFICIENT TOKENS ACTION BANNER */}
                     {vinError && (
-                      <div style={{
-                        marginTop: '12px',
-                        padding: '10px 14px',
-                        background: '#fef2f2',
-                        border: '1px solid #fca5a5',
-                        borderRadius: '8px',
-                        display: 'flex',
-                        justify: 'space-between',
-                        alignItems: 'center'
-                      }}>
-                        <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: '500' }}>
-                          {vinError}
-                        </span>
+                      <div style={{ marginTop: '12px', padding: '10px 14px', background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+                        <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: '500' }}>{vinError}</span>
                         {tokens < 1 && (
                           <button
                             type="button"
                             onClick={() => setIsPricingModalOpen(true)}
-                            style={{
-                              background: '#05643c',
-                              color: '#ffffff',
-                              border: 'none',
-                              padding: '6px 14px',
-                              borderRadius: '6px',
-                              fontWeight: '700',
-                              fontSize: '12px',
-                              cursor: 'pointer',
-                              whiteSpace: 'nowrap',
-                              marginLeft: '12px'
-                            }}
+                            style={{ background: '#05643c', color: '#ffffff', border: 'none', padding: '6px 14px', borderRadius: '6px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', whiteSpace: 'nowrap' }}
                           >
                             Buy Tokens 🪙
                           </button>
@@ -614,34 +616,35 @@ export default function Home() {
               )}
 
               {mode === 'free' && (
-                <div style={{ padding: '12px 16px', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0', color: '#166534', fontSize: '12px', fontWeight: '500', marginBottom: '20px' }}>
-                  💡 <strong>Free Mode Active:</strong> Select a car from the quick presets on the left or type your car details below to calculate duty instantly for free.
+                <div style={{ padding: '12px 16px', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0', color: '#166534', fontSize: '12px', fontWeight: '500', marginBottom: '20px', lineHeight: '1.4' }}>
+                  💡 <strong>Free Mode Active:</strong> Select a car from the quick presets or type your car details below to calculate duty instantly for free.
                 </div>
               )}
 
-              <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: 20 }}>
+              <div className="responsive-form-grid">
                 <div className="form-group">
-                  <label className="form-label">Year of Manufacture *</label>
-                  <input className="form-input premium-input-field" type="number" placeholder="e.g. 2022" value={fields.year} onChange={e => setFields(p => ({ ...p, year: e.target.value }))} disabled={mode === 'premium'} />
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Year of Manufacture *</label>
+                  <input className="form-input premium-input-field" type="number" placeholder="e.g. 2022" value={fields.year} onChange={e => setFields(p => ({ ...p, year: e.target.value }))} disabled={mode === 'premium'} style={{ padding: '10px 12px' }} />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Car Make *</label>
-                  <input className="form-input premium-input-field" type="text" placeholder="e.g. Hyundai, Toyota, Honda" value={fields.make} onChange={e => setFields(p => ({ ...p, make: e.target.value }))} disabled={mode === 'premium'} />
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Make *</label>
+                  <input className="form-input premium-input-field" type="text" placeholder="e.g. Hyundai, Toyota" value={fields.make} onChange={e => setFields(p => ({ ...p, make: e.target.value }))} disabled={mode === 'premium'} style={{ padding: '10px 12px' }} />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Car Model *</label>
-                  <input className="form-input premium-input-field" type="text" placeholder="e.g. Sonata, Kona, RAV4" value={fields.model} onChange={e => setFields(p => ({ ...p, model: e.target.value }))} disabled={mode === 'premium'} />
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Model *</label>
+                  <input className="form-input premium-input-field" type="text" placeholder="e.g. Sonata, RAV4" value={fields.model} onChange={e => setFields(p => ({ ...p, model: e.target.value }))} disabled={mode === 'premium'} style={{ padding: '10px 12px' }} />
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Trim Variant (Optional Filter)</label>
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Trim Variant (Optional)</label>
                   <input 
                     className="form-input premium-input-field" 
                     type="text" 
                     list="available-trim-options" 
-                    placeholder={dropdownTrims.length > 0 ? 'Select trim variant...' : 'Optional — Leave blank to search all trims'}
+                    placeholder={dropdownTrims.length > 0 ? 'Select trim variant...' : 'Optional — Leave blank'}
                     value={fields.trim} 
                     onChange={e => setFields(p => ({ ...p, trim: e.target.value }))} 
+                    style={{ padding: '10px 12px' }}
                   />
                   <datalist id="available-trim-options">
                     {dropdownTrims.map(t => (
@@ -651,12 +654,12 @@ export default function Home() {
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Engine Capacity Size</label>
-                  <input className="form-input premium-input-field" type="text" placeholder="Optional — e.g. 2.0L, 2500cc" value={fields.engine} onChange={e => setFields(p => ({ ...p, engine: e.target.value }))} />
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Engine Capacity Size</label>
+                  <input className="form-input premium-input-field" type="text" placeholder="Optional — e.g. 2.0L" value={fields.engine} onChange={e => setFields(p => ({ ...p, engine: e.target.value }))} style={{ padding: '10px 12px' }} />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Body Type</label>
-                  <select className="form-select premium-input-field" value={fields.bodyType} onChange={e => setFields(p => ({ ...p, bodyType: e.target.value }))}>
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Body Type</label>
+                  <select className="form-select premium-input-field" value={fields.bodyType} onChange={e => setFields(p => ({ ...p, bodyType: e.target.value }))} style={{ padding: '10px 12px' }}>
                     <option>Sedan</option>
                     <option>SUV</option>
                     <option>Pickup Truck</option>
@@ -666,26 +669,26 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div className="responsive-form-grid" style={{ marginBottom: '16px' }}>
                 <div className="form-group">
-                  <label className="form-label">Customs Base Price / MSRP (USD)</label>
-                  <input className="form-input premium-input-field" type="number" placeholder="Estimated original price" value={purchasePrice} onChange={e => setPurchasePrice(e.target.value)} />
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Customs Base Price / MSRP (USD)</label>
+                  <input className="form-input premium-input-field" type="number" placeholder="Estimated original price" value={purchasePrice} onChange={e => setPurchasePrice(e.target.value)} style={{ padding: '10px 12px' }} />
                 </div>
                 {condition === 'used' && (
                   <div className="form-group">
-                    <label className="form-label">Actual Purchase Price (USD)</label>
-                    <input className="form-input premium-input-field" type="number" placeholder="What you paid for the car" value={actualCost} onChange={e => setActualCost(e.target.value)} />
+                    <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Actual Purchase Price (USD)</label>
+                    <input className="form-input premium-input-field" type="number" placeholder="What you paid for the car" value={actualCost} onChange={e => setActualCost(e.target.value)} style={{ padding: '10px 12px' }} />
                   </div>
                 )}
                 <div className="form-group">
-                  <label className="form-label">Freight Shipping Cost (USD)</label>
-                  <input className="form-input premium-input-field" type="number" value={freight} onChange={e => setFreight(e.target.value)} />
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Freight Shipping Cost (USD)</label>
+                  <input className="form-input premium-input-field" type="number" value={freight} onChange={e => setFreight(e.target.value)} style={{ padding: '10px 12px' }} />
                 </div>
               </div>
 
               {/* REACTIVE CONTINENT & COUNTRY ORIGIN SELECTOR */}
               <div className="form-group full" style={{ marginTop: 16 }}>
-                <label className="form-label" style={{ fontWeight: '700', color: '#1e293b', marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label className="form-label" style={{ fontWeight: '700', color: '#1e293b', marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px', fontSize: '12px' }}>
                   <span>Country Shipping From (Origin Code Filter) *</span>
                   <span style={{ fontSize: '11px', fontWeight: '600', color: '#05643c' }}>
                     Active Origin: {origin} [{getOriginCode(origin)}]
@@ -693,22 +696,23 @@ export default function Home() {
                 </label>
                 
                 {/* Tier 1: Continent Region Tabs */}
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '6px', marginBottom: '10px', flexWrap: 'wrap' }}>
                   {CONTINENT_ORIGIN_GROUPS.map(group => (
                     <button
                       key={group.continent}
                       type="button"
                       onClick={() => setActiveContinent(group.continent)}
                       style={{
-                        padding: '8px 16px',
-                        borderRadius: '8px',
-                        fontSize: '12px',
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        fontSize: '11px',
                         fontWeight: '700',
                         border: activeContinent === group.continent ? '1px solid #05643c' : '1px solid #cbd5e1',
                         backgroundColor: activeContinent === group.continent ? '#05643c' : '#f8fafc',
                         color: activeContinent === group.continent ? '#ffffff' : '#475569',
                         cursor: 'pointer',
-                        transition: 'all 0.2s'
+                        flex: '1 1 auto',
+                        textAlign: 'center'
                       }}
                     >
                       {group.continent}
@@ -717,23 +721,22 @@ export default function Home() {
                 </div>
 
                 {/* Tier 2: Country Selector Pills */}
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', padding: '12px', background: '#f1f5f9', borderRadius: '10px' }}>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', padding: '10px', background: '#f1f5f9', borderRadius: '10px' }}>
                   {CONTINENT_ORIGIN_GROUPS.find(g => g.continent === activeContinent)?.countries.map(c => (
                     <button
                       key={c.value}
                       type="button"
                       onClick={() => handleSelectOrigin(c.value)}
                       style={{
-                        padding: '6px 16px',
+                        padding: '5px 12px',
                         borderRadius: '20px',
-                        fontSize: '12px',
+                        fontSize: '11px',
                         fontWeight: '700',
                         border: origin === c.value ? '2px solid #05643c' : '1px solid #cbd5e1',
                         backgroundColor: origin === c.value ? '#ffffff' : 'transparent',
                         color: origin === c.value ? '#05643c' : '#334155',
                         cursor: 'pointer',
-                        boxShadow: origin === c.value ? '0 2px 4px rgba(0,0,0,0.06)' : 'none',
-                        transition: 'all 0.2s'
+                        boxShadow: origin === c.value ? '0 2px 4px rgba(0,0,0,0.06)' : 'none'
                       }}
                     >
                       {c.label} ({c.code})
@@ -743,79 +746,66 @@ export default function Home() {
               </div>
 
               <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
-                <button className="calc-btn" style={{ flex: 2, borderRadius: '8px' }} onClick={handleManualCalculateTrigger}>
+                <button className="calc-btn" style={{ flex: 1, borderRadius: '8px', padding: '12px', fontSize: '14px', fontWeight: '700' }} onClick={handleManualCalculateTrigger}>
                   Fetch Trims & Calculate Duty
                 </button>
               </div>
-              {calcStatus && <div className="status-bar">{calcStatus}</div>}
-              {calcError && <div className="error-msg">{calcError}</div>}
+              {calcStatus && <div className="status-bar" style={{ marginTop: '10px', fontSize: '12px', color: '#05643c' }}>{calcStatus}</div>}
+              {calcError && <div className="error-msg" style={{ marginTop: '10px', fontSize: '12px', color: '#dc2626' }}>{calcError}</div>}
             </div>
           </div>
 
           {lineupLoading && !result && (
-            <div className="premium-card-wrapper" style={{ marginTop: '24px', padding: '36px', textAlign: 'center', color: '#4b5563' }}>
+            <div className="premium-card-wrapper" style={{ marginTop: '20px', padding: '30px', textAlign: 'center', color: '#4b5563' }}>
               <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #05643c', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: '12px' }} />
-              <p style={{ margin: 0, fontSize: '14px', fontWeight: '500' }}>
+              <p style={{ margin: 0, fontSize: '13px', fontWeight: '500' }}>
                 Fetching official GRA valuation records for {fields.year} {fields.make} {fields.model} [{getOriginCode(origin)}]...
               </p>
             </div>
           )}
 
           {displayedLineupCards.length > 0 && !result && !lineupLoading && (
-            <div className="premium-card-wrapper" style={{ marginTop: '24px', padding: '24px' }}>
+            <div className="premium-card-wrapper" style={{ marginTop: '20px', padding: '20px' }}>
               
-              {/* EXPLICIT NO-RECORDS FALLBACK NOTICE */}
               {lineupMeta.isFallback ? (
-                <div style={{ padding: '16px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '10px', marginBottom: '20px', color: '#92400e' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '700', fontSize: '15px' }}>
+                <div style={{ padding: '14px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '10px', marginBottom: '16px', color: '#92400e' }}>
+                  <div style={{ fontWeight: '700', fontSize: '14px' }}>
                     ⚠️ No Direct GRA Records Found for {origin} [{getOriginCode(origin)}]
                   </div>
-                  <p style={{ margin: '6px 0 0 0', fontSize: '13px', lineHeight: '1.5', color: '#b45309' }}>
-                    There are no official ICUMS valuations specifically indexed under origin code <strong>{getOriginCode(origin)}</strong> for the {fields.year} {fields.make} {fields.model}.
+                  <p style={{ margin: '6px 0 0 0', fontSize: '12px', lineHeight: '1.4', color: '#b45309' }}>
                     Showing available valuation variants recorded from other export hubs: <strong>{lineupMeta.availableOrigins.join(', ')}</strong>.
                   </p>
                 </div>
               ) : (
-                <div className="result-header" style={{ marginBottom: '20px' }}>
-                  <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', color: '#0f172a' }}>
+                <div className="result-header" style={{ marginBottom: '16px' }}>
+                  <h3 style={{ margin: '0 0 4px 0', fontSize: '16px', color: '#0f172a' }}>
                     Select Trim Level for {fields.year} {fields.make} {fields.model} [{getOriginCode(origin)}]
                   </h3>
-                  <p style={{ margin: 0, fontSize: '13px', color: '#64748b' }}>
-                    Showing {displayedLineupCards.length} official GRA variants recorded for origin code: <strong>{getOriginCode(origin)} ({origin})</strong>. Click a trim below to view duty.
+                  <p style={{ margin: 0, fontSize: '12px', color: '#64748b' }}>
+                    Showing {displayedLineupCards.length} official GRA variants recorded for origin code: <strong>{getOriginCode(origin)} ({origin})</strong>.
                   </p>
                 </div>
               )}
 
-              {/* VARIANT CARDS WITH ORIGIN SPEC BADGES */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div className="responsive-two-cols">
                 {displayedLineupCards.map((opt, idx) => (
                   <div
                     key={idx}
                     onClick={() => runFinalCalculation(opt)}
-                    style={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '16px', cursor: 'pointer', transition: 'all 0.2s ease', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
-                    onMouseEnter={(e) => e.currentTarget.style.borderColor = '#05643c'}
-                    onMouseLeave={(e) => e.currentTarget.style.borderColor = '#e5e7eb'}
+                    style={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '14px', cursor: 'pointer', transition: 'all 0.2s ease', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}
                   >
                     <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                        <h4 style={{ color: '#05643c', margin: 0, fontSize: '15px', fontWeight: '700' }}>{opt.trim}</h4>
-                        <span style={{ 
-                          fontSize: '10px', 
-                          fontWeight: '800', 
-                          padding: '2px 8px', 
-                          borderRadius: '4px', 
-                          backgroundColor: opt.originCode === getOriginCode(origin) ? '#dcfce7' : '#f1f5f9',
-                          color: opt.originCode === getOriginCode(origin) ? '#15803d' : '#475569',
-                          border: opt.originCode === getOriginCode(origin) ? '1px solid #bbf7d0' : '1px solid #cbd5e1'
-                        }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px', gap: '8px' }}>
+                        <h4 style={{ color: '#05643c', margin: 0, fontSize: '14px', fontWeight: '700' }}>{opt.trim}</h4>
+                        <span style={{ fontSize: '10px', fontWeight: '800', padding: '2px 6px', borderRadius: '4px', backgroundColor: opt.originCode === getOriginCode(origin) ? '#dcfce7' : '#f1f5f9', color: opt.originCode === getOriginCode(origin) ? '#15803d' : '#475569', whiteSpace: 'nowrap' }}>
                           {opt.originCode || getOriginCode(origin)} SPEC
                         </span>
                       </div>
-                      <p style={{ color: '#6b7280', margin: '0 0 8px 0', fontSize: '13px' }}>
-                        {opt.body_style || fields.bodyType} {opt.engine ? `— ${opt.engine}` : ''} {opt.fuel_type ? `— ${opt.fuel_type}` : ''}
+                      <p style={{ color: '#6b7280', margin: '0 0 8px 0', fontSize: '12px' }}>
+                        {opt.body_style || fields.bodyType} {opt.engine ? `— ${opt.engine}` : ''}
                       </p>
                     </div>
-                    <p style={{ color: '#111827', margin: '8px 0 0 0', fontSize: '14px', fontWeight: '600' }}>
+                    <p style={{ color: '#111827', margin: '6px 0 0 0', fontSize: '13px', fontWeight: '600' }}>
                       Customs Base Price: <span>{(opt.price ?? 0).toLocaleString()} {opt.currency}</span>
                     </p>
                   </div>
@@ -825,127 +815,131 @@ export default function Home() {
           )}
 
           {result && (
-            <div className="premium-card-wrapper result-card" style={{ marginTop: '24px', padding: '24px' }}>
+            <div className="premium-card-wrapper result-card" style={{ marginTop: '20px', padding: '20px' }}>
               <div className="result-header">
-                <h3 style={{ margin: '0 0 4px 0', fontSize: '20px', color: '#0f172a' }}>{result.vehicle_label}</h3>
-                <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#64748b' }}>Customs Exchange Rate Applied: {result.exchange_label} — Tema / Takoradi Port</p>
+                <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', color: '#0f172a' }}>{result.vehicle_label}</h3>
+                <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: '#64748b' }}>Customs Exchange Rate: {result.exchange_label} — Tema / Takoradi Port</p>
               </div>
 
-              <div className="metrics-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', margin: '20px 0' }}>
-                <div className="metric-cell" style={{ background: '#f8fafc', padding: '14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ fontSize: '12px', color: '#64748b', fontWeight: '500' }}>CIF Value</div>
-                  <div style={{ fontSize: '16px', fontWeight: '700', color: '#0f172a', marginTop: '2px' }}>{fmtGhs(result.cif_ghs)}</div>
-                  <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '1px' }}>({fmtUsd(result.cif_usd)})</div>
+              <div className="metrics-grid">
+                <div className="metric-cell" style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '500' }}>CIF Value</div>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', marginTop: '2px' }}>{fmtGhs(result.cif_ghs)}</div>
+                  <div style={{ fontSize: '10px', color: '#94a3b8' }}>({fmtUsd(result.cif_usd)})</div>
                 </div>
-                <div className="metric-cell" style={{ background: '#f0fdf4', padding: '14px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
-                  <div style={{ fontSize: '12px', color: '#166534', fontWeight: '500' }}>Total Duty & Taxes Payable</div>
-                  <div style={{ fontSize: '16px', fontWeight: '700', color: '#05643c', marginTop: '2px' }}>{fmtGhs(result.total_duty_ghs)}</div>
-                  <div style={{ fontSize: '11px', color: '#78716c', marginTop: '1px' }}>({fmtUsd(result.total_duty_usd)})</div>
+                <div className="metric-cell" style={{ background: '#f0fdf4', padding: '12px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                  <div style={{ fontSize: '11px', color: '#166534', fontWeight: '500' }}>Total Duty & Taxes Payable</div>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: '#05643c', marginTop: '2px' }}>{fmtGhs(result.total_duty_ghs)}</div>
+                  <div style={{ fontSize: '10px', color: '#78716c' }}>({fmtUsd(result.total_duty_usd)})</div>
                 </div>
-                <div className="metric-cell" style={{ background: '#f8fafc', padding: '14px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                  <div style={{ fontSize: '12px', color: '#64748b', fontWeight: '500' }}>Total Estimated Landed Cost</div>
-                  <div style={{ fontSize: '16px', fontWeight: '700', color: '#0f172a', marginTop: '2px' }}>{fmtUsd(result.landed_cost_usd)}</div>
-                  <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '1px' }}>Total budget needed</div>
+                <div className="metric-cell" style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '500' }}>Estimated Landed Cost</div>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', marginTop: '2px' }}>{fmtUsd(result.landed_cost_usd)}</div>
+                  <div style={{ fontSize: '10px', color: '#94a3b8' }}>Total budget needed</div>
                 </div>
               </div>
 
               {result.vehicle_age >= 11 && (
-                <div className="overage-warning-box" style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', backgroundColor: '#fff9e6', borderLeft: '4px solid #d97706', padding: '14px', borderRadius: '8px', marginBottom: '20px' }}>
-                  <span style={{ fontSize: '18px' }}>⚠️</span>
+                <div className="overage-warning-box" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#fff9e6', borderLeft: '4px solid #d97706', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '16px' }}>⚠️</span>
                   <div>
-                    <h4 style={{ color: '#92400e', margin: '0 0 4px 0', fontSize: '14px', fontWeight: '600' }}>Over-Age Penalty Fee Included</h4>
-                    <p style={{ color: '#b45309', margin: '0', fontSize: '13px', lineHeight: '1.4' }}>
-                      This car is <strong>{result.vehicle_age} years old</strong>. Cars older than 10 years attract an extra over-age penalty tax of <strong>{result.overage_rate_label || '0%'}</strong> based on GRA regulations.
+                    <h4 style={{ color: '#92400e', margin: '0 0 2px 0', fontSize: '13px', fontWeight: '600' }}>Over-Age Penalty Fee Included</h4>
+                    <p style={{ color: '#b45309', margin: '0', fontSize: '12px', lineHeight: '1.4' }}>
+                      This car is <strong>{result.vehicle_age} years old</strong>. Cars older than 10 years attract an extra penalty of <strong>{result.overage_rate_label || '0%'}</strong>.
                     </p>
                   </div>
                 </div>
               )}
 
               <div className="report-section-title">Section 1 — Customs CIF Value Breakdown</div>
-              <table className="report-table">
-                <tbody>
-                  <tr>
-                    <td className="td-label">Original Customs Base Price (MSRP / HDV)</td>
-                    <td className="td-value">{result.hdv_formatted}</td>
-                  </tr>
-                  <tr>
-                    <td className="td-label">Age Depreciation Discount ({result.depreciation_pct}% — {result.vehicle_age} yrs old)</td>
-                    <td className="td-value">
-                      {result.hdv_origin && result.depreciation_pct ? (result.hdv_origin * result.depreciation_pct / 100).toLocaleString() : '0'} {result.hdv_currency}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="td-label">Depreciated Car Value</td>
-                    <td className="td-value">{(result.depreciated_value_origin ?? 0).toLocaleString()} {result.hdv_currency}</td>
-                  </tr>
-                  <tr>
-                    <td className="td-label">Freight Shipping Fee ({origin} to Ghana Port)</td>
-                    <td className="td-value">{(result.freight_origin ?? 0).toLocaleString()} {result.hdv_currency}</td>
-                  </tr>
-                  <tr>
-                    <td className="td-label">Marine Insurance (Estimated ~1%)</td>
-                    <td className="td-value">{(result.insurance_origin ?? 0).toLocaleString()} {result.hdv_currency}</td>
-                  </tr>
-                  <tr className="total-row">
-                    <td className="td-label" style={{ paddingLeft: 8 }}>Total Calculated CIF Value (GHS)</td>
-                    <td className="td-value">{(result.cif_origin ?? 0).toLocaleString()} {result.hdv_currency} = {fmtGhs(result.cif_ghs)}</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <div className="report-section-title">Section 2 — Itemized Port Taxes & Duties (GRA Act 891 Compliant)</div>
-              <table className="report-table">
-                <tbody>
-                  {[
-                    ['Import Duty Rate (10%)', d.import_duty],
-                    ['National Health Insurance Levy (NHIL 2.5%)', d.nhil],
-                    ['GETFund Levy (2.5%)', d.getfund],
-                    ['Import Value Added Tax (VAT 15%)', d.import_vat],
-                    ['ECOWAS Community Levy (0.5%)', d.ecowas],
-                    ['Vehicle Examination Fee (1%)', d.exam_fee],
-                    ['Network & Processing Service Charge (0.4%)', d.network_charges],
-                    ['  Network Service NHIL Allocation', d.network_nhil],
-                    ['  Network Service GETFund Allocation', d.network_getfund],
-                    ['  Network Service Processing VAT', d.network_vat],
-                    ['Special Import Levy (2%)', d.special_import_levy],
-                    ['EXIM Bank Development Levy (0.75%)', d.exim_levy],
-                    ['African Union Union Levy (0.2%)', d.au_levy],
-                    ['Vehicle Inspection Certification Fee', d.cert_fee],
-                    ['Ghana Shippers Authority Processing Fee', d.shippers_fee],
-                    ['Ministry of Trade e-ID Integration Fee', d.moti_fee],
-                    ['Port Health & Sanitation Treatment Fee', d.disinfection_fee],
-                    [`Over-Age Penalty Charge (${result.overage_rate_label || '0%'})`, d.overage_penalty],
-                  ].map(([label, valuation]) => (
-                    <tr key={label}>
-                      <td className="td-label">{label}</td>
-                      <td className="td-value">{fmtGhs(valuation)}</td>
+              <div style={{ overflowX: 'auto' }}>
+                <table className="report-table">
+                  <tbody>
+                    <tr>
+                      <td className="td-label">Original Customs Base Price (MSRP / HDV)</td>
+                      <td className="td-value">{result.hdv_formatted}</td>
                     </tr>
-                  ))}
-                  <tr className="total-row">
-                    <td className="td-label" style={{ paddingLeft: 8 }}>Total Port Clearance Duty & Taxes Payable</td>
-                    <td className="td-value">{fmtGhs(result.total_duty_ghs)}</td>
-                  </tr>
-                </tbody>
-              </table>
+                    <tr>
+                      <td className="td-label">Age Depreciation Discount ({result.depreciation_pct}%)</td>
+                      <td className="td-value">
+                        {result.hdv_origin && result.depreciation_pct ? (result.hdv_origin * result.depreciation_pct / 100).toLocaleString() : '0'} {result.hdv_currency}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="td-label">Depreciated Car Value</td>
+                      <td className="td-value">{(result.depreciated_value_origin ?? 0).toLocaleString()} {result.hdv_currency}</td>
+                    </tr>
+                    <tr>
+                      <td className="td-label">Freight Shipping Fee ({origin})</td>
+                      <td className="td-value">{(result.freight_origin ?? 0).toLocaleString()} {result.hdv_currency}</td>
+                    </tr>
+                    <tr>
+                      <td className="td-label">Marine Insurance (~1%)</td>
+                      <td className="td-value">{(result.insurance_origin ?? 0).toLocaleString()} {result.hdv_currency}</td>
+                    </tr>
+                    <tr className="total-row">
+                      <td className="td-label">Total Calculated CIF Value</td>
+                      <td className="td-value">{(result.cif_origin ?? 0).toLocaleString()} {result.hdv_currency} = {fmtGhs(result.cif_ghs)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="report-section-title">Section 2 — Itemized Port Taxes & Duties (GRA Act 891)</div>
+              <div style={{ overflowX: 'auto' }}>
+                <table className="report-table">
+                  <tbody>
+                    {[
+                      ['Import Duty Rate (10%)', d.import_duty],
+                      ['National Health Insurance Levy (NHIL 2.5%)', d.nhil],
+                      ['GETFund Levy (2.5%)', d.getfund],
+                      ['Import Value Added Tax (VAT 15%)', d.import_vat],
+                      ['ECOWAS Community Levy (0.5%)', d.ecowas],
+                      ['Vehicle Examination Fee (1%)', d.exam_fee],
+                      ['Network & Processing Service Charge (0.4%)', d.network_charges],
+                      ['  Network Service NHIL Allocation', d.network_nhil],
+                      ['  Network Service GETFund Allocation', d.network_getfund],
+                      ['  Network Service Processing VAT', d.network_vat],
+                      ['Special Import Levy (2%)', d.special_import_levy],
+                      ['EXIM Bank Development Levy (0.75%)', d.exim_levy],
+                      ['African Union Levy (0.2%)', d.au_levy],
+                      ['Vehicle Inspection Certification Fee', d.cert_fee],
+                      ['Ghana Shippers Authority Processing Fee', d.shippers_fee],
+                      ['Ministry of Trade e-ID Integration Fee', d.moti_fee],
+                      ['Port Health & Sanitation Treatment Fee', d.disinfection_fee],
+                      [`Over-Age Penalty Charge (${result.overage_rate_label || '0%'})`, d.overage_penalty],
+                    ].map(([label, valuation]) => (
+                      <tr key={label}>
+                        <td className="td-label">{label}</td>
+                        <td className="td-value">{fmtGhs(valuation)}</td>
+                      </tr>
+                    ))}
+                    <tr className="total-row">
+                      <td className="td-label">Total Port Clearance Duty & Taxes Payable</td>
+                      <td className="td-value">{fmtGhs(result.total_duty_ghs)}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
               <div className="report-section-title">💼 Need Help Clearing Your Car?</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '12px' }}>
+              <div className="responsive-two-cols" style={{ marginTop: '12px' }}>
                 
                 <div className="marketplace-card">
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '11px', fontWeight: '800', background: '#e0f2fe', color: '#0369a1', padding: '2px 8px', borderRadius: '4px' }}>TEMA & TAKORADI</span>
-                      <span style={{ fontSize: '12px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
+                      <span style={{ fontSize: '10px', fontWeight: '800', background: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px' }}>TEMA & TAKORADI</span>
+                      <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
                     </div>
-                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#0f172a', fontWeight: '700' }}>Licensed Clearing Agents</h4>
-                    <p style={{ margin: 0, fontSize: '12px', color: '#64748b', lineHeight: '1.4' }}>
-                      Get connected with trusted, licensed clearing agents at Tema or Takoradi ports to handle your documents and car clearance.
+                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>Licensed Clearing Agents</h4>
+                    <p style={{ margin: 0, fontSize: '11px', color: '#64748b', lineHeight: '1.4' }}>
+                      Get connected with trusted, licensed clearing agents at Tema or Takoradi ports to handle documents.
                     </p>
                   </div>
                   <button 
                     onClick={() => triggerOpenLeadModal('Clearing Agent Support')}
                     disabled={clearingAgentLeadSent}
-                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: clearingAgentLeadSent ? '#e2e8f0' : '#05643c', color: clearingAgentLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: clearingAgentLeadSent ? 'default' : 'pointer', transition: 'background 0.2s' }}
+                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: clearingAgentLeadSent ? '#e2e8f0' : '#05643c', color: clearingAgentLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: clearingAgentLeadSent ? 'default' : 'pointer' }}
                   >
                     {clearingAgentLeadSent ? '✓ Request Submitted' : 'Connect with Clearing Agents'}
                   </button>
@@ -954,18 +948,18 @@ export default function Home() {
                 <div className="marketplace-card">
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '11px', fontWeight: '800', background: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: '4px' }}>VALUATION REVIEW</span>
-                      <span style={{ fontSize: '12px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
+                      <span style={{ fontSize: '10px', fontWeight: '800', background: '#fef3c7', color: '#b45309', padding: '2px 6px', borderRadius: '4px' }}>VALUATION REVIEW</span>
+                      <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
                     </div>
-                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#0f172a', fontWeight: '700' }}>Vehicle Valuation & Inspection</h4>
-                    <p style={{ margin: 0, fontSize: '12px', color: '#64748b', lineHeight: '1.4' }}>
-                      Request a physical condition check or dispute an over-estimated valuation to ensure you do not pay higher taxes than necessary.
+                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>Vehicle Valuation & Inspection</h4>
+                    <p style={{ margin: 0, fontSize: '11px', color: '#64748b', lineHeight: '1.4' }}>
+                      Request a physical condition check or dispute an over-estimated valuation at the port.
                     </p>
                   </div>
                   <button 
                     onClick={() => triggerOpenLeadModal('Valuation & Inspection Review')}
                     disabled={inspectionLeadSent}
-                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: inspectionLeadSent ? '#e2e8f0' : '#0f172a', color: inspectionLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: inspectionLeadSent ? 'default' : 'pointer', transition: 'background 0.2s' }}
+                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: inspectionLeadSent ? '#e2e8f0' : '#0f172a', color: inspectionLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: inspectionLeadSent ? 'default' : 'pointer' }}
                   >
                     {inspectionLeadSent ? '✓ Request Submitted' : 'Request Inspection & Review'}
                   </button>
@@ -974,35 +968,37 @@ export default function Home() {
               </div>
 
               <div className="report-section-title">Section 3 — Total Estimated Investment</div>
-              <table className="report-table">
-                <tbody>
-                  {[
-                    ['Car Purchase Price (FOB)', fmtUsd(result.purchase_price_usd)],
-                    ['Freight & Shipping Fee', fmtUsd(result.freight_usd)],
-                    ['Marine Insurance', fmtUsd(result.insurance_usd)],
-                    ['Total Port Customs Duty & Taxes', fmtUsd(result.total_duty_usd)],
-                  ].map(([label, valuation]) => (
-                    <tr key={label}>
-                      <td className="td-label"> {label}</td>
-                      <td className="td-value">{valuation}</td>
+              <div style={{ overflowX: 'auto' }}>
+                <table className="report-table">
+                  <tbody>
+                    {[
+                      ['Car Purchase Price (FOB)', fmtUsd(result.purchase_price_usd)],
+                      ['Freight & Shipping Fee', fmtUsd(result.freight_usd)],
+                      ['Marine Insurance', fmtUsd(result.insurance_usd)],
+                      ['Total Port Customs Duty & Taxes', fmtUsd(result.total_duty_usd)],
+                    ].map(([label, valuation]) => (
+                      <tr key={label}>
+                        <td className="td-label">{label}</td>
+                        <td className="td-value">{valuation}</td>
+                      </tr>
+                    ))}
+                    <tr className="total-row">
+                      <td className="td-label">Estimated Total Landed Cost</td>
+                      <td className="td-value">{fmtUsd(result.landed_cost_usd)} / {fmtGhs(result.landed_cost_ghs)}</td>
                     </tr>
-                  ))}
-                  <tr className="total-row">
-                    <td className="td-label" style={{ paddingLeft: 8 }}>Estimated Total Landed Cost</td>
-                    <td className="td-value">{fmtUsd(result.landed_cost_usd)} / {fmtGhs(result.landed_cost_ghs)}</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <div className="disclaimer-box" style={{ background: '#fafafa', border: '1px solid #e2e8f0', padding: '12px', fontSize: '11px', color: '#64748b', borderRadius: '8px', marginTop: '16px', lineHeight: '1.4' }}>
-                <strong>Important Notice:</strong> Calculations are based on the Ghana Revenue Authority Customs Act 2015 (Act 891). Figures shown are estimates for planning purposes. Final duty charges paid at the port depend on Bank of Ghana exchange rates active on the day of clearance.
+                  </tbody>
+                </table>
               </div>
 
-              <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
-                <button className="download-btn" style={{ flex: 1, background: '#05643c', color: '#ffffff', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '600', border: 'none', cursor: 'pointer' }} onClick={downloadPdf} disabled={pdfLoading}>
+              <div className="disclaimer-box" style={{ background: '#fafafa', border: '1px solid #e2e8f0', padding: '12px', fontSize: '11px', color: '#64748b', borderRadius: '8px', marginTop: '16px', lineHeight: '1.4' }}>
+                <strong>Important Notice:</strong> Calculations are based on the Ghana Revenue Authority Customs Act 2015 (Act 891). Figures shown are estimates for planning purposes.
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap' }}>
+                <button className="download-btn" style={{ flex: '1 1 180px', background: '#05643c', color: '#ffffff', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '600', border: 'none', cursor: 'pointer' }} onClick={downloadPdf} disabled={pdfLoading}>
                   {pdfLoading ? 'Preparing PDF Report...' : 'Download Official PDF Report'}
                 </button>
-                <button className="calc-btn" style={{ background: '#64748b', color: '#ffffff', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '600', border: 'none', cursor: 'pointer' }} onClick={() => setResult(null)}>
+                <button className="calc-btn" style={{ flex: '1 1 140px', background: '#64748b', color: '#ffffff', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '600', border: 'none', cursor: 'pointer' }} onClick={() => setResult(null)}>
                   Calculate Another Car
                 </button>
               </div>
@@ -1010,19 +1006,20 @@ export default function Home() {
           )}
         </div>
 
-        <div className="sidebar-right" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div className="premium-card-wrapper" style={{ padding: '20px' }}>
-            <h3 style={{ fontSize: '15px', fontWeight: '750', color: '#111827', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        {/* RIGHT SIDEBAR: HOW IT WORKS */}
+        <div className="sidebar-right" style={{ display: 'flex', flexDirection: 'column', gap: '16px', order: 3 }}>
+          <div className="premium-card-wrapper" style={{ padding: '16px' }}>
+            <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               ℹ️ How It Works
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '13px', color: '#4b5563', lineHeight: '1.5' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '12px', color: '#4b5563', lineHeight: '1.4' }}>
               <div>
                 <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>1. Enter Vehicle Details</strong>
                 Enter your car 17-digit Chassis (VIN) number or pick the make, model, and year manually.
               </div>
               <div>
                 <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>2. Select Origin Country</strong>
-                Choose your shipping region and country (USA, Canada, Germany, Japan, South Korea, etc.) for correct currency exchange rates.
+                Choose your shipping region and country for correct currency exchange rates.
               </div>
               <div>
                 <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>3. Get Instant Duty Report</strong>
@@ -1070,7 +1067,7 @@ export default function Home() {
                   value={leadForm.name}
                   onChange={e => setLeadForm(prev => ({ ...prev, name: e.target.value }))}
                   className="premium-input-field"
-                  style={{ width: '100%', padding: '10px', fontSize: '13px', boxSizing: 'border-box' }}
+                  style={{ padding: '10px', fontSize: '13px' }}
                 />
               </div>
 
@@ -1083,7 +1080,7 @@ export default function Home() {
                   value={leadForm.phone}
                   onChange={e => setLeadForm(prev => ({ ...prev, phone: e.target.value }))}
                   className="premium-input-field"
-                  style={{ width: '100%', padding: '10px', fontSize: '13px', boxSizing: 'border-box' }}
+                  style={{ padding: '10px', fontSize: '13px' }}
                 />
               </div>
 
@@ -1096,7 +1093,7 @@ export default function Home() {
                   value={leadForm.email}
                   onChange={e => setLeadForm(prev => ({ ...prev, email: e.target.value }))}
                   className="premium-input-field"
-                  style={{ width: '100%', padding: '10px', fontSize: '13px', boxSizing: 'border-box' }}
+                  style={{ padding: '10px', fontSize: '13px' }}
                 />
               </div>
 
@@ -1104,11 +1101,11 @@ export default function Home() {
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Special Instructions or Questions (Optional)</label>
                 <textarea 
                   rows={3}
-                  placeholder="Tell us any specific details about your shipment timeline or location..."
+                  placeholder="Tell us any specific details about your shipment timeline..."
                   value={leadForm.notes}
                   onChange={e => setLeadForm(prev => ({ ...prev, notes: e.target.value }))}
                   className="premium-input-field"
-                  style={{ width: '100%', padding: '10px', fontSize: '13px', boxSizing: 'border-box', resize: 'vertical', fontFamily: 'inherit' }}
+                  style={{ padding: '10px', fontSize: '13px', resize: 'vertical', fontFamily: 'inherit' }}
                 />
               </div>
 
@@ -1140,8 +1137,8 @@ export default function Home() {
       )}
 
       <footer className="footer" style={{ marginTop: '48px', background: 'rgba(15, 23, 42, 0.95)', padding: '24px 20px', color: '#cbd5e1', textAlign: 'center' }}>
-        <p style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '500' }}>© 2026 GhanaDuty • Ghana Vehicle Import Duty Calculator</p>
-        <p style={{ margin: '0', fontSize: '12px', opacity: 0.8, lineHeight: '1.4' }}>Calculations based on Customs Act 2015 (Act 891) • Estimates for planning purposes only</p>
+        <p style={{ margin: '0 0 6px 0', fontSize: '13px', fontWeight: '500' }}>© 2026 GhanaDuty • Ghana Vehicle Import Duty Calculator</p>
+        <p style={{ margin: '0', fontSize: '11px', opacity: 0.8, lineHeight: '1.4' }}>Calculations based on Customs Act 2015 (Act 891) • Estimates for planning purposes only</p>
       </footer>
     </>
   );
