@@ -460,7 +460,8 @@ export default function Home() {
         }
         @media (min-width: 1200px) {
           .app-container-grid {
-            grid-template-columns: 280px minmax(0, 1fr) 280px;
+            /* Quick Presets on left (320px), Main Calculator center stage (minmax(0, 1fr)), How It Works on right (280px) */
+            grid-template-columns: 320px minmax(0, 1fr) 280px;
             gap: 24px;
             padding: 0 24px;
           }
@@ -542,7 +543,7 @@ export default function Home() {
 
       <div className="app-container-grid">
         
-        {/* LEFT SIDEBAR: QUICK PRESETS */}
+        {/* LEFT SIDEBAR: QUICK PRESETS (Order 2) */}
         <div className="sidebar-left" style={{ order: 2 }}>
           <div className="premium-card-wrapper" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -552,7 +553,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* MAIN CONTENT AREA */}
+        {/* MAIN CONTENT AREA / EXPANDED CALCULATOR (Order 1) */}
         <div className="page-content" style={{ order: 1 }}>
           <div className="premium-card-wrapper">
             <div className="card-body" style={{ padding: '20px' }}>
@@ -1006,7 +1007,7 @@ export default function Home() {
           )}
         </div>
 
-        {/* RIGHT SIDEBAR: HOW IT WORKS */}
+        {/* RIGHT SIDEBAR: HOW IT WORKS (Order 3) */}
         <div className="sidebar-right" style={{ display: 'flex', flexDirection: 'column', gap: '16px', order: 3 }}>
           <div className="premium-card-wrapper" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
