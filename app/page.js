@@ -543,8 +543,8 @@ export default function Home() {
 
       <div className="app-container-grid">
         
-        {/* LEFT SIDEBAR: QUICK PRESETS (Order 2) */}
-        <div className="sidebar-left" style={{ order: 2 }}>
+        {/* LEFT SIDEBAR: QUICK PRESETS (Order 1) */}
+        <div className="sidebar-left" style={{ order: 1 }}>
           <div className="premium-card-wrapper" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               📊 Quick Vehicle Presets
@@ -553,8 +553,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* MAIN CONTENT AREA / EXPANDED CALCULATOR (Order 1) */}
-        <div className="page-content" style={{ order: 1 }}>
+        {/* MAIN CONTENT AREA / EXPANDED CALCULATOR (Order 2) */}
+        <div className="page-content" style={{ order: 2 }}>
           <div className="premium-card-wrapper">
             <div className="card-body" style={{ padding: '20px' }}>
               
