@@ -92,7 +92,6 @@ export default function Home() {
   const [freight, setFreight] = useState('1500');
   const [calcStatus, setCalcStatus] = useState('');
   const [calcError, setCalcError] = useState('');
-  const [warnings, setWarnings] = useState([]);
   
   const [masterLineup, setMasterLineup] = useState([]);
   const [dropdownTrims, setDropdownTrims] = useState([]);
@@ -368,7 +367,6 @@ export default function Home() {
     setMasterLineup([]);
     setDropdownTrims([]);
     setCalcError('');
-    setWarnings([]);
     if (m === 'free') setVinData(null);
   }
 
@@ -427,8 +425,8 @@ export default function Home() {
   const d = result?.duties || {};
 
   return (
-    <>
-      <style>{`
+    <div suppressHydrationWarning>
+      <style suppressHydrationWarning>{`
         .premium-input-field { transition: all 0.2s ease-in-out !important; border: 1px solid #d1d5db !important; border-radius: 8px !important; width: 100% !important; box-sizing: border-box !important; }
         .premium-input-field:focus { border-color: #05643c !important; box-shadow: 0 0 0 3px rgba(5, 100, 60, 0.18) !important; outline: none !important; }
         .premium-card-wrapper { border-radius: 16px !important; border: 1px solid #e2e8f0 !important; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important; background: #ffffff !important; overflow: hidden; width: 100%; box-sizing: border-box; }
@@ -447,22 +445,22 @@ export default function Home() {
         .modal-inner-surface { background: #ffffff; width: 100%; max-width: 460px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); overflow: hidden; animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes modalPop { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-        /* RESPONSIVE LAYOUT CONTAINER OVERRIDES */
+        /* 2-COLUMN APP CONTAINER GRID ARCHITECTURE */
         .app-container-grid {
           display: grid;
           grid-template-columns: 1fr;
           gap: 20px;
-          max-width: 1440px;
+          max-width: 1320px;
           margin: 0 auto;
           width: 100%;
           padding: 0 16px;
           box-sizing: border-box;
         }
-        @media (min-width: 1200px) {
+        @media (min-width: 1024px) {
           .app-container-grid {
-            /* Quick Presets left (260px), Main Calculator center stage (wider, 1.8fr), How It Works right (260px) */
-            grid-template-columns: 260px minmax(0, 1.8fr) 260px;
-            gap: 24px;
+            /* Left Column: Calculator form & Results (wider 1fr), Right Column: Presets & How It Works (320px) */
+            grid-template-columns: minmax(0, 1fr) 320px;
+            gap: 28px;
             padding: 0 24px;
           }
         }
@@ -543,18 +541,8 @@ export default function Home() {
 
       <div className="app-container-grid">
         
-        {/* LEFT SIDEBAR: QUICK PRESETS (Order 1) */}
-        <div className="sidebar-left" style={{ order: 1 }}>
-          <div className="premium-card-wrapper" style={{ padding: '16px' }}>
-            <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              📊 Quick Vehicle Presets
-            </h3>
-            <PresetSelector onSelectVehicle={handleLoadVehiclePreset} />
-          </div>
-        </div>
-
-        {/* MAIN CONTENT AREA / EXPANDED CALCULATOR (Order 2) */}
-        <div className="page-content" style={{ order: 2 }}>
+        {/* COLUMN 1: MAIN CALCULATOR FORM & RESULTS (Left Stage) */}
+        <div className="page-content" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div className="premium-card-wrapper">
             <div className="card-body" style={{ padding: '20px' }}>
               
@@ -757,7 +745,7 @@ export default function Home() {
           </div>
 
           {lineupLoading && !result && (
-            <div className="premium-card-wrapper" style={{ marginTop: '20px', padding: '30px', textAlign: 'center', color: '#4b5563' }}>
+            <div className="premium-card-wrapper" style={{ padding: '30px', textAlign: 'center', color: '#4b5563' }}>
               <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #05643c', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: '12px' }} />
               <p style={{ margin: 0, fontSize: '13px', fontWeight: '500' }}>
                 Fetching official GRA valuation records for {fields.year} {fields.make} {fields.model} [{getOriginCode(origin)}]...
@@ -766,7 +754,7 @@ export default function Home() {
           )}
 
           {displayedLineupCards.length > 0 && !result && !lineupLoading && (
-            <div className="premium-card-wrapper" style={{ marginTop: '20px', padding: '20px' }}>
+            <div className="premium-card-wrapper" style={{ padding: '20px' }}>
               
               {lineupMeta.isFallback ? (
                 <div style={{ padding: '14px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '10px', marginBottom: '16px', color: '#92400e' }}>
@@ -816,7 +804,7 @@ export default function Home() {
           )}
 
           {result && (
-            <div className="premium-card-wrapper result-card" style={{ marginTop: '20px', padding: '20px' }}>
+            <div className="premium-card-wrapper result-card" style={{ padding: '20px' }}>
               <div className="result-header">
                 <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', color: '#0f172a' }}>{result.vehicle_label}</h3>
                 <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: '#64748b' }}>Customs Exchange Rate: {result.exchange_label} — Tema / Takoradi Port</p>
@@ -1007,8 +995,18 @@ export default function Home() {
           )}
         </div>
 
-        {/* RIGHT SIDEBAR: HOW IT WORKS (Order 3) */}
-        <div className="sidebar-right" style={{ display: 'flex', flexDirection: 'column', gap: '16px', order: 3 }}>
+        {/* COLUMN 2: SIDEBAR (Quick Presets & How It Works on the Right Stack) */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          {/* Quick Vehicle Presets Component */}
+          <div className="premium-card-wrapper" style={{ padding: '16px' }}>
+            <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              📊 Quick Vehicle Presets
+            </h3>
+            <PresetSelector onSelectVehicle={handleLoadVehiclePreset} />
+          </div>
+
+          {/* How It Works Component */}
           <div className="premium-card-wrapper" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               ℹ️ How It Works
@@ -1032,6 +1030,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+
         </div>
 
       </div>
@@ -1141,6 +1140,6 @@ export default function Home() {
         <p style={{ margin: '0 0 6px 0', fontSize: '13px', fontWeight: '500' }}>© 2026 GhanaDuty • Ghana Vehicle Import Duty Calculator</p>
         <p style={{ margin: '0', fontSize: '11px', opacity: 0.8, lineHeight: '1.4' }}>Calculations based on Customs Act 2015 (Act 891) • Estimates for planning purposes only</p>
       </footer>
-    </>
+    </div>
   );
 }
