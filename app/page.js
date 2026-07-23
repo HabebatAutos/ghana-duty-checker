@@ -420,20 +420,31 @@ export default function Home() {
           padding: 0 16px;
           box-sizing: border-box;
         }
-        /* Column ordering: on mobile the sidebar (presets) stacks first,
-           on desktop the calculator takes the wide track and the sidebar
-           takes the fixed narrow track, matching the sketch layout. */
-        .sidebar-column { order: 1; }
-        .main-column { order: 2; }
+        /* Mobile: presets, then calculator, then how it works (in that order).
+           sidebar-wrap dissolves via display:contents so its two children
+           become direct grid items and can be ordered independently. */
+        .sidebar-wrap { display: contents; }
+        .presets-item { order: 1; }
+        .calculator-item { order: 2; }
+        .howitworks-item { order: 3; }
         @media (min-width: 1024px) {
           .app-container-grid {
-            /* Left Column: Calculator form & Results (wider stage, 1.8fr), Right Column: Quick Presets & How It Works (fixed 380px) */
             grid-template-columns: minmax(0, 1.8fr) 380px;
             gap: 28px;
             padding: 0 24px;
+            align-items: start;
           }
-          .main-column { order: 1; }
-          .sidebar-column { order: 2; }
+          /* Desktop: calculator sits alone in the wide left column (no
+             spanning). sidebar-wrap becomes a real flex column that stacks
+             presets above how it works in the narrow right column. */
+          .calculator-item { order: initial; }
+          .sidebar-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+          }
+          .presets-item { order: initial; }
+          .howitworks-item { order: initial; }
         }
         /* FORM GRIDS RESPONSIVE */
         .responsive-form-grid {
@@ -505,8 +516,8 @@ export default function Home() {
       </div>
       <div className="app-container-grid">
         
-        {/* COLUMN 1: MAIN CALCULATOR FORM & RESULTS (Wide column on desktop) */}
-        <div className="page-content main-column" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* MAIN CALCULATOR FORM & RESULTS (Wide column on desktop, middle on mobile) */}
+        <div className="page-content calculator-item" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div className="premium-card-wrapper">
             <div className="card-body" style={{ padding: '20px' }}>
               
@@ -935,18 +946,19 @@ export default function Home() {
             </div>
           )}
         </div>
-        {/* COLUMN 2: SIDEBAR (Quick Presets & How It Works, narrow column on desktop) -> Appears FIRST on mobile */}
-        <div className="sidebar-column" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          
-          {/* Quick Vehicle Presets Component */}
-          <div className="premium-card-wrapper" style={{ padding: '16px' }}>
+        {/* SIDEBAR WRAP: dissolves into two independent grid items on mobile
+            (so How It Works can be ordered last), becomes a stacked flex
+            column beside the calculator on desktop. */}
+        <div className="sidebar-wrap">
+          {/* QUICK VEHICLE PRESETS (Narrow column on desktop, first on mobile) */}
+          <div className="premium-card-wrapper presets-item" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               📊 Quick Vehicle Presets
             </h3>
             <PresetSelector onSelectVehicle={handleLoadVehiclePreset} />
           </div>
-          {/* How It Works Component */}
-          <div className="premium-card-wrapper" style={{ padding: '16px' }}>
+          {/* HOW IT WORKS (Narrow column on desktop, last on mobile) */}
+          <div className="premium-card-wrapper howitworks-item" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               ℹ️ How It Works
             </h3>
