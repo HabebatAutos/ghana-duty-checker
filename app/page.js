@@ -460,8 +460,8 @@ export default function Home() {
         }
         @media (min-width: 1200px) {
           .app-container-grid {
-            /* Quick Presets on left (320px), Main Calculator center stage (minmax(0, 1fr)), How It Works on right (280px) */
-            grid-template-columns: 320px minmax(0, 1fr) 280px;
+            /* Quick Presets left (260px), Main Calculator center stage (wider, 1.8fr), How It Works right (260px) */
+            grid-template-columns: 260px minmax(0, 1.8fr) 260px;
             gap: 24px;
             padding: 0 24px;
           }
