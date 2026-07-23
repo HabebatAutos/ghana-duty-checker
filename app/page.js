@@ -1,12 +1,10 @@
 'use client'
-
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTokens } from './Context/TokenContext'
 import PresetSelector from './components/PresetSelector'
 import PricingModal from './components/PricingModal'
-
 const CONTINENT_ORIGIN_GROUPS = [
   {
     continent: 'North America',
@@ -34,7 +32,6 @@ const CONTINENT_ORIGIN_GROUPS = [
     ]
   }
 ];
-
 function getOriginCode(originValue) {
   for (const group of CONTINENT_ORIGIN_GROUPS) {
     const found = group.countries.find(c => c.value === originValue);
@@ -42,7 +39,6 @@ function getOriginCode(originValue) {
   }
   return 'US';
 }
-
 function findContinentForCountry(countryValue) {
   for (const group of CONTINENT_ORIGIN_GROUPS) {
     if (group.countries.some(c => c.value === countryValue)) {
@@ -51,15 +47,12 @@ function findContinentForCountry(countryValue) {
   }
   return 'North America';
 }
-
 function fmtGhs(n) {
   return 'GHC ' + parseFloat(n || 0).toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
 function fmtUsd(n) {
   return '$' + parseFloat(n || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
-
 function normaliseBodyType(nhtsa) {
   if (!nhtsa) return 'Sedan';
   const b = nhtsa.toLowerCase();
@@ -72,10 +65,8 @@ function normaliseBodyType(nhtsa) {
   if (b.includes('electric')) return 'Electric Vehicle (EV)';
   return 'Sedan';
 }
-
 export default function Home() {
   const { tokens, spendToken } = useTokens()
-
   const [mode, setMode] = useState('free');
   const [activeContinent, setActiveContinent] = useState('North America');
   const [origin, setOrigin] = useState('USA');
@@ -100,7 +91,6 @@ export default function Home() {
   const [lineupLoading, setLineupLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [pdfLoading, setPdfLoading] = useState(false);
-
   // INTERACTIVE POPUP MODAL HOOK STATES
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -110,19 +100,15 @@ export default function Home() {
   const [leadForm, setLeadForm] = useState({ name: '', phone: '', email: '', notes: '' });
   const [clearingAgentLeadSent, setClearingAgentLeadSent] = useState(false);
   const [inspectionLeadSent, setInspectionLeadSent] = useState(false);
-
   async function fetchLineupForFields(targetFields, targetOrigin, allowAIFallback) {
     if (!targetFields.year || !targetFields.make || !targetFields.model) return;
-
     setLineupLoading(true);
     setCalcError('');
     setResult(null);
     setMasterLineup([]);
     setDropdownTrims([]);
     setLineupMeta({ isFallback: false, availableOrigins: [] });
-
     const originCode = getOriginCode(targetOrigin);
-
     try {
       const res = await fetch('/api/calculate', {
         method: 'POST',
@@ -170,18 +156,15 @@ export default function Home() {
       setLineupLoading(false);
     }
   }
-
   function handleSelectOrigin(newOrigin) {
     setOrigin(newOrigin);
     setResult(null);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-
     if (fields.year && fields.make && fields.model) {
       fetchLineupForFields(fields, newOrigin, false);
     }
   }
-
   function handleLoadVehiclePreset(payload) {
     setMode('free');
     const newFields = {
@@ -206,10 +189,8 @@ export default function Home() {
     setDropdownTrims([]);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-
     fetchLineupForFields(newFields, targetOrigin, false);
   }
-
   function handleManualCalculateTrigger() {
     if (!fields.year || !fields.make || !fields.model) {
       setCalcError('Please enter the Year, Make, and Model of the vehicle.');
@@ -220,7 +201,6 @@ export default function Home() {
     setInspectionLeadSent(false);
     fetchLineupForFields(fields, origin, true);
   }
-
   async function decodeVin() {
     const v = vin.trim().toUpperCase();
     if (v.length !== 17) { setVinError('Please enter a full 17-character VIN (Chassis Number).'); return; }
@@ -230,7 +210,6 @@ export default function Home() {
       setIsPricingModalOpen(true);
       return;
     }
-
     setVinError('');
     setVinStatus('Searching VIN in official database...');
     setVinData(null);
@@ -252,7 +231,6 @@ export default function Home() {
       }
             
       spendToken();
-
       const v2 = data.vehicle;
       const newFields = {
         year: v2.year || '',
@@ -281,14 +259,12 @@ export default function Home() {
       setActiveContinent(findContinentForCountry(detectedOrigin));
       setVinData(v2);
       setVinStatus('');
-
       fetchLineupForFields(newFields, detectedOrigin, false);
     } catch (e) {
       setVinStatus('');
       setVinError('VIN lookup timed out. Please try again or fill in the details manually.');
     }
   }
-
   async function runFinalCalculation(selectedOption) {
     setCalcError('');
     setCalcStatus('Calculating itemized customs duty and port clearing taxes...');
@@ -333,7 +309,6 @@ export default function Home() {
       setCalcError('Connection error. Please check your network connection.');
     }
   }
-
   async function downloadPdf() {
     if (!result) return;
     setPdfLoading(true);
@@ -360,7 +335,6 @@ export default function Home() {
     }
     setPdfLoading(false);
   }
-
   function switchMode(m) {
     setMode(m);
     setResult(null);
@@ -369,19 +343,16 @@ export default function Home() {
     setCalcError('');
     if (m === 'free') setVinData(null);
   }
-
   function triggerOpenLeadModal(serviceTypeString) {
     setLeadTargetType(serviceTypeString);
     setLeadError('');
     setLeadForm({ name: '', phone: '', email: '', notes: '' });
     setIsLeadModalOpen(true);
   }
-
   async function executeLeadFormSubmission(e) {
     e.preventDefault();
     setLeadError('');
     setLeadSubmitting(true);
-
     try {
       const response = await fetch('/api/send-lead', {
         method: 'POST',
@@ -392,20 +363,17 @@ export default function Home() {
           calculationResult: result
         }),
       });
-
       const data = await response.json();
       if (!response.ok) {
         setLeadError(data.error || 'Could not send request. Please try again.');
         setLeadSubmitting(false);
         return;
       }
-
       if (leadTargetType === 'Clearing Agent Support') {
         setClearingAgentLeadSent(true);
       } else {
         setInspectionLeadSent(true);
       }
-
       setIsLeadModalOpen(false);
       alert('Request sent successfully! An agent will get in touch with you shortly.');
     } catch (err) {
@@ -414,16 +382,13 @@ export default function Home() {
       setLeadSubmitting(false);
     }
   }
-
   const displayedLineupCards = masterLineup.filter(item => {
     if (!fields.trim) return true;
     const itemTrimUpper = item.trim.toUpperCase();
     const searchTrimUpper = fields.trim.toUpperCase();
     return itemTrimUpper.includes(searchTrimUpper) || searchTrimUpper.includes(itemTrimUpper);
   });
-
   const d = result?.duties || {};
-
   return (
     <div suppressHydrationWarning>
       <style suppressHydrationWarning>{`
@@ -444,27 +409,32 @@ export default function Home() {
         .modal-overlay-blur { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; }
         .modal-inner-surface { background: #ffffff; width: 100%; max-width: 460px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); overflow: hidden; animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes modalPop { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
         /* 2-COLUMN APP CONTAINER GRID ARCHITECTURE */
         .app-container-grid {
           display: grid;
           grid-template-columns: 1fr;
           gap: 20px;
-          max-width: 1320px;
+          max-width: 1440px;
           margin: 0 auto;
           width: 100%;
           padding: 0 16px;
           box-sizing: border-box;
         }
+        /* Column ordering: on mobile the sidebar (presets) stacks first,
+           on desktop the calculator takes the wide track and the sidebar
+           takes the fixed narrow track, matching the sketch layout. */
+        .sidebar-column { order: 1; }
+        .main-column { order: 2; }
         @media (min-width: 1024px) {
           .app-container-grid {
-            /* Left Column: Calculator form & Results (wider 1fr), Right Column: Presets & How It Works (320px) */
-            grid-template-columns: minmax(0, 1fr) 320px;
+            /* Left Column: Calculator form & Results (wider stage, 1.8fr), Right Column: Quick Presets & How It Works (fixed 380px) */
+            grid-template-columns: minmax(0, 1.8fr) 380px;
             gap: 28px;
             padding: 0 24px;
           }
+          .main-column { order: 1; }
+          .sidebar-column { order: 2; }
         }
-
         /* FORM GRIDS RESPONSIVE */
         .responsive-form-grid {
           display: grid;
@@ -477,7 +447,6 @@ export default function Home() {
             grid-template-columns: 1fr 1fr;
           }
         }
-
         /* METRICS GRID RESPONSIVE */
         .metrics-grid {
           display: grid;
@@ -490,7 +459,6 @@ export default function Home() {
             grid-template-columns: 1fr 1fr 1fr;
           }
         }
-
         /* MARKETPLACE & CARDS GRIDS */
         .responsive-two-cols {
           display: grid;
@@ -503,13 +471,11 @@ export default function Home() {
           }
         }
       `}</style>
-
       {/* BACKGROUND IMAGE & OVERLAY */}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -2, overflow: 'hidden', backgroundColor: '#090d16' }}>
         <Image src="/bg-hero.jpg" alt="Tema Harbor Terminal Background" fill priority quality={95} style={{ objectFit: 'cover' }} />
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.20) 0%, rgba(15, 23, 42, 0.40) 100%)' }} />
       </div>
-
       <div className="hero" style={{ background: 'linear-gradient(135deg, #05643c, #047857)', padding: '32px 16px', color: '#ffffff', textAlign: 'center', marginBottom: '24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         
         {/* HERO BADGE CONTAINER */}
@@ -522,7 +488,6 @@ export default function Home() {
           />
           <span style={{ fontSize: '18px', fontWeight: '900', letterSpacing: '0.06em', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>GHANADUTY</span>
         </div>
-
         <h1 style={{ margin: '0 0 6px 0', fontSize: 'clamp(24px, 5vw, 32px)', fontWeight: '800', letterSpacing: '-0.025em', textAlign: 'center', width: '100%' }}>
           Ghana Vehicle Import Duty Calculator
         </h1>
@@ -538,11 +503,10 @@ export default function Home() {
           ))}
         </div>
       </div>
-
       <div className="app-container-grid">
         
-        {/* COLUMN 1: MAIN CALCULATOR FORM & RESULTS (Left Stage) */}
-        <div className="page-content" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* COLUMN 1: MAIN CALCULATOR FORM & RESULTS (Wide column on desktop) */}
+        <div className="page-content main-column" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div className="premium-card-wrapper">
             <div className="card-body" style={{ padding: '20px' }}>
               
@@ -572,7 +536,6 @@ export default function Home() {
                   </span>
                 </button>
               </div>
-
               {mode === 'premium' && (
                 <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '20px', boxSizing: 'border-box' }}>
                   <div style={{ fontSize: '14px', fontWeight: '600', color: '#1e293b', marginBottom: '4px' }}>Automatic VIN Search</div>
@@ -603,13 +566,11 @@ export default function Home() {
                   </div>
                 </div>
               )}
-
               {mode === 'free' && (
                 <div style={{ padding: '12px 16px', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0', color: '#166534', fontSize: '12px', fontWeight: '500', marginBottom: '20px', lineHeight: '1.4' }}>
                   💡 <strong>Free Mode Active:</strong> Select a car from the quick presets or type your car details below to calculate duty instantly for free.
                 </div>
               )}
-
               <div className="responsive-form-grid">
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Year of Manufacture *</label>
@@ -623,7 +584,6 @@ export default function Home() {
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Model *</label>
                   <input className="form-input premium-input-field" type="text" placeholder="e.g. Sonata, RAV4" value={fields.model} onChange={e => setFields(p => ({ ...p, model: e.target.value }))} disabled={mode === 'premium'} style={{ padding: '10px 12px' }} />
                 </div>
-
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Trim Variant (Optional)</label>
                   <input 
@@ -641,7 +601,6 @@ export default function Home() {
                     ))}
                   </datalist>
                 </div>
-
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Engine Capacity Size</label>
                   <input className="form-input premium-input-field" type="text" placeholder="Optional — e.g. 2.0L" value={fields.engine} onChange={e => setFields(p => ({ ...p, engine: e.target.value }))} style={{ padding: '10px 12px' }} />
@@ -657,7 +616,6 @@ export default function Home() {
                   </select>
                 </div>
               </div>
-
               <div className="responsive-form-grid" style={{ marginBottom: '16px' }}>
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Customs Base Price / MSRP (USD)</label>
@@ -674,7 +632,6 @@ export default function Home() {
                   <input className="form-input premium-input-field" type="number" value={freight} onChange={e => setFreight(e.target.value)} style={{ padding: '10px 12px' }} />
                 </div>
               </div>
-
               {/* REACTIVE CONTINENT & COUNTRY ORIGIN SELECTOR */}
               <div className="form-group full" style={{ marginTop: 16 }}>
                 <label className="form-label" style={{ fontWeight: '700', color: '#1e293b', marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px', fontSize: '12px' }}>
@@ -708,7 +665,6 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
-
                 {/* Tier 2: Country Selector Pills */}
                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', padding: '10px', background: '#f1f5f9', borderRadius: '10px' }}>
                   {CONTINENT_ORIGIN_GROUPS.find(g => g.continent === activeContinent)?.countries.map(c => (
@@ -733,7 +689,6 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-
               <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
                 <button className="calc-btn" style={{ flex: 1, borderRadius: '8px', padding: '12px', fontSize: '14px', fontWeight: '700' }} onClick={handleManualCalculateTrigger}>
                   Fetch Trims & Calculate Duty
@@ -743,7 +698,6 @@ export default function Home() {
               {calcError && <div className="error-msg" style={{ marginTop: '10px', fontSize: '12px', color: '#dc2626' }}>{calcError}</div>}
             </div>
           </div>
-
           {lineupLoading && !result && (
             <div className="premium-card-wrapper" style={{ padding: '30px', textAlign: 'center', color: '#4b5563' }}>
               <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #05643c', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: '12px' }} />
@@ -752,7 +706,6 @@ export default function Home() {
               </p>
             </div>
           )}
-
           {displayedLineupCards.length > 0 && !result && !lineupLoading && (
             <div className="premium-card-wrapper" style={{ padding: '20px' }}>
               
@@ -775,7 +728,6 @@ export default function Home() {
                   </p>
                 </div>
               )}
-
               <div className="responsive-two-cols">
                 {displayedLineupCards.map((opt, idx) => (
                   <div
@@ -802,14 +754,12 @@ export default function Home() {
               </div>
             </div>
           )}
-
           {result && (
             <div className="premium-card-wrapper result-card" style={{ padding: '20px' }}>
               <div className="result-header">
                 <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', color: '#0f172a' }}>{result.vehicle_label}</h3>
                 <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: '#64748b' }}>Customs Exchange Rate: {result.exchange_label} — Tema / Takoradi Port</p>
               </div>
-
               <div className="metrics-grid">
                 <div className="metric-cell" style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '500' }}>CIF Value</div>
@@ -827,7 +777,6 @@ export default function Home() {
                   <div style={{ fontSize: '10px', color: '#94a3b8' }}>Total budget needed</div>
                 </div>
               </div>
-
               {result.vehicle_age >= 11 && (
                 <div className="overage-warning-box" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#fff9e6', borderLeft: '4px solid #d97706', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
                   <span style={{ fontSize: '16px' }}>⚠️</span>
@@ -839,7 +788,6 @@ export default function Home() {
                   </div>
                 </div>
               )}
-
               <div className="report-section-title">Section 1 — Customs CIF Value Breakdown</div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="report-table">
@@ -873,7 +821,6 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
-
               <div className="report-section-title">Section 2 — Itemized Port Taxes & Duties (GRA Act 891)</div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="report-table">
@@ -910,7 +857,6 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
-
               <div className="report-section-title">💼 Need Help Clearing Your Car?</div>
               <div className="responsive-two-cols" style={{ marginTop: '12px' }}>
                 
@@ -933,7 +879,6 @@ export default function Home() {
                     {clearingAgentLeadSent ? '✓ Request Submitted' : 'Connect with Clearing Agents'}
                   </button>
                 </div>
-
                 <div className="marketplace-card">
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -953,9 +898,7 @@ export default function Home() {
                     {inspectionLeadSent ? '✓ Request Submitted' : 'Request Inspection & Review'}
                   </button>
                 </div>
-
               </div>
-
               <div className="report-section-title">Section 3 — Total Estimated Investment</div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="report-table">
@@ -978,11 +921,9 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
-
               <div className="disclaimer-box" style={{ background: '#fafafa', border: '1px solid #e2e8f0', padding: '12px', fontSize: '11px', color: '#64748b', borderRadius: '8px', marginTop: '16px', lineHeight: '1.4' }}>
                 <strong>Important Notice:</strong> Calculations are based on the Ghana Revenue Authority Customs Act 2015 (Act 891). Figures shown are estimates for planning purposes.
               </div>
-
               <div style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap' }}>
                 <button className="download-btn" style={{ flex: '1 1 180px', background: '#05643c', color: '#ffffff', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '600', border: 'none', cursor: 'pointer' }} onClick={downloadPdf} disabled={pdfLoading}>
                   {pdfLoading ? 'Preparing PDF Report...' : 'Download Official PDF Report'}
@@ -994,9 +935,8 @@ export default function Home() {
             </div>
           )}
         </div>
-
-        {/* COLUMN 2: SIDEBAR (Quick Presets & How It Works on the Right Stack) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* COLUMN 2: SIDEBAR (Quick Presets & How It Works, narrow column on desktop) -> Appears FIRST on mobile */}
+        <div className="sidebar-column" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
           {/* Quick Vehicle Presets Component */}
           <div className="premium-card-wrapper" style={{ padding: '16px' }}>
@@ -1005,7 +945,6 @@ export default function Home() {
             </h3>
             <PresetSelector onSelectVehicle={handleLoadVehiclePreset} />
           </div>
-
           {/* How It Works Component */}
           <div className="premium-card-wrapper" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -1030,14 +969,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
-
       {/* PRICING MODAL COMPONENT */}
       <PricingModal isOpen={isPricingModalOpen} onClose={() => setIsPricingModalOpen(false)} />
-
       {/* LEAD GENERATION ASSISTANCE MODAL */}
       {isLeadModalOpen && (
         <div className="modal-overlay-blur">
@@ -1056,7 +991,6 @@ export default function Home() {
                 ✕
               </button>
             </div>
-
             <form onSubmit={executeLeadFormSubmission} style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Your Full Name *</label>
@@ -1070,7 +1004,6 @@ export default function Home() {
                   style={{ padding: '10px', fontSize: '13px' }}
                 />
               </div>
-
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Phone Number (WhatsApp Active) *</label>
                 <input 
@@ -1083,7 +1016,6 @@ export default function Home() {
                   style={{ padding: '10px', fontSize: '13px' }}
                 />
               </div>
-
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Email Address *</label>
                 <input 
@@ -1096,7 +1028,6 @@ export default function Home() {
                   style={{ padding: '10px', fontSize: '13px' }}
                 />
               </div>
-
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Special Instructions or Questions (Optional)</label>
                 <textarea 
@@ -1108,13 +1039,11 @@ export default function Home() {
                   style={{ padding: '10px', fontSize: '13px', resize: 'vertical', fontFamily: 'inherit' }}
                 />
               </div>
-
               {leadError && (
                 <div style={{ color: '#dc2626', fontSize: '12px', fontWeight: '600', marginTop: '2px' }}>
                   ⚠️ {leadError}
                 </div>
               )}
-
               <div style={{ display: 'flex', gap: '10px', marginTop: '6px', justifyContent: 'flex-end' }}>
                 <button 
                   type="button"
@@ -1135,7 +1064,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
       <footer className="footer" style={{ marginTop: '48px', background: 'rgba(15, 23, 42, 0.95)', padding: '24px 20px', color: '#cbd5e1', textAlign: 'center' }}>
         <p style={{ margin: '0 0 6px 0', fontSize: '13px', fontWeight: '500' }}>© 2026 GhanaDuty • Ghana Vehicle Import Duty Calculator</p>
         <p style={{ margin: '0', fontSize: '11px', opacity: 0.8, lineHeight: '1.4' }}>Calculations based on Customs Act 2015 (Act 891) • Estimates for planning purposes only</p>
