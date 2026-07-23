@@ -24,6 +24,37 @@ export async function POST(req) {
       )
     }
 
+    // 0. IDEMPOTENCY CHECK: Ensure this exact reference hasn't already been processed
+    const { data: existingLog, error: logCheckError } = await supabaseAdmin
+      .from('payment_logs')
+      .select('*')
+      .eq('reference', reference)
+      .maybeSingle()
+
+    if (logCheckError) {
+      console.error('[VERIFY-PAYMENT] Error checking payment logs:', logCheckError)
+    }
+
+    if (existingLog) {
+      console.warn(`[VERIFY-PAYMENT] Duplicate verification attempt for already processed reference: ${reference}`)
+      
+      // Fetch current wallet state to safely return to client without re-crediting
+      const { data: currentWallet } = await supabaseAdmin
+        .from('user_wallets')
+        .select('*')
+        .eq('email', existingLog.email)
+        .maybeSingle()
+
+      return NextResponse.json({
+        success: true,
+        message: 'Transaction already verified and processed.',
+        email: currentWallet?.email || existingLog.email,
+        tokens: currentWallet?.tokens || 0,
+        isPro: currentWallet?.is_pro || false,
+        proExpiresAt: currentWallet?.pro_expires_at || null,
+      })
+    }
+
     // 1. Verify transaction status directly with Paystack API
     const paystackRes = await fetch(
       `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
@@ -77,21 +108,34 @@ export async function POST(req) {
       throw new Error('Failed to query user wallet.')
     }
 
-    let newTokens = wallet ? wallet.tokens : 0
+    let currentTokens = wallet ? wallet.tokens : 0
     let newIsPro = wallet ? wallet.is_pro : false
     let newProExpiresAt = wallet ? wallet.pro_expires_at : null
 
-    // 5. Calculate new balance or subscription state
+    // 5. Calculate new balance or subscription state accurately
+    let tokensPurchased = 10 
+    
+    if (paidAmountGHS >= 50) {
+      tokensPurchased = 30; 
+    } else if (paidAmountGHS >= 30) {
+      tokensPurchased = 20;
+    } else {
+      tokensPurchased = 10;
+    }
+
+    let newTokens = currentTokens
     if (effectivePlan === 'subscription' || effectivePlan === 'pro') {
       newIsPro = true
       const expiryDate = new Date()
       expiryDate.setDate(expiryDate.getDate() + 30)
       newProExpiresAt = expiryDate.toISOString()
     } else {
-      newTokens += 10
+      newTokens = currentTokens + tokensPurchased
     }
 
     console.log(`[VERIFY-PAYMENT] Saving update for ${customerEmail}:`, {
+      currentTokens,
+      tokensPurchased,
       newTokens,
       newIsPro,
       newProExpiresAt,
@@ -118,9 +162,23 @@ export async function POST(req) {
       throw new Error('Failed to update wallet in database.')
     }
 
+    // 7. Log this transaction reference so it can NEVER be processed twice
+    const { error: insertLogErr } = await supabaseAdmin
+      .from('payment_logs')
+      .insert({
+        reference: reference,
+        email: customerEmail,
+        amount: paidAmountGHS,
+        tokens_granted: effectivePlan === 'subscription' ? 0 : tokensPurchased
+      })
+
+    if (insertLogErr) {
+      console.error('[VERIFY-PAYMENT] Warning: Failed to write payment log entry:', insertLogErr)
+    }
+
     console.log('[VERIFY-PAYMENT] Database write successfully completed:', updatedWallet)
 
-    // 7. Return structured payload for client TokenContext synchronization
+    // 8. Return structured payload for client TokenContext synchronization
     return NextResponse.json({
       success: true,
       email: updatedWallet.email,
