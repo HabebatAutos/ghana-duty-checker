@@ -204,7 +204,7 @@ export default function Home() {
   async function decodeVin() {
     const v = vin.trim().toUpperCase();
     if (v.length !== 17) { setVinError('Please enter a full 17-character VIN (Chassis Number).'); return; }
-    
+
     if (tokens < 1) {
       setVinError('You have no tokens left. Please buy tokens to use automatic VIN lookup.');
       setIsPricingModalOpen(true);
@@ -218,19 +218,30 @@ export default function Home() {
     setDropdownTrims([]);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-         
+
     try {
       const res = await fetch(`/api/decode-vin?vin=${v}`);
       const data = await res.json();
-            
+
       if (!res.ok) {
         setVinStatus('');
         setMode('free');
         setVinError('Could not auto-fill details for this VIN. Please enter car details manually.');
         return;
       }
-            
-      spendToken();
+
+      // spendToken is now async and server-backed (see TokenContext).
+      // Must await it and check the result — proceeding on a rejected
+      // spend would let a lookup through without actually deducting
+      // a token from the real database balance.
+      const spendOk = await spendToken();
+      if (!spendOk) {
+        setVinStatus('');
+        setVinError('Could not process token payment. Please try again or buy more tokens.');
+        setIsPricingModalOpen(true);
+        return;
+      }
+
       const v2 = data.vehicle;
       const newFields = {
         year: v2.year || '',
