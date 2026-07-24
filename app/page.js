@@ -338,7 +338,7 @@ export default function Home() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `CediDuty-Report-${result.vehicle_label?.replace(/\s+/g, '-') || 'Statement'}.pdf`;
+      a.download = `CEDIDUTY-Report-${result.vehicle_label?.replace(/\s+/g, '-') || 'Statement'}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
     } catch {
@@ -504,11 +504,11 @@ export default function Home() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', background: 'rgba(255, 255, 255, 0.12)', padding: '8px 18px', borderRadius: '50px', border: '1px solid rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
           <img 
             src="/logo.png" 
-            alt="CediDuty Official Logo" 
+            alt="CEDIDUTY Official Logo" 
             style={{ width: '44px', height: '44px', borderRadius: '8px', objectFit: 'contain', boxShadow: '0 4px 10px rgba(0,0,0,0.25)' }}
             onError={(e) => { console.error("Logo failed to load."); }}
           />
-          <span style={{ fontSize: '18px', fontWeight: '900', letterSpacing: '0.06em', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>CediDUTY</span>
+          <span style={{ fontSize: '18px', fontWeight: '900', letterSpacing: '0.06em', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>CEDIDUTY</span>
         </div>
         <h1 style={{ margin: '0 0 6px 0', fontSize: 'clamp(24px, 5vw, 32px)', fontWeight: '800', letterSpacing: '-0.025em', textAlign: 'center', width: '100%' }}>
           Ghana Vehicle Import Duty Calculator
@@ -1088,7 +1088,7 @@ export default function Home() {
         </div>
       )}
       <footer className="footer" style={{ marginTop: '48px', background: 'rgba(15, 23, 42, 0.95)', padding: '24px 20px', color: '#cbd5e1', textAlign: 'center' }}>
-        <p style={{ margin: '0 0 6px 0', fontSize: '13px', fontWeight: '500' }}>© 2026 CediDuty • Ghana Vehicle Import Duty Calculator</p>
+        <p style={{ margin: '0 0 6px 0', fontSize: '13px', fontWeight: '500' }}>© 2026 CEDIDUTY • Ghana Vehicle Import Duty Calculator</p>
         <p style={{ margin: '0', fontSize: '11px', opacity: 0.8, lineHeight: '1.4' }}>Calculations based on Customs Act 2015 (Act 891) • Estimates for planning purposes only</p>
       </footer>
     </div>
