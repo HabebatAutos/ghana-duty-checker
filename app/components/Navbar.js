@@ -60,7 +60,7 @@ export default function Navbar() {
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
           <Image 
             src="/logo.png" 
-            alt="CediDuty Official Navigation Logo" 
+            alt="CEDIDUTY Official Navigation Logo" 
             width={48} 
             height={48}
             priority
@@ -70,7 +70,7 @@ export default function Navbar() {
             }} 
           />
           <span className="navbar-name" style={{ color: '#111827', fontWeight: '800', fontSize: '18px', letterSpacing: '-0.02em' }}>
-            CediDuty
+            CEDIDUTY
           </span>
         </Link>
 
