@@ -505,12 +505,12 @@ export default function Home() {
           <Image 
             src="/logo.png" 
             alt="CEDIDUTY Official Logo" 
-            width={56} 
-            height={56}
+            width={65} 
+            height={65}
             priority
             style={{ 
-              width: '56px', 
-              height: '56px', 
+              width: '65px', 
+              height: '65px', 
               objectFit: 'contain', 
               filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.25))',
               imageRendering: '-webkit-optimize-contrast'
