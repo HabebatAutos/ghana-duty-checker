@@ -125,7 +125,7 @@ export default function Navbar() {
           </div>
 
           {/* Standalone Donate CTA — sits right next to the token badge */}
-          
+          <a
             href={DONATE_URL}
             target="_blank"
             rel="noopener noreferrer"
@@ -163,7 +163,7 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu Drawer */}
       <div className={`mobile-dropdown-menu ${mobileMenuOpen ? 'open' : ''}`}>
-        
+        <a
           href={DONATE_URL}
           target="_blank"
           rel="noopener noreferrer"
