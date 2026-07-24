@@ -37,36 +37,36 @@ export async function POST(request) {
     const borderGreen = rgb(0.73, 0.97, 0.82); // #bbf7d0
     const borderLight = rgb(0.80, 0.84, 0.88); // #cbd5e1
 
-    // --- LOAD & EMBED THE PNG LOGO IMAGE ---
-    let embeddedLogo;
-    try {
-      const logoPath = path.join(process.cwd(), 'public', 'logo.png');
-      const logoBytes = fs.readFileSync(logoPath);
-      embeddedLogo = await pdfDoc.embedPng(logoBytes);
-    } catch (imageError) {
-      console.warn('[PDF GENERATION WARNING]: Logo file not found at public/logo.png, skipping asset embedding.', imageError);
-    }
+   // --- LOAD & EMBED THE PNG LOGO IMAGE ---
+  let embeddedLogo;
+  try {
+    const logoPath = path.join(process.cwd(), 'public', 'logo.png');
+    const logoBytes = fs.readFileSync(logoPath);
+    embeddedLogo = await pdfDoc.embedPng(logoBytes);
+  } catch (imageError) {
+    console.warn('[PDF GENERATION WARNING]: Logo file not found at public/logo.png, skipping asset embedding.', imageError);
+  }
 
-    // --- BRANDED TOP HEADER BANNER BAR ---
-    page.drawRectangle({ x: 0, y: 841.89 - 105, width: 595.28, height: 105, color: pGreen });
-    
-    // BRAND ASSET: Draw the logo asset or fallback safely if file read fails
-    if (embeddedLogo) {
-      page.drawImage(embeddedLogo, {
-        x: 45,
-        y: 841.89 - 76.5, // Centers the logo vertically inside the 105px banner
-        width: 48,
-        height: 48,
-      });
-    } else {
-      page.drawRectangle({ x: 45, y: 841.89 - 65, width: 24, height: 24, color: rgb(1,1,1) });
-      page.drawText('GD', { x: 50, y: 841.89 - 58, size: 12, font: fontBold, color: pGreen });
-    }
+  // --- BRANDED TOP HEADER BANNER BAR ---
+  page.drawRectangle({ x: 0, y: 841.89 - 105, width: 595.28, height: 105, color: pGreen });
+  
+  // BRAND ASSET: Draw the logo asset (enlarged to 64x64 and cleanly centered)
+  if (embeddedLogo) {
+    page.drawImage(embeddedLogo, {
+      x: 45,
+      y: 841.89 - 84.5, // Perfectly centers the 64px logo inside the 105px banner area
+      width: 64,
+      height: 64,
+    });
+  } else {
+    page.drawRectangle({ x: 45, y: 841.89 - 65, width: 24, height: 24, color: rgb(1,1,1) });
+    page.drawText('CD', { x: 50, y: 841.89 - 58, size: 12, font: fontBold, color: pGreen });
+  }
 
-    // Header text coordinates isolated safely from the right badge box to prevent spatial collision
-    const titleXCoord = embeddedLogo ? 108 : 79;
-    page.drawText('GHANA VEHICLE IMPORT DUTY ADVISOR', { x: titleXCoord, y: 841.89 - 46, size: 13.5, font: fontBold, color: rgb(1,1,1), letterSpacing: -0.01 });
-    page.drawText('Statutory Simulation Ledger • Compliant with Customs Act 2015 (Act 891)', { x: titleXCoord, y: 841.89 - 62, size: 9, font: fontReg, color: rgb(1,1,1), opacity: 0.85 });
+  // Header text coordinates shifted further right (124px) to accommodate the larger 64px logo width safely
+  const titleXCoord = embeddedLogo ? 124 : 79;
+  page.drawText('GHANA VEHICLE IMPORT DUTY ADVISOR', { x: titleXCoord, y: 841.89 - 46, size: 13.5, font: fontBold, color: rgb(1,1,1), letterSpacing: -0.01 });
+  page.drawText('Statutory Simulation Ledger • Compliant with Customs Act 2015 (Act 891)', { x: titleXCoord, y: 841.89 - 62, size: 9, font: fontReg, color: rgb(1,1,1), opacity: 0.85 });
 
     // --- WATERMARK ADVISORY BANNER BLOCK (Shifted right to prevent layout overlapping) ---
     page.drawRectangle({ x: 440, y: 841.89 - 72, width: 110, height: 40, borderColor: rgb(1,1,1), borderWidth: 1.5, opacity: 0.4 });
