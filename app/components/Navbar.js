@@ -5,6 +5,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useTokens } from '../Context/TokenContext'
 
+// TODO: replace with your real donation link (Buy Me a Coffee, Paystack
+// donate page, etc.)
+const DONATE_URL = 'https://buymeacoffee.com/yourpage'
+
 export default function Navbar() {
   const { tokens, isUnlimited } = useTokens()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -28,6 +32,24 @@ export default function Navbar() {
         }
         .mobile-dropdown-menu {
           display: none;
+        }
+        .donate-navbar-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          background: #fef3c7;
+          color: #92400e;
+          border: 1px solid #fde68a;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 5px 12px;
+          border-radius: 9999px;
+          text-decoration: none;
+          white-space: nowrap;
+          transition: background 0.15s ease;
+        }
+        .donate-navbar-btn:hover {
+          background: #fde68a;
         }
 
         @media (max-width: 860px) {
@@ -74,7 +96,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* RIGHT SIDE: TOKENS + DESKTOP LINKS + HAMBURGER */}
+        {/* RIGHT SIDE: TOKENS + DONATE + DESKTOP LINKS + HAMBURGER */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           {/* Dynamic Badge Display Matrix */}
           <div className="token-status-badge" style={{ display: 'flex', alignItems: 'center' }}>
@@ -101,6 +123,16 @@ export default function Navbar() {
               </span>
             )}
           </div>
+
+          {/* Standalone Donate CTA — sits right next to the token badge */}
+          
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="donate-navbar-btn"
+          >
+            ❤️ Donate
+          </a>
 
           {/* Desktop Navigation Links */}
           <div className="navbar-desktop-links">
@@ -131,6 +163,15 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu Drawer */}
       <div className={`mobile-dropdown-menu ${mobileMenuOpen ? 'open' : ''}`}>
+        
+          href={DONATE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setMobileMenuOpen(false)}
+          style={{ textDecoration: 'none', color: '#92400e', fontSize: '14px', fontWeight: '700', padding: '6px 0', borderBottom: '1px solid #f1f5f9' }}
+        >
+          ❤️ Donate
+        </a>
         <Link 
           href="/how-it-works" 
           onClick={() => setMobileMenuOpen(false)}
