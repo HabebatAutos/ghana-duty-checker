@@ -501,22 +501,22 @@ export default function Home() {
       <div className="hero" style={{ background: 'linear-gradient(135deg, #05643c, #047857)', padding: '32px 16px', color: '#ffffff', textAlign: 'center', marginBottom: '24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         
         {/* HERO BADGE CONTAINER */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px', background: 'rgba(255, 255, 255, 0.12)', padding: '10px 24px', borderRadius: '50px', border: '1px solid rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px', background: 'rgba(255, 255, 255, 0.12)', padding: '12px 28px', borderRadius: '50px', border: '1px solid rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
           <Image 
             src="/logo.png" 
             alt="CEDIDUTY Official Logo" 
-            width={38} 
-            height={38}
+            width={52} 
+            height={52}
             priority
             style={{ 
-              width: '38px', 
-              height: '38px', 
+              width: '52px', 
+              height: '52px', 
               objectFit: 'contain', 
-              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.25))',
+              filter: 'drop-shadow(0 2px 5px rgba(0,0,0,0.3))',
               imageRendering: '-webkit-optimize-contrast'
             }} 
           />
-          <span style={{ fontSize: '18px', fontWeight: '900', letterSpacing: '0.06em', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>CEDIDUTY</span>
+          <span style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '0.06em', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>CEDIDUTY</span>
         </div>
         <h1 style={{ margin: '0 0 6px 0', fontSize: 'clamp(24px, 5vw, 32px)', fontWeight: '800', letterSpacing: '-0.025em', textAlign: 'center', width: '100%' }}>
           Ghana Vehicle Import Duty Calculator
