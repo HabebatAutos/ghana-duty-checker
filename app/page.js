@@ -998,6 +998,19 @@ export default function Home() {
                 <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>4. Connect with Agents</strong>
                 Connect with licensed clearing agents or request a physical car inspection at Tema or Takoradi port.
               </div>
+<div>
+  <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>Need Help?</strong>
+  If you're having trouble computing your duty or navigating the site, message us directly on WhatsApp at{' '}
+  
+    href="https://wa.me/447411545196"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{ color: '#05643c', fontWeight: '700', textDecoration: 'underline' }}
+  >
+    +44 7411 545196
+  </a>{' '}
+  for direct assistance.
+</div>
             </div>
           </div>
         </div>
