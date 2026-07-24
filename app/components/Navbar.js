@@ -4,14 +4,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTokens } from '../Context/TokenContext'
-
-// TODO: replace with your real donation link (Buy Me a Coffee, Paystack
-// donate page, etc.)
-const DONATE_URL = 'https://buymeacoffee.com/yourpage'
+import DonateModal from './DonateModal'
 
 export default function Navbar() {
   const { tokens, isUnlimited } = useTokens()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [donateModalOpen, setDonateModalOpen] = useState(false)
 
   return (
     <>
@@ -44,7 +42,7 @@ export default function Navbar() {
           font-weight: 700;
           padding: 5px 12px;
           border-radius: 9999px;
-          text-decoration: none;
+          cursor: pointer;
           white-space: nowrap;
           transition: background 0.15s ease;
         }
@@ -124,15 +122,13 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Standalone Donate CTA — sits right next to the token badge */}
-          <a
-            href={DONATE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Standalone Donate CTA — opens the in-site Paystack donate modal */}
+          <button
+            onClick={() => setDonateModalOpen(true)}
             className="donate-navbar-btn"
           >
             ❤️ Donate
-          </a>
+          </button>
 
           {/* Desktop Navigation Links */}
           <div className="navbar-desktop-links">
@@ -163,15 +159,12 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu Drawer */}
       <div className={`mobile-dropdown-menu ${mobileMenuOpen ? 'open' : ''}`}>
-        <a
-          href={DONATE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => setMobileMenuOpen(false)}
-          style={{ textDecoration: 'none', color: '#92400e', fontSize: '14px', fontWeight: '700', padding: '6px 0', borderBottom: '1px solid #f1f5f9' }}
+        <button
+          onClick={() => { setMobileMenuOpen(false); setDonateModalOpen(true) }}
+          style={{ background: 'none', border: 'none', textAlign: 'left', textDecoration: 'none', color: '#92400e', fontSize: '14px', fontWeight: '700', padding: '6px 0', borderBottom: '1px solid #f1f5f9', cursor: 'pointer' }}
         >
           ❤️ Donate
-        </a>
+        </button>
         <Link 
           href="/how-it-works" 
           onClick={() => setMobileMenuOpen(false)}
@@ -201,6 +194,8 @@ export default function Navbar() {
           FAQ
         </Link>
       </div>
+
+      <DonateModal isOpen={donateModalOpen} onClose={() => setDonateModalOpen(false)} />
     </>
   )
 }
