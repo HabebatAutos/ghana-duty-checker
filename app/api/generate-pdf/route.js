@@ -207,7 +207,7 @@ export async function POST(request) {
     page.drawText(txt4, { x: 52, y: y + 7, size: 7, font: fontReg, color: pMuted });
 
     // --- FOOTER BRAND STAMP ---
-    const footerTxt = '© 2026 GhanaDuty Platform Registry Engine • Generated via Local Workspace Deployment Node';
+    const footerTxt = '© 2026 CediDuty Platform Registry Engine • Generated via Local Workspace Deployment Node';
     page.drawText(footerTxt, {
       x: 297.64 - fontReg.widthOfTextAtSize(footerTxt, 7.5) / 2,
       y: 20,
@@ -221,7 +221,7 @@ export async function POST(request) {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename=GhanaDuty-Report.pdf',
+        'Content-Disposition': 'attachment; filename=CediDuty-Report.pdf',
         'Content-Length': pdfBytes.length,
       },
     });

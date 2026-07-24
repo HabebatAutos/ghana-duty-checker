@@ -725,7 +725,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
 
 async function fetchRates(origin) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cediduty.com';
     const res = await fetch(`${baseUrl}/api/exchange-rate?origin=${encodeURIComponent(origin)}`);
     if (!res.ok) throw new Error('FX endpoint failed');
     return await res.json();

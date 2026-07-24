@@ -5,9 +5,9 @@ import path from 'path'
 
 // High-fidelity file mapping dictionary matching your exact filenames
 const MODEL_FILE_MAP = {
-  'toyota-vitz': 'Toyota_Vitz.json',
-  'toyota-corolla': 'Corolla.json',
-  'honda-crv': 'HondaCRv_Dataset.json',
+  'toyota-vitz': 'toyota_vitz.json',
+  'toyota-corolla': 'toyota_corolla.json',
+  'honda-crv': 'honda_crv.json',
 
   // Hyundai Inventory
   'hyundai-accent': 'hyundai_accent.json',
@@ -22,13 +22,13 @@ const MODEL_FILE_MAP = {
   'honda-civic': 'Honda_Civic.json',
 
   // Toyota Inventory
-  'toyota-yaris': 'Toyota_yaris.json',
-  'toyota-landcruiserprado': 'Toyota_LandCruiserPrado.json',
-  'toyota-landcruiser': 'Toyota_LandCruiser.json',
-  'toyota-voxy': 'Toyota_Voxy.json',
-  'toyota-camry': 'Toyota_Camry.json',
-  'toyota-highlander': 'Toyota_Highlander.json',
-  'toyota-rav4': 'Toyota_RAV4.json',
+  'toyota-yaris': 'toyota_yaris.json',
+  'toyota-landcruiserprado': 'toyota_LandCruiserPrado.json',
+  'toyota-landcruiser': 'toyota_landcruiser.json',
+  'toyota-voxy': 'toyota_voxy.json',
+  'toyota-camry': 'toyota_camry.json',
+  'toyota-highlander': 'toyota_highlander.json',
+  'toyota-rav4': 'toyota_rav4.json',
 
   // Ford Inventory
   'ford-ranger': 'ford_ranger.json',

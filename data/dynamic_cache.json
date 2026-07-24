@@ -3860,5 +3860,63 @@
       }
     ],
     "cachedAt": "2026-07-22T21:04:28.882Z"
+  },
+  "2017-mercedesbenz-eclass-US-20l4cylgasoline": {
+    "lineup": [
+      {
+        "trim": "E300",
+        "body_style": "Sedan",
+        "engine": "2.0L 4-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 51900,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "E300 Luxury",
+        "body_style": "Sedan",
+        "engine": "2.0L 4-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 54700,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      },
+      {
+        "trim": "E300 Sport",
+        "body_style": "Sedan",
+        "engine": "2.0L 4-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 55600,
+        "currency": "USD",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-23T10:31:52.919Z"
+  },
+  "2017-mercedesbenz-eclass-DE-20l4cylgasoline": {
+    "lineup": [
+      {
+        "trim": "Base / Standard",
+        "body_style": "Sedan",
+        "engine": "2.0L 4-cyl Gasoline",
+        "fuel_type": "Gasoline",
+        "price": 20000,
+        "currency": "EUR",
+        "originCode": "",
+        "isFallback": false,
+        "source": "Verified Technical Specification Baseline",
+        "notes": ""
+      }
+    ],
+    "cachedAt": "2026-07-23T10:32:19.829Z"
   }
 }

@@ -2,8 +2,8 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'FAQ — GhanaDuty Ghana Vehicle Import Duty Calculator',
-  description: 'Frequently asked questions about Ghana vehicle import duty, customs calculations, depreciation rules, and using the GhanaDuty calculator.',
+  title: 'FAQ — CediDuty Ghana Vehicle Import Duty Calculator',
+  description: 'Frequently asked questions about Ghana vehicle import duty, customs calculations, depreciation rules, and using the CediDuty calculator.',
 };
 
 const faqs = [
@@ -25,7 +25,7 @@ const faqs = [
   },
   {
     q: 'Is there an age limit on vehicles I can import?',
-    a: 'Yes. Under Ghana Standards Authority regulations (GS 4510:2022), vehicles over 10 years old from the manufacturing year are prohibited from import. For example, in 2026 you cannot import a vehicle manufactured before 2016. GhanaDuty will warn you if you attempt to calculate duty on an overage vehicle.',
+    a: 'Yes. Under Ghana Standards Authority regulations (GS 4510:2022), vehicles over 10 years old from the manufacturing year are prohibited from import. For example, in 2026 you cannot import a vehicle manufactured before 2016. CediDuty will warn you if you attempt to calculate duty on an overage vehicle.',
   },
   {
     q: 'What is CIF and why does it matter?',
@@ -81,7 +81,7 @@ export default function FAQ() {
       </div>
 
       <footer className="footer">
-        <p>© 2026 GhanaDuty • Calculations based on Customs Act 2015 (Act 891)</p>
+        <p>© 2026 CediDuty • Calculations based on Customs Act 2015 (Act 891)</p>
       </footer>
     </>
   );

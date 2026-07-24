@@ -9,7 +9,7 @@ export default function AboutPage() {
       {/* Header Section */}
       <section style={{ marginBottom: '40px', textAlign: 'center' }}>
         <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#111827', marginBottom: '16px' }}>
-          About GhanaDuty
+          About CediDuty
         </h1>
         <p style={{ fontSize: '18px', lineHeight: '1.6', color: '#4b5563' }}>
           Your reliable digital assistant for transparent vehicle valuation, customs duty calculations, and port entry clearing support in Ghana.
@@ -27,7 +27,7 @@ export default function AboutPage() {
           Importing a car through Tema or Takoradi ports should be straightforward. Too often, car buyers, importers, and overseas shippers face unexpected clearance fees and confusing tax calculations when vehicles land at the harbor.
         </p>
         <p style={{ fontSize: '15px', lineHeight: '1.7', color: '#4b5563' }}>
-          GhanaDuty was built to bridge this gap. By combining official customs tariff frameworks with real-time exchange rate updates, we give you clear financial clarity before committing money to purchase or ship a vehicle.
+          CediDuty was built to bridge this gap. By combining official customs tariff frameworks with real-time exchange rate updates, we give you clear financial clarity before committing money to purchase or ship a vehicle.
         </p>
       </section>
 
@@ -52,7 +52,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      {/* Why Choose GhanaDuty */}
+      {/* Why Choose CediDuty */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#111827', marginBottom: '16px' }}>
           Why Importers Choose Us
