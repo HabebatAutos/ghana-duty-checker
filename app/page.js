@@ -230,10 +230,6 @@ export default function Home() {
         return;
       }
 
-      // spendToken is now async and server-backed (see TokenContext).
-      // Must await it and check the result — proceeding on a rejected
-      // spend would let a lookup through without actually deducting
-      // a token from the real database balance.
       const spendOk = await spendToken();
       if (!spendOk) {
         setVinStatus('');
@@ -431,9 +427,6 @@ export default function Home() {
           padding: 0 16px;
           box-sizing: border-box;
         }
-        /* Mobile: presets, then calculator, then how it works (in that order).
-           sidebar-wrap dissolves via display:contents so its two children
-           become direct grid items and can be ordered independently. */
         .sidebar-wrap { display: contents; }
         .presets-item { order: 1; }
         .calculator-item { order: 2; }
@@ -445,9 +438,6 @@ export default function Home() {
             padding: 0 24px;
             align-items: start;
           }
-          /* Desktop: calculator sits alone in the wide left column (no
-             spanning). sidebar-wrap becomes a real flex column that stacks
-             presets above how it works in the narrow right column. */
           .calculator-item { order: initial; }
           .sidebar-wrap {
             display: flex;
@@ -457,7 +447,6 @@ export default function Home() {
           .presets-item { order: initial; }
           .howitworks-item { order: initial; }
         }
-        /* FORM GRIDS RESPONSIVE */
         .responsive-form-grid {
           display: grid;
           grid-template-columns: 1fr;
@@ -469,7 +458,6 @@ export default function Home() {
             grid-template-columns: 1fr 1fr;
           }
         }
-        /* METRICS GRID RESPONSIVE */
         .metrics-grid {
           display: grid;
           grid-template-columns: 1fr;
@@ -481,7 +469,6 @@ export default function Home() {
             grid-template-columns: 1fr 1fr 1fr;
           }
         }
-        /* MARKETPLACE & CARDS GRIDS */
         .responsive-two-cols {
           display: grid;
           grid-template-columns: 1fr;
@@ -501,18 +488,18 @@ export default function Home() {
       <div className="hero" style={{ background: 'linear-gradient(135deg, #05643c, #047857)', padding: '32px 16px', color: '#ffffff', textAlign: 'center', marginBottom: '24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         
         {/* HERO LOGO & TITLE CONTAINER */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', marginBottom: '16px', background: 'rgba(255, 255, 255, 0.12)', padding: '6px 20px 6px 10px', borderRadius: '50px', border: '1px solid rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
           <Image 
             src="/logo.png" 
             alt="CEDIDUTY Official Logo" 
-            width={65} 
-            height={65}
+            width={72} 
+            height={72}
             priority
             style={{ 
-              width: '65px', 
-              height: '65px', 
+              width: '72px', 
+              height: '72px', 
               objectFit: 'contain', 
-              filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.25))',
+              filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
               imageRendering: '-webkit-optimize-contrast'
             }} 
           />
@@ -535,7 +522,7 @@ export default function Home() {
       </div>
       <div className="app-container-grid">
         
-        {/* MAIN CALCULATOR FORM & RESULTS (Wide column on desktop, middle on mobile) */}
+        {/* MAIN CALCULATOR FORM & RESULTS */}
         <div className="page-content calculator-item" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div className="premium-card-wrapper">
             <div className="card-body" style={{ padding: '20px' }}>
@@ -965,18 +952,16 @@ export default function Home() {
             </div>
           )}
         </div>
-        {/* SIDEBAR WRAP: dissolves into two independent grid items on mobile
-            (so How It Works can be ordered last), becomes a stacked flex
-            column beside the calculator on desktop. */}
+        {/* SIDEBAR WRAP */}
         <div className="sidebar-wrap">
-          {/* QUICK VEHICLE PRESETS (Narrow column on desktop, first on mobile) */}
+          {/* QUICK VEHICLE PRESETS */}
           <div className="premium-card-wrapper presets-item" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               📊 Quick Vehicle Presets
             </h3>
             <PresetSelector onSelectVehicle={handleLoadVehiclePreset} />
           </div>
-          {/* HOW IT WORKS (Narrow column on desktop, last on mobile) */}
+          {/* HOW IT WORKS */}
           <div className="premium-card-wrapper howitworks-item" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               ℹ️ How It Works
@@ -998,19 +983,19 @@ export default function Home() {
                 <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>4. Connect with Agents</strong>
                 Connect with licensed clearing agents or request a physical car inspection at Tema or Takoradi port.
               </div>
-<div>
-  <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>Need Help?</strong>
-  If you're having trouble computing your duty or navigating the site, message us directly on WhatsApp at{' '}
-  
-    href="https://wa.me/447411545196"
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{ color: '#05643c', fontWeight: '700', textDecoration: 'underline' }}
-  >
-    +44 7411 545196
-  </a>{' '}
-  for direct assistance.
-</div>
+              <div>
+                <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>Need Help?</strong>
+                If you're having trouble computing your duty or navigating the site, message us directly on WhatsApp at{' '}
+                <a 
+                  href="https://wa.me/447411545196" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ color: '#05643c', fontWeight: '700', textDecoration: 'underline' }}
+                >
+                  +44 7411 545196
+                </a>{' '}
+                for direct assistance.
+              </div>
             </div>
           </div>
         </div>
@@ -1060,7 +1045,7 @@ export default function Home() {
                   style={{ padding: '10px', fontSize: '13px' }}
                 />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Email Address *</label>
                 <input 
                   type="email" 
