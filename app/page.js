@@ -500,24 +500,23 @@ export default function Home() {
       </div>
       <div className="hero" style={{ background: 'linear-gradient(135deg, #05643c, #047857)', padding: '32px 16px', color: '#ffffff', textAlign: 'center', marginBottom: '24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         
-        {/* HERO BADGE CONTAINER */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px', background: 'rgba(255, 255, 255, 0.12)', padding: '10px 22px', borderRadius: '50px', border: '1px solid rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+        {/* HERO LOGO & TITLE CONTAINER */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <Image 
             src="/logo.png" 
             alt="CEDIDUTY Official Logo" 
-            width={64} 
-            height={64}
+            width={72} 
+            height={72}
             priority
             style={{ 
-              width: '64px', 
-              height: '64px', 
-              borderRadius: '10px', 
+              width: '72px', 
+              height: '72px', 
               objectFit: 'contain', 
-              boxShadow: '0 4px 10px rgba(0,0,0,0.25)',
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.25))',
               imageRendering: '-webkit-optimize-contrast'
             }} 
           />
-          <span style={{ fontSize: '22px', fontWeight: '900', letterSpacing: '0.06em', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>CEDIDUTY</span>
+          <span style={{ fontSize: '24px', fontWeight: '900', letterSpacing: '0.06em', color: '#ffffff', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>CEDIDUTY</span>
         </div>
         <h1 style={{ margin: '0 0 6px 0', fontSize: 'clamp(24px, 5vw, 32px)', fontWeight: '800', letterSpacing: '-0.025em', textAlign: 'center', width: '100%' }}>
           Ghana Vehicle Import Duty Calculator
