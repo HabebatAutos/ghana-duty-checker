@@ -49,7 +49,20 @@ export default function Navbar() {
         .donate-navbar-btn:hover {
           background: #fde68a;
         }
+        .navbar-logo-img {
+          width: 48px;
+          height: 48px;
+        }
+        .navbar-name {
+          font-size: 18px;
+        }
+        .token-status-badge span {
+          font-size: 11px;
+          padding: 5px 10px;
+        }
 
+        /* Tighten everything progressively as space shrinks, instead of
+           keeping full-size elements and letting them collide. */
         @media (max-width: 860px) {
           .navbar-desktop-links {
             display: none !important;
@@ -69,6 +82,50 @@ export default function Navbar() {
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
           }
         }
+
+        @media (max-width: 480px) {
+          .navbar {
+            padding: 10px 12px !important;
+          }
+          .navbar-logo-img {
+            width: 34px !important;
+            height: 34px !important;
+          }
+          .navbar-name {
+            font-size: 14px !important;
+            letter-spacing: -0.01em !important;
+          }
+          .navbar-right-group {
+            gap: 8px !important;
+          }
+          .token-status-badge span {
+            font-size: 10px !important;
+            padding: 4px 8px !important;
+          }
+          .donate-navbar-btn {
+            font-size: 10px !important;
+            padding: 4px 9px !important;
+            gap: 3px !important;
+          }
+          .navbar-hamburger {
+            font-size: 19px !important;
+            padding: 2px !important;
+          }
+        }
+
+        @media (max-width: 360px) {
+          /* Extremely narrow screens: drop the "Tokens"/"Casual" wording,
+             keep just the number, so the badge doesn't force a wrap. */
+          .token-status-badge .badge-full-label {
+            display: none;
+          }
+          .token-status-badge .badge-short-label {
+            display: inline;
+          }
+        }
+        .badge-short-label {
+          display: none;
+        }
       `}</style>
 
       <nav className="navbar" style={{
@@ -77,47 +134,52 @@ export default function Navbar() {
         position: 'sticky', top: 0, zIndex: 100, width: '100%', boxSizing: 'border-box'
       }}>
         {/* LOGO & BRAND */}
-        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
           <Image 
             src="/logo.png" 
             alt="CEDIDUTY Official Navigation Logo" 
             width={48} 
             height={48}
             priority
+            className="navbar-logo-img"
             style={{ 
               objectFit: 'contain',
-              imageRendering: '-webkit-optimize-contrast'
+              imageRendering: '-webkit-optimize-contrast',
+              flexShrink: 0
             }} 
           />
-          <span className="navbar-name" style={{ color: '#111827', fontWeight: '800', fontSize: '18px', letterSpacing: '-0.02em' }}>
+          <span className="navbar-name" style={{ color: '#111827', fontWeight: '800', letterSpacing: '-0.02em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             CEDIDUTY
           </span>
         </Link>
 
         {/* RIGHT SIDE: TOKENS + DONATE + DESKTOP LINKS + HAMBURGER */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div className="navbar-right-group" style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
           {/* Dynamic Badge Display Matrix */}
           <div className="token-status-badge" style={{ display: 'flex', alignItems: 'center' }}>
             {isUnlimited ? (
               <span style={{
-                background: '#e0f2fe', color: '#0369a1', fontSize: '11px',
-                fontWeight: '600', padding: '5px 10px', borderRadius: '9999px', border: '1px solid #bae6fd', whiteSpace: 'nowrap'
+                background: '#e0f2fe', color: '#0369a1',
+                fontWeight: '600', borderRadius: '9999px', border: '1px solid #bae6fd', whiteSpace: 'nowrap'
               }}>
-                💼 Pro (Unlimited)
+                <span className="badge-full-label">💼 Pro (Unlimited)</span>
+                <span className="badge-short-label">💼 Pro</span>
               </span>
             ) : tokens > 0 ? (
               <span style={{
-                background: '#ecfdf5', color: '#047857', fontSize: '11px',
-                fontWeight: '600', padding: '5px 10px', borderRadius: '9999px', border: '1px solid #a7f3d0', whiteSpace: 'nowrap'
+                background: '#ecfdf5', color: '#047857',
+                fontWeight: '600', borderRadius: '9999px', border: '1px solid #a7f3d0', whiteSpace: 'nowrap'
               }}>
-                🪙 {tokens} Tokens
+                <span className="badge-full-label">🪙 {tokens} Tokens</span>
+                <span className="badge-short-label">🪙 {tokens}</span>
               </span>
             ) : (
               <span style={{
-                background: '#f3f4f6', color: '#4b5563', fontSize: '11px',
-                fontWeight: '500', padding: '5px 10px', borderRadius: '9999px', whiteSpace: 'nowrap'
+                background: '#f3f4f6', color: '#4b5563',
+                fontWeight: '500', borderRadius: '9999px', whiteSpace: 'nowrap'
               }}>
-                ⚡ Casual (0)
+                <span className="badge-full-label">⚡ Casual (0)</span>
+                <span className="badge-short-label">⚡ 0</span>
               </span>
             )}
           </div>
