@@ -506,7 +506,6 @@ export default function Home() {
     width: '54px',
     height: '54px',
     borderRadius: '50%',
-    overflow: 'hidden',
     flexShrink: 0,
     display: 'flex',
     alignItems: 'center',
@@ -520,9 +519,9 @@ export default function Home() {
       height={70}
       priority
       style={{
-        width: '135%',
-        height: '135%',
-        objectFit: 'cover',
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain',
         imageRendering: '-webkit-optimize-contrast'
       }}
     />
