@@ -75,6 +75,41 @@ function getFlexibleValue(rowObj, candidateKeys) {
   return null;
 }
 
+// Helper to infer clean Make from filenames like gra_2010-2023_volkswagen or toyota_aqua
+function inferMakeFromFilename(filename) {
+  const clean = filename.replace('.json', '').toLowerCase();
+  if (clean.includes('volkswagen')) return 'Volkswagen';
+  if (clean.includes('mercedes')) return 'Mercedes-Benz';
+  if (clean.includes('hyundai')) return 'Hyundai';
+  if (clean.includes('chevrolet')) return 'Chevrolet';
+  if (clean.includes('toyota')) return 'Toyota';
+  if (clean.includes('honda')) return 'Honda';
+  if (clean.includes('ford')) return 'Ford';
+  if (clean.includes('dodge')) return 'Dodge';
+  if (clean.includes('infinity') || clean.includes('infiniti')) return 'Infiniti';
+  if (clean.includes('fiat')) return 'Fiat';
+  if (clean.includes('daewoo')) return 'Daewoo';
+  if (clean.includes('bmw')) return 'BMW';
+  if (clean.includes('audi')) return 'Audi';
+  if (clean.includes('lexus')) return 'Lexus';
+  if (clean.includes('renault')) return 'Renault';
+  if (clean.includes('jeep')) return 'Jeep';
+  if (clean.includes('jaguar')) return 'Jaguar';
+  if (clean.includes('iveco')) return 'Iveco';
+  if (clean.includes('nissan')) return 'Nissan';
+  if (clean.includes('mitsubishi')) return 'Mitsubishi';
+  if (clean.includes('landrover')) return 'Land Rover';
+  if (clean.includes('kia')) return 'Kia';
+  if (clean.includes('acura')) return 'Acura';
+
+  const parts = clean.split('_');
+  if (parts[0] === 'gra') {
+    const makePart = parts[parts.length - 1];
+    return makePart.charAt(0).toUpperCase() + makePart.slice(1);
+  }
+  return parts[0] ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) : 'Other';
+}
+
 try {
   if (!fs.existsSync(dataDir)) {
     console.error(`[ERROR] Directory not found at: ${dataDir}`);
@@ -95,8 +130,8 @@ try {
     let fileAddedCount = 0;
     
     const cleanFilename = file.replace('.json', '');
+    const filenameMake = inferMakeFromFilename(file);
     const nameParts = cleanFilename.split('_');
-    let filenameMake = nameParts[0] ? nameParts[0].charAt(0).toUpperCase() + nameParts[0].slice(1) : '';
     let filenameModel = nameParts.slice(1).map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
 
     try {
@@ -126,13 +161,17 @@ try {
           const rawOrigin = getFlexibleValue(row, ['origin code', 'origin_code', 'origin', 'country', 'market']) ?? 'US';
           const rawBody = getFlexibleValue(row, ['body style', 'bodystyle', 'bodytype', 'body_style']) ?? 'Sedan';
 
-          const make = rawMake ? String(rawMake).trim() : filenameMake || 'Other';
+          let make = rawMake ? String(rawMake).trim() : filenameMake;
+          if (make.toLowerCase() === 'mercedes_benz' || make.toLowerCase() === 'mercedes benz') {
+            make = 'Mercedes-Benz';
+          }
+
           const model = rawModel ? String(rawModel).trim() : filenameModel || 'Other';
           const year = rawYear ? String(rawYear).trim() : '';
           const trimLevel = rawTrim ? String(rawTrim).trim() : '';
           const currency = String(rawCurrency).trim();
 
-          // Skip duplicate header row copies (e.g., Make: "Make")
+          // Skip duplicate header row copies
           if (make.toLowerCase() === 'make' || model.toLowerCase() === 'model' || year.toLowerCase() === 'year of manufacture') {
             continue;
           }
