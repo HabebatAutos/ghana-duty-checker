@@ -25,11 +25,11 @@ const MARKET_CONFIG = {
   'DE':           { currency: 'EUR', code: 'DE' },
   'Belgium':      { currency: 'EUR', code: 'BE' },
   'BE':           { currency: 'EUR', code: 'BE' },
-  'Netherlands': { currency: 'EUR', code: 'NL' },
+  'Netherlands':  { currency: 'EUR', code: 'NL' },
   'NL':           { currency: 'EUR', code: 'NL' },
   'UK':           { currency: 'GBP', code: 'GB' },
   'GB':           { currency: 'GBP', code: 'GB' },
-  'South Korea': { currency: 'KRW', code: 'KR' },
+  'South Korea':  { currency: 'KRW', code: 'KR' },
   'Korea':        { currency: 'KRW', code: 'KR' },
   'KR':           { currency: 'KRW', code: 'KR' },
 };
@@ -45,7 +45,7 @@ const SANITY = {
   KRW: { min: 5000000, max: 500000000 },
 };
 
-// Helper to normalize country names and codes into clean 2-letter codes
+// Helper to normalize country names and codes into clean 2-letter ISO codes
 function normalizeOriginCode(rawVal) {
   if (!rawVal) return '';
   const str = String(rawVal).trim().toUpperCase();
@@ -64,7 +64,7 @@ function normalizeOriginCode(rawVal) {
   return str;
 }
 
-// Preset Filename Registry (Updated with new Toyota and Volkswagen Datasets)
+// Preset Filename Registry
 const PRESET_FILENAME_MAP = {
   // --- NEW TOYOTA DATASETS ---
   'toyota-aqua': 'toyota_aqua.json',
@@ -497,9 +497,13 @@ function normalizeLineupProperties(array, userEngine = '', userBodyType = '', ta
     }
 
     let resolvedTrim = 'Base / Standard';
-    if (item.trim !== undefined && item.trim !== null && String(item.trim).trim() !== 'NIL') resolvedTrim = item.trim;
-    else if (item['Trim Level'] !== undefined && item['Trim Level'] !== null && String(item['Trim Level']).trim() !== 'NIL') resolvedTrim = item['Trim Level'];
-    else if (item['Trim'] !== undefined && item['Trim'] !== null && String(item['Trim']).trim() !== 'NIL') resolvedTrim = item['Trim'];
+    const candidateTrim = item.trim ?? item['Trim Level'] ?? item['Trim'];
+    if (candidateTrim !== undefined && candidateTrim !== null) {
+      const trimStr = String(candidateTrim).trim();
+      if (trimStr !== '' && trimStr.toUpperCase() !== 'NIL' && trimStr.toUpperCase() !== 'NA' && trimStr.toUpperCase() !== 'N/A' && trimStr.toUpperCase() !== 'NAN') {
+        resolvedTrim = trimStr;
+      }
+    }
 
     return {
       trim: String(resolvedTrim).trim(),
@@ -535,14 +539,23 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     const normMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
     const normModel = model.toLowerCase().replace(/[^a-z0-9]/g, '');
     
-    // Primary Filter: Find filenames matching both Make and Model
+    // Rank 1: Specific Model Match (e.g. toyota_aqua.json, Toyota_yaris.json)
     let matchedFiles = files.filter(file => {
       if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
       const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
       return fileLow.includes(normMake) && fileLow.includes(normModel);
     });
 
-    // Fallback Filter: Match Model alone if Make+Model didn't match
+    // Rank 2: GRA Bulk Make Match (e.g. gra_2022_toyota.json, gra_2010-2023_volkswagen.json)
+    if (matchedFiles.length === 0) {
+      matchedFiles = files.filter(file => {
+        if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
+        const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return fileLow.startsWith('gra') && fileLow.includes(normMake);
+      });
+    }
+
+    // Rank 3: Loose Model Match
     if (matchedFiles.length === 0) {
       matchedFiles = files.filter(file => {
         if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
@@ -570,7 +583,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
       const repairedRawData = rawData.replace(/:\s*NaN\b/gi, ': null');
       const parsedData = JSON.parse(repairedRawData);
 
-      // Bulletproof check: extract array whether root is an array or an object wrapper
+      // Extract array whether root is an array or an object wrapper
       const records = Array.isArray(parsedData) 
         ? parsedData 
         : (parsedData.data || parsedData.records || Object.values(parsedData).find(v => Array.isArray(v)) || []);
@@ -606,18 +619,22 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
         
         matches.forEach(row => {
           let rawTrim = 'Base / Standard';
-          if (row.trim !== undefined && row.trim !== null) rawTrim = row.trim;
-          else if (row['Trim Level'] !== undefined && row['Trim Level'] !== null) rawTrim = row['Trim Level'];
-          else if (row['Trim'] !== undefined && row['Trim'] !== null) rawTrim = row['Trim'];
+          const candidateTrim = row.trim ?? row['Trim Level'] ?? row['Trim'];
+          if (candidateTrim !== undefined && candidateTrim !== null) {
+            const trimStr = String(candidateTrim).trim();
+            if (trimStr !== '' && trimStr.toUpperCase() !== 'NIL' && trimStr.toUpperCase() !== 'NA' && trimStr.toUpperCase() !== 'N/A' && trimStr.toUpperCase() !== 'NAN') {
+              rawTrim = trimStr;
+            }
+          }
 
           const cleanTrim = String(rawTrim).toUpperCase().trim();
-          const hdv = parseFloat(row.hdv ?? row['HDV'] ?? row['price'] ?? row['MSRP'] ?? 0);
+          const hdv = parseFloat(row.hdv ?? row['HDV'] ?? row['price'] ?? row['MSRP'] ?? row['CIF NCY'] ?? 0);
           const rowCurrency = row.currency ?? row['Currency'] ?? targetCurrency;
           
           const rawRowOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? targetCode;
           const rowOriginCode = normalizeOriginCode(rawRowOrigin) || targetCode;
 
-          if (cleanTrim === 'NIL' || cleanTrim === 'NAN' || isNaN(hdv) || hdv === 0) return;
+          if (cleanTrim === 'NAN' || isNaN(hdv) || hdv === 0) return;
 
           if (!uniqueVariants[cleanTrim]) {
             uniqueVariants[cleanTrim] = { 
@@ -758,17 +775,35 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
   };
 }
 
+// Fixed fetchRates with cache-control and updated fallback baseline
 async function fetchRates(origin) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cediduty.com';
-    const res = await fetch(`${baseUrl}/api/exchange-rate?origin=${encodeURIComponent(origin)}`);
+    const res = await fetch(`${baseUrl}/api/exchange-rate?origin=${encodeURIComponent(origin)}`, {
+      cache: 'no-store' // Prevents Next.js internal static fetch caching
+    });
     if (!res.ok) throw new Error('FX endpoint failed');
     return await res.json();
   } catch (err) {
+    console.error('[CALCULATE FX FETCH ERROR - FALLBACK APPLIED]', err.message);
     return {
-      currency_code: 'USD', currency_symbol: '$', rate_to_ghs: 11.77, usd_to_ghs: 11.77,
-      all_rates: { USD: 11.77, CAD: 8.65, AED: 3.20, JPY: 0.0782, CNY: 1.623, EUR: 13.21, GBP: 15.54, KRW: 0.00855 },
-      date: new Date().toISOString().split('T')[0], source: 'Bank of Ghana (cached)', label: '1 USD = GHC 11.77',
+      currency_code: 'USD',
+      currency_symbol: '$',
+      rate_to_ghs: 11.63,
+      usd_to_ghs: 11.63,
+      all_rates: { 
+        USD: 11.63, 
+        CAD: 8.26, 
+        AED: 3.16, 
+        JPY: 0.0711, 
+        CNY: 1.718, 
+        EUR: 13.25, 
+        GBP: 15.52, 
+        KRW: 0.0084 
+      },
+      date: new Date().toISOString().split('T')[0],
+      source: 'Bank of Ghana (Fallback)',
+      label: '1 USD = GH₵ 11.63',
     };
   }
 }
@@ -865,8 +900,8 @@ export async function POST(request) {
       const overagePenaltyGhs = cifGhs * overagePenaltyRate;
 
       const importDuty   = cifGhs * 0.10;
-      const nhil          = cifGhs * 0.025;
-      const getfund       = cifGhs * 0.025;
+      const nhil         = cifGhs * 0.025;
+      const getfund      = cifGhs * 0.025;
       const importVat    = cifGhs * 0.15;
       const ecowas       = cifGhs * 0.005;
       const examFee      = cifGhs * 0.01;

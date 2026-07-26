@@ -1,8 +1,8 @@
 // app/api/exchange-rate/route.js
 // Returns GHS rates for all origin currencies
 // Key insight from GRA Unipass data:
-// - Japan → JPY/GHS (e.g. 0.0719)
-// - USA   → USD/GHS (e.g. 11.28)
+// - Japan → JPY/GHS
+// - USA   → USD/GHS
 // - UAE   → USD/GHS (UAE dealers price in USD, AED pegged to dollar)
 // - China → CNY/GHS
 // - Germany/Europe → EUR/GHS
@@ -14,12 +14,12 @@ import { get, set, TTL } from '@/lib/cache'
 // Origin → currency mapping
 // UAE uses USD because international car trade there is dollar-denominated
 export const ORIGIN_CURRENCY = {
-  'USA':         { code: 'USD', symbol: '$',   name: 'US Dollar',      useUsd: true  },
-  'Japan':       { code: 'JPY', symbol: '¥',   name: 'Japanese Yen',   useUsd: false },
-  'China':       { code: 'CNY', symbol: '¥',   name: 'Chinese Yuan',   useUsd: false },
-  'Germany':     { code: 'EUR', symbol: '€',   name: 'Euro',           useUsd: false },
-  'UK':          { code: 'GBP', symbol: '£',   name: 'British Pound',  useUsd: false },
-  'UAE':         { code: 'USD', symbol: '$',   name: 'US Dollar',      useUsd: true  },
+  'USA':          { code: 'USD', symbol: '$',   name: 'US Dollar',      useUsd: true  },
+  'Japan':        { code: 'JPY', symbol: '¥',   name: 'Japanese Yen',    useUsd: false },
+  'China':        { code: 'CNY', symbol: '¥',   name: 'Chinese Yuan',    useUsd: false },
+  'Germany':      { code: 'EUR', symbol: '€',   name: 'Euro',            useUsd: false },
+  'UK':           { code: 'GBP', symbol: '£',   name: 'British Pound',  useUsd: false },
+  'UAE':          { code: 'USD', symbol: '$',   name: 'US Dollar',      useUsd: true  },
   'South Korea': { code: 'KRW', symbol: '₩',   name: 'Korean Won',     useUsd: false },
 }
 
@@ -32,7 +32,11 @@ async function fetchAllRates() {
 
   try {
     // open.er-api.com — free, reliable, includes GHS
-    const res = await fetch('https://open.er-api.com/v6/latest/USD')
+    // Added { next: { revalidate: 43200 } } to force Next.js to pull fresh data twice daily
+    const res = await fetch('https://open.er-api.com/v6/latest/USD', {
+      next: { revalidate: 43200 }
+    })
+    
     if (!res.ok) throw new Error('open.er-api failed')
     const data = await res.json()
     if (!data.rates?.GHS) throw new Error('GHS not in response')
@@ -48,33 +52,35 @@ async function fetchAllRates() {
       GBP: parseFloat((usdGhs / data.rates.GBP).toFixed(4)),
       AED: parseFloat((usdGhs / data.rates.AED).toFixed(4)),
       KRW: parseFloat((usdGhs / data.rates.KRW).toFixed(6)),
-      // Also store USD→GHS for internal calculations
+      // Store USD→GHS for internal calculations
       USD_GHS: parseFloat(usdGhs.toFixed(4)),
       date: new Date().toISOString().split('T')[0],
       source: 'Bank of Ghana',
     }
 
     set(cacheKey, rates, TTL.EXCHANGE_RATE)
-    console.log(`[FX] Rates cached: 1 USD = GH₵ ${rates.USD}, 1 JPY = GH₵ ${rates.JPY}, 1 CNY = GH₵ ${rates.CNY}`)
+    console.log(`[FX] Live rates cached: 1 USD = GH₵ ${rates.USD}, 1 JPY = GH₵ ${rates.JPY}, 1 CNY = GH₵ ${rates.CNY}`)
     return rates
 
   } catch (e1) {
     console.warn('[FX] Primary source failed:', e1.message)
 
-    // Fallback — use reasonable current approximations
+    // Fallback — aligned closer to current reference rates (~11.63 USD/GHS)
     const fallback = {
-      USD:     11.77,
-      JPY:     0.0782,
-      CNY:     1.623,
-      EUR:     13.21,
-      GBP:     15.54,
-      AED:     3.205,
-      KRW:     0.00855,
-      USD_GHS: 11.77,
+      USD:     11.63,
+      JPY:     0.0711,
+      CNY:     1.718,
+      EUR:     13.25,
+      GBP:     15.52,
+      AED:     3.16,
+      KRW:     0.0084,
+      USD_GHS: 11.63,
       date: new Date().toISOString().split('T')[0],
-      source: 'Bank of Ghana (cached fallback)',
+      source: 'Bank of Ghana (Fallback)',
     }
-    set(cacheKey, fallback, 60 * 60 * 1000) // only 1hr for fallback
+    
+    // Store fallback for only 15 minutes so it retries live polling shortly
+    set(cacheKey, fallback, 15 * 60 * 1000) 
     return fallback
   }
 }
