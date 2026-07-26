@@ -72,12 +72,14 @@ function normaliseBodyType(nhtsa) {
   return 'Sedan';
 }
 
-// Mobile Scroll Utility Function
+// Mobile Scroll Utility Function (Updated to scroll further down to action button)
 function scrollToCalculator() {
   if (typeof window !== 'undefined' && window.innerWidth < 768) {
     const el = document.getElementById('calculator-action-section');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const yOffset = -20;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   }
 }
@@ -567,8 +569,7 @@ export default function Home() {
         {/* MAIN CALCULATOR FORM & RESULTS */}
         <div className="page-content calculator-item" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          {/* CALCULATOR ACTION SECTION WRAPPER TARGET FOR MOBILE AUTO-SCROLL */}
-          <div id="calculator-action-section" className="premium-card-wrapper">
+          <div className="premium-card-wrapper">
             <div className="card-body" style={{ padding: '20px' }}>
               
               <div className="mode-tabs" style={{ display: 'flex', width: '100%', borderRadius: '10px', padding: '4px', background: '#f1f5f9', marginBottom: '20px', boxSizing: 'border-box' }}>
@@ -757,7 +758,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
+              {/* CALCULATOR ACTION SECTION WRAPPER TARGET FOR MOBILE AUTO-SCROLL */}
+              <div id="calculator-action-section" style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
                 <button className="calc-btn" style={{ flex: 1, borderRadius: '8px', padding: '12px', fontSize: '14px', fontWeight: '700' }} onClick={handleManualCalculateTrigger}>
                   Fetch Trims & Calculate Duty
                 </button>
