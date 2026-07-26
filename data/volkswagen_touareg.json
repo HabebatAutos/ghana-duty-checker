@@ -1,0 +1,20 @@
+{
+  "Sheet1": [
+    {
+      "No.": 1,
+      "Trim Level": "NA",
+      "Year of Manufacture": 2020,
+      "Make": "VOLKSWAGEN",
+      "Model": "TOUAREG",
+      "HDV": 23869,
+      "Currency": "USD",
+      "Origin Code": "CN",
+      "HS Code": 8703222000,
+      "Excange Rate": 11.4182,
+      "Receipt Date": "22/05/2026",
+      "Assessment Date": "21/05/2026",
+      "CIF NCY": 148520.3,
+      "Total Tax": 56275.45
+    }
+  ]
+}

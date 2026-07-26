@@ -64,8 +64,45 @@ function normalizeOriginCode(rawVal) {
   return str;
 }
 
-// Legacy dictionary kept strictly as an emergency fallback channel
+// Preset Filename Registry (Updated with new Toyota and Volkswagen Datasets)
 const PRESET_FILENAME_MAP = {
+  // --- NEW TOYOTA DATASETS ---
+  'toyota-aqua': 'toyota_aqua.json',
+  'toyotaaqua': 'toyota_aqua.json',
+  'toyota-auris': 'toyota_auris.json',
+  'toyotaauris': 'toyota_auris.json',
+  'toyota-prius': 'toyota_prius.json',
+  'toyotaprius': 'toyota_prius.json',
+  'toyota-verso': 'toyota_verso.json',
+  'toyotaverso': 'toyota_verso.json',
+  'toyota-avanza': 'toyota_avanza.json',
+  'toyotaavanza': 'toyota_avanza.json',
+  'toyota-pickup': 'toyota_pickup.json',
+  'toyotapickup': 'toyota_pickup.json',
+  'toyota-hilux': 'toyota_pickup.json',
+  'toyotahilux': 'toyota_pickup.json',
+  'toyota-alphard': 'toyota_alphard.json',
+  'toyotaalphard': 'toyota_alphard.json',
+
+  // --- NEW VOLKSWAGEN DATASETS ---
+  'volkswagen-touareg': 'volkswagen_touareg.json',
+  'volkwagentouareg': 'volkswagen_touareg.json',
+  'vw-touareg': 'volkswagen_touareg.json',
+  'vwtouareg': 'volkswagen_touareg.json',
+  'volkswagen-tiguan': 'volkswagen_tiguan.json',
+  'volkwagentiguan': 'volkswagen_tiguan.json',
+  'vw-tiguan': 'volkswagen_tiguan.json',
+  'vwtiguan': 'volkswagen_tiguan.json',
+  'volkswagen-golf': 'volkswagen_golf.json',
+  'volkwagengolf': 'volkswagen_golf.json',
+  'vw-golf': 'volkswagen_golf.json',
+  'vwgolf': 'volkswagen_golf.json',
+  'volkswagen-jetta': 'volkswagen_jetta.json',
+  'volkwagenjetta': 'volkswagen_jetta.json',
+  'vw-jetta': 'volkswagen_jetta.json',
+  'vwjetta': 'volkswagen_jetta.json',
+
+  // --- EXISTING DATASETS ---
   'acura-mdx': 'acura_mdx.json',
   'acura-rdx': 'acura_rdx.json',
   'acura-tlx': 'acura_tlx.json',
@@ -381,7 +418,6 @@ const PRESET_FILENAME_MAP = {
   'toyota-harrier': 'toyota_harrier.json',
   'toyota-hiace': 'toyota_hiace.json',
   'toyota-highlander': 'toyota_highlander.json',
-  'toyota-hilux': 'toyota_hilux.json',
   'toyota-landcruiser': 'toyota_landCruiser.json',
   'toyota-landcruiserprado': 'toyota_landcruiserprado.json',
   'toyota-matrix': 'toyota_matrix.json',
@@ -412,7 +448,6 @@ const PRESET_FILENAME_MAP = {
   'toyotaharrier': 'toyota_harrier.json',
   'toyotahiace': 'toyota_hiace.json',
   'toyotahighlander': 'toyota_highlander.json',
-  'toyotahilux': 'toyota_hilux.json',
   'toyotalandcruiser': 'toyotalandcruiser.json',
   'toyotalandcruiserprado': 'toyotalandcruiserprado.json',
   'toyotamatrix': 'toyota_matrix.json',
@@ -522,7 +557,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
       targetPresetFile = matchedFiles[0];
     }
     
-    // Safety Net: Fall back to legacy dictionary maps
+    // Safety Net: Fall back to dictionary maps
     if (!targetPresetFile) {
       let carKey = `${cleanMake}-${cleanModel}`;
       if (!PRESET_FILENAME_MAP[carKey]) carKey = `${cleanMake}${cleanModel}`;
@@ -535,7 +570,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
       const repairedRawData = rawData.replace(/:\s*NaN\b/gi, ': null');
       const parsedData = JSON.parse(repairedRawData);
 
-      // 🛡️ Bulletproof check: extract array whether root is an array or an object wrapper
+      // Bulletproof check: extract array whether root is an array or an object wrapper
       const records = Array.isArray(parsedData) 
         ? parsedData 
         : (parsedData.data || parsedData.records || Object.values(parsedData).find(v => Array.isArray(v)) || []);

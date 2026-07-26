@@ -31,14 +31,14 @@ export default function PresetSelector({ onSelectVehicle }) {
   const [activeModel, setActiveModel] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
 
-  // Group compiled entries dynamically (Runs ONCE on mount)
+  // Group compiled entries dynamically from PRESET_DATA
   const AVAILABLE_BRANDS = useMemo(() => {
     const registry = {}
 
     PRESET_DATA.forEach(vehicle => {
-      const makeVal = vehicle.make || vehicle.Make;
-      const modelVal = vehicle.model || vehicle.Model;
-      const yearVal = vehicle.year || vehicle['Year of Manufacture'];
+      const makeVal = vehicle.make || vehicle.Make || vehicle.MAKE;
+      const modelVal = vehicle.model || vehicle.Model || vehicle.MODEL;
+      const yearVal = vehicle.year || vehicle['Year of Manufacture'] || vehicle.YEAR;
 
       if (!makeVal || !modelVal || !yearVal) return
 
@@ -135,25 +135,25 @@ export default function PresetSelector({ onSelectVehicle }) {
   const handleYearSelectionLocal = (yearPresets) => {
     if (!yearPresets || yearPresets.length === 0) return
 
-    // If multiple trims exist for this year, prioritize standard/base or take the first one
+    // If multiple trims exist for this year, prioritize standard/base or take the first record
     let selectedVehicle = yearPresets.find(p => {
-      const t = (p.trim || p['Trim Level'] || '').toString().toUpperCase();
+      const t = (p.trim || p['Trim Level'] || p.TRIM || '').toString().toUpperCase();
       return t === 'NIL' || t === 'BASE' || t === 'STANDARD' || !t;
     }) || yearPresets[0];
 
-    const makeVal = selectedVehicle.make || selectedVehicle.Make || ''
+    const makeVal = selectedVehicle.make || selectedVehicle.Make || selectedVehicle.MAKE || ''
     let makeFormatted = makeVal.toString().toUpperCase().trim()
     if (makeFormatted === 'MERCEDES_BENZ' || makeFormatted === 'MERCEDES BENZ') {
       makeFormatted = 'MERCEDES-BENZ'
     }
 
-    const rawTrim = selectedVehicle.trim || selectedVehicle['Trim Level'] || ''
-    const rawOrigin = selectedVehicle.origin || selectedVehicle['Origin Code'] || ''
-    const rawHdv = selectedVehicle.hdv || selectedVehicle.HDV || ''
-    const rawYear = selectedVehicle.year || selectedVehicle['Year of Manufacture'] || ''
-    const rawModel = selectedVehicle.model || selectedVehicle.Model || ''
-    const rawEngine = selectedVehicle.engine || selectedVehicle.Engine || ''
-    const rawBody = selectedVehicle.bodyType || selectedVehicle.BodyType || 'Sedan'
+    const rawTrim = selectedVehicle.trim || selectedVehicle['Trim Level'] || selectedVehicle.TRIM || ''
+    const rawOrigin = selectedVehicle.origin || selectedVehicle['Origin Code'] || selectedVehicle.ORIGIN || ''
+    const rawHdv = selectedVehicle.hdv || selectedVehicle.HDV || selectedVehicle['HDV Value'] || ''
+    const rawYear = selectedVehicle.year || selectedVehicle['Year of Manufacture'] || selectedVehicle.YEAR || ''
+    const rawModel = selectedVehicle.model || selectedVehicle.Model || selectedVehicle.MODEL || ''
+    const rawEngine = selectedVehicle.engine || selectedVehicle.Engine || selectedVehicle.ENGINE || ''
+    const rawBody = selectedVehicle.bodyType || selectedVehicle.BodyType || selectedVehicle.BODY_TYPE || 'Sedan'
 
     onSelectVehicle({
       make: makeFormatted,
