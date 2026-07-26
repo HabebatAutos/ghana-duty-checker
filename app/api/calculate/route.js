@@ -531,7 +531,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
   const engineToken = userEngine ? userEngine.toLowerCase().replace(/[^a-z0-9]/g, '') : 'default';
   const fileCacheKey = `${year}-${cleanMake}-${cleanModel}-${targetCode}-${engineToken}`;
 
-  // 1. AUTOMATED LOCAL SPREADSHEET SCANNER FILTERED BY ORIGIN CODE & YEAR
+  // 1. AUTOMATED LOCAL SPREADSHEET SCANNER (STRICT MODEL MATCH ONLY)
   try {
     const dataDirPath = path.join(process.cwd(), 'data');
     const files = await fs.readdir(dataDirPath);
@@ -539,30 +539,13 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     const normMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
     const normModel = model.toLowerCase().replace(/[^a-z0-9]/g, '');
     
-    // Rank 1: Specific Model Match (e.g. toyota_aqua.json, Toyota_yaris.json)
+    // Strict Match: Only include files containing both make and model, explicitly omitting bulk cross-make sets
     let matchedFiles = files.filter(file => {
       if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
       const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (fileLow.startsWith('gra_20') && !fileLow.includes(normModel)) return false;
       return fileLow.includes(normMake) && fileLow.includes(normModel);
     });
-
-    // Rank 2: GRA Bulk Make Match (e.g. gra_2022_toyota.json, gra_2010-2023_volkswagen.json)
-    if (matchedFiles.length === 0) {
-      matchedFiles = files.filter(file => {
-        if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
-        const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
-        return fileLow.startsWith('gra') && fileLow.includes(normMake);
-      });
-    }
-
-    // Rank 3: Loose Model Match
-    if (matchedFiles.length === 0) {
-      matchedFiles = files.filter(file => {
-        if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
-        const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
-        return fileLow.includes(normModel);
-      });
-    }
 
     let targetPresetFile = null;
     if (matchedFiles.length > 0) {
