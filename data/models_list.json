@@ -1,0 +1,1322 @@
+[
+  {
+    "make_model": "audi_a1"
+  },
+  {
+    "make_model": "audi_a3"
+  },
+  {
+    "make_model": "audi_a4"
+  },
+  {
+    "make_model": "audi_a5"
+  },
+  {
+    "make_model": "audi_a6"
+  },
+  {
+    "make_model": "audi_a7"
+  },
+  {
+    "make_model": "audi_a8"
+  },
+  {
+    "make_model": "audi_e_tron"
+  },
+  {
+    "make_model": "audi_q2"
+  },
+  {
+    "make_model": "audi_q3"
+  },
+  {
+    "make_model": "audi_q5"
+  },
+  {
+    "make_model": "audi_q7"
+  },
+  {
+    "make_model": "audi_q8"
+  },
+  {
+    "make_model": "audi_rs5"
+  },
+  {
+    "make_model": "audi_rs7"
+  },
+  {
+    "make_model": "audi_rs_q8"
+  },
+  {
+    "make_model": "audi_s5"
+  },
+  {
+    "make_model": "audi_sq8"
+  },
+  {
+    "make_model": "bmw_1_series"
+  },
+  {
+    "make_model": "bmw_2_series"
+  },
+  {
+    "make_model": "bmw_3_series"
+  },
+  {
+    "make_model": "bmw_4_series"
+  },
+  {
+    "make_model": "bmw_5_series"
+  },
+  {
+    "make_model": "bmw_6_series"
+  },
+  {
+    "make_model": "bmw_7_series"
+  },
+  {
+    "make_model": "bmw_8_series"
+  },
+  {
+    "make_model": "bmw_i7"
+  },
+  {
+    "make_model": "bmw_ix"
+  },
+  {
+    "make_model": "bmw_m3"
+  },
+  {
+    "make_model": "bmw_m4"
+  },
+  {
+    "make_model": "bmw_m5"
+  },
+  {
+    "make_model": "bmw_m8"
+  },
+  {
+    "make_model": "bmw_x1"
+  },
+  {
+    "make_model": "bmw_x2"
+  },
+  {
+    "make_model": "bmw_x3"
+  },
+  {
+    "make_model": "bmw_x4"
+  },
+  {
+    "make_model": "bmw_x5"
+  },
+  {
+    "make_model": "bmw_x6"
+  },
+  {
+    "make_model": "bmw_x7"
+  },
+  {
+    "make_model": "bmw_xm"
+  },
+  {
+    "make_model": "bmw_z4"
+  },
+  {
+    "make_model": "daewoo_alpheon"
+  },
+  {
+    "make_model": "daewoo_aveo"
+  },
+  {
+    "make_model": "daewoo_bs"
+  },
+  {
+    "make_model": "daewoo_captiva"
+  },
+  {
+    "make_model": "daewoo_cruze"
+  },
+  {
+    "make_model": "daewoo_damas"
+  },
+  {
+    "make_model": "daewoo_fx_series_bus"
+  },
+  {
+    "make_model": "daewoo_gentra"
+  },
+  {
+    "make_model": "daewoo_lacetti"
+  },
+  {
+    "make_model": "daewoo_lestar_bus"
+  },
+  {
+    "make_model": "daewoo_malibu"
+  },
+  {
+    "make_model": "daewoo_matiz"
+  },
+  {
+    "make_model": "daewoo_novus_truck"
+  },
+  {
+    "make_model": "daewoo_orlando"
+  },
+  {
+    "make_model": "daewoo_prima_truck"
+  },
+  {
+    "make_model": "daewoo_spark"
+  },
+  {
+    "make_model": "daewoo_trax"
+  },
+  {
+    "make_model": "daewoo_ultra_truck"
+  },
+  {
+    "make_model": "daewoo_winstorm"
+  },
+  {
+    "make_model": "dodge_avenger"
+  },
+  {
+    "make_model": "dodge_caliber"
+  },
+  {
+    "make_model": "dodge_caravan"
+  },
+  {
+    "make_model": "dodge_challenger"
+  },
+  {
+    "make_model": "dodge_charger"
+  },
+  {
+    "make_model": "dodge_dart"
+  },
+  {
+    "make_model": "dodge_durango"
+  },
+  {
+    "make_model": "dodge_hornet"
+  },
+  {
+    "make_model": "dodge_journey"
+  },
+  {
+    "make_model": "dodge_neon"
+  },
+  {
+    "make_model": "dodge_ram"
+  },
+  {
+    "make_model": "dodge_ram_1200"
+  },
+  {
+    "make_model": "dodge_ram_promaster"
+  },
+  {
+    "make_model": "dodge_sprinter"
+  },
+  {
+    "make_model": "fiat_500"
+  },
+  {
+    "make_model": "fiat_500l"
+  },
+  {
+    "make_model": "fiat_500x"
+  },
+  {
+    "make_model": "fiat_bravo"
+  },
+  {
+    "make_model": "fiat_croma"
+  },
+  {
+    "make_model": "fiat_doblo"
+  },
+  {
+    "make_model": "fiat_ducato"
+  },
+  {
+    "make_model": "fiat_feixiang"
+  },
+  {
+    "make_model": "fiat_fiorino"
+  },
+  {
+    "make_model": "fiat_freemont"
+  },
+  {
+    "make_model": "fiat_fullback"
+  },
+  {
+    "make_model": "fiat_panda"
+  },
+  {
+    "make_model": "fiat_punto"
+  },
+  {
+    "make_model": "fiat_strada"
+  },
+  {
+    "make_model": "ford_bronco"
+  },
+  {
+    "make_model": "ford_c_max"
+  },
+  {
+    "make_model": "ford_cargo_4143d"
+  },
+  {
+    "make_model": "ford_crown_victoria"
+  },
+  {
+    "make_model": "ford_e_series"
+  },
+  {
+    "make_model": "ford_econovan"
+  },
+  {
+    "make_model": "ford_ecosport"
+  },
+  {
+    "make_model": "ford_edge"
+  },
+  {
+    "make_model": "ford_equator"
+  },
+  {
+    "make_model": "ford_escape"
+  },
+  {
+    "make_model": "ford_everest"
+  },
+  {
+    "make_model": "ford_expedition"
+  },
+  {
+    "make_model": "ford_explorer"
+  },
+  {
+    "make_model": "ford_f800"
+  },
+  {
+    "make_model": "ford_f_150"
+  },
+  {
+    "make_model": "ford_f_250"
+  },
+  {
+    "make_model": "ford_f_350"
+  },
+  {
+    "make_model": "ford_f_450"
+  },
+  {
+    "make_model": "ford_f_550"
+  },
+  {
+    "make_model": "ford_f_750"
+  },
+  {
+    "make_model": "ford_fiesta"
+  },
+  {
+    "make_model": "ford_figo"
+  },
+  {
+    "make_model": "ford_flex"
+  },
+  {
+    "make_model": "ford_focus"
+  },
+  {
+    "make_model": "ford_fusion"
+  },
+  {
+    "make_model": "ford_ka"
+  },
+  {
+    "make_model": "ford_kuga"
+  },
+  {
+    "make_model": "ford_maverick"
+  },
+  {
+    "make_model": "ford_mondeo"
+  },
+  {
+    "make_model": "ford_mustang"
+  },
+  {
+    "make_model": "ford_pronto"
+  },
+  {
+    "make_model": "ford_ranger"
+  },
+  {
+    "make_model": "ford_taurus"
+  },
+  {
+    "make_model": "ford_territory"
+  },
+  {
+    "make_model": "ford_transit"
+  },
+  {
+    "make_model": "honda_accord"
+  },
+  {
+    "make_model": "honda_acty"
+  },
+  {
+    "make_model": "honda_breeze"
+  },
+  {
+    "make_model": "honda_city"
+  },
+  {
+    "make_model": "honda_civic"
+  },
+  {
+    "make_model": "honda_cr_v"
+  },
+  {
+    "make_model": "honda_crider"
+  },
+  {
+    "make_model": "honda_crossroad"
+  },
+  {
+    "make_model": "honda_crosstour"
+  },
+  {
+    "make_model": "honda_e:np1"
+  },
+  {
+    "make_model": "honda_e:ns1"
+  },
+  {
+    "make_model": "honda_envix"
+  },
+  {
+    "make_model": "honda_fit"
+  },
+  {
+    "make_model": "honda_freed"
+  },
+  {
+    "make_model": "honda_grace"
+  },
+  {
+    "make_model": "honda_hr_v"
+  },
+  {
+    "make_model": "honda_insight"
+  },
+  {
+    "make_model": "honda_jazz"
+  },
+  {
+    "make_model": "honda_life"
+  },
+  {
+    "make_model": "honda_n_box"
+  },
+  {
+    "make_model": "honda_n_one"
+  },
+  {
+    "make_model": "honda_n_wgn"
+  },
+  {
+    "make_model": "honda_odyssey"
+  },
+  {
+    "make_model": "honda_passport"
+  },
+  {
+    "make_model": "honda_pilot"
+  },
+  {
+    "make_model": "honda_prologue"
+  },
+  {
+    "make_model": "honda_ridgeline"
+  },
+  {
+    "make_model": "honda_stepwgn"
+  },
+  {
+    "make_model": "honda_stream"
+  },
+  {
+    "make_model": "honda_ur_v"
+  },
+  {
+    "make_model": "honda_vezel"
+  },
+  {
+    "make_model": "honda_xr_v"
+  },
+  {
+    "make_model": "honda_zest"
+  },
+  {
+    "make_model": "honda_zr_v"
+  },
+  {
+    "make_model": "hyundai_accent"
+  },
+  {
+    "make_model": "hyundai_aero_city"
+  },
+  {
+    "make_model": "hyundai_aslan"
+  },
+  {
+    "make_model": "hyundai_atos"
+  },
+  {
+    "make_model": "hyundai_avante_md"
+  },
+  {
+    "make_model": "hyundai_azera"
+  },
+  {
+    "make_model": "hyundai_bongo"
+  },
+  {
+    "make_model": "hyundai_celesta"
+  },
+  {
+    "make_model": "hyundai_county"
+  },
+  {
+    "make_model": "hyundai_creta"
+  },
+  {
+    "make_model": "hyundai_custo"
+  },
+  {
+    "make_model": "hyundai_elantra"
+  },
+  {
+    "make_model": "hyundai_equus"
+  },
+  {
+    "make_model": "hyundai_genesis"
+  },
+  {
+    "make_model": "hyundai_genesis_g80"
+  },
+  {
+    "make_model": "hyundai_getz"
+  },
+  {
+    "make_model": "hyundai_grace"
+  },
+  {
+    "make_model": "hyundai_granbird"
+  },
+  {
+    "make_model": "hyundai_grand_i10"
+  },
+  {
+    "make_model": "hyundai_grandeur"
+  },
+  {
+    "make_model": "hyundai_h1"
+  },
+  {
+    "make_model": "hyundai_h100"
+  },
+  {
+    "make_model": "hyundai_h300"
+  },
+  {
+    "make_model": "hyundai_h350"
+  },
+  {
+    "make_model": "hyundai_hd_series_trucks"
+  },
+  {
+    "make_model": "hyundai_i10"
+  },
+  {
+    "make_model": "hyundai_i20"
+  },
+  {
+    "make_model": "hyundai_i30"
+  },
+  {
+    "make_model": "hyundai_i40"
+  },
+  {
+    "make_model": "hyundai_i800"
+  },
+  {
+    "make_model": "hyundai_iload"
+  },
+  {
+    "make_model": "hyundai_ix20"
+  },
+  {
+    "make_model": "hyundai_ix25"
+  },
+  {
+    "make_model": "hyundai_ix35"
+  },
+  {
+    "make_model": "hyundai_ix55"
+  },
+  {
+    "make_model": "hyundai_kona"
+  },
+  {
+    "make_model": "hyundai_maxcruz"
+  },
+  {
+    "make_model": "hyundai_mega"
+  },
+  {
+    "make_model": "hyundai_mighty"
+  },
+  {
+    "make_model": "hyundai_mistra"
+  },
+  {
+    "make_model": "hyundai_mufasa"
+  },
+  {
+    "make_model": "hyundai_palisade"
+  },
+  {
+    "make_model": "hyundai_porter"
+  },
+  {
+    "make_model": "hyundai_reina"
+  },
+  {
+    "make_model": "hyundai_rhino"
+  },
+  {
+    "make_model": "hyundai_santa_cruz"
+  },
+  {
+    "make_model": "hyundai_santa_fe"
+  },
+  {
+    "make_model": "hyundai_solaris"
+  },
+  {
+    "make_model": "hyundai_solati"
+  },
+  {
+    "make_model": "hyundai_sonata"
+  },
+  {
+    "make_model": "hyundai_starex"
+  },
+  {
+    "make_model": "hyundai_trago"
+  },
+  {
+    "make_model": "hyundai_tucson"
+  },
+  {
+    "make_model": "hyundai_universe"
+  },
+  {
+    "make_model": "hyundai_veloster"
+  },
+  {
+    "make_model": "hyundai_veracruz"
+  },
+  {
+    "make_model": "hyundai_verna"
+  },
+  {
+    "make_model": "infiniti_ex_series"
+  },
+  {
+    "make_model": "infiniti_fx_series"
+  },
+  {
+    "make_model": "infiniti_jx_series"
+  },
+  {
+    "make_model": "infiniti_m_series"
+  },
+  {
+    "make_model": "infiniti_q30"
+  },
+  {
+    "make_model": "infiniti_q50"
+  },
+  {
+    "make_model": "infiniti_qx30"
+  },
+  {
+    "make_model": "infiniti_qx50"
+  },
+  {
+    "make_model": "infiniti_qx55"
+  },
+  {
+    "make_model": "infiniti_qx56"
+  },
+  {
+    "make_model": "infiniti_qx60"
+  },
+  {
+    "make_model": "infiniti_qx70"
+  },
+  {
+    "make_model": "infiniti_qx80"
+  },
+  {
+    "make_model": "iveco_daily"
+  },
+  {
+    "make_model": "iveco_eurocargo"
+  },
+  {
+    "make_model": "iveco_powerdaily"
+  },
+  {
+    "make_model": "iveco_stralis"
+  },
+  {
+    "make_model": "iveco_trakker"
+  },
+  {
+    "make_model": "jaguar_e_pace"
+  },
+  {
+    "make_model": "jaguar_f_pace"
+  },
+  {
+    "make_model": "jaguar_xe"
+  },
+  {
+    "make_model": "jaguar_xf"
+  },
+  {
+    "make_model": "jaguar_xj"
+  },
+  {
+    "make_model": "jaguar_xj8"
+  },
+  {
+    "make_model": "jeep_cherokee"
+  },
+  {
+    "make_model": "jeep_compass"
+  },
+  {
+    "make_model": "jeep_gladiator"
+  },
+  {
+    "make_model": "jeep_grand_cherokee"
+  },
+  {
+    "make_model": "jeep_grand_commander"
+  },
+  {
+    "make_model": "jeep_grand_wagoneer"
+  },
+  {
+    "make_model": "jeep_liberty"
+  },
+  {
+    "make_model": "jeep_patriot"
+  },
+  {
+    "make_model": "jeep_renegade"
+  },
+  {
+    "make_model": "jeep_wagoneer"
+  },
+  {
+    "make_model": "jeep_wrangler"
+  },
+  {
+    "make_model": "lexus_es"
+  },
+  {
+    "make_model": "lexus_gs"
+  },
+  {
+    "make_model": "lexus_gx"
+  },
+  {
+    "make_model": "lexus_is"
+  },
+  {
+    "make_model": "lexus_lc"
+  },
+  {
+    "make_model": "lexus_ls"
+  },
+  {
+    "make_model": "lexus_lx"
+  },
+  {
+    "make_model": "lexus_nx"
+  },
+  {
+    "make_model": "lexus_rc"
+  },
+  {
+    "make_model": "lexus_rx"
+  },
+  {
+    "make_model": "lexus_tx"
+  },
+  {
+    "make_model": "lexus_ux"
+  },
+  {
+    "make_model": "mercedes_benz_a_class"
+  },
+  {
+    "make_model": "mercedes_benz_actros"
+  },
+  {
+    "make_model": "mercedes_benz_amg_gt"
+  },
+  {
+    "make_model": "mercedes_benz_antos"
+  },
+  {
+    "make_model": "mercedes_benz_arocs"
+  },
+  {
+    "make_model": "mercedes_benz_atego"
+  },
+  {
+    "make_model": "mercedes_benz_axor"
+  },
+  {
+    "make_model": "mercedes_benz_b_class"
+  },
+  {
+    "make_model": "mercedes_benz_c250"
+  },
+  {
+    "make_model": "mercedes_benz_c300"
+  },
+  {
+    "make_model": "mercedes_benz_c_class"
+  },
+  {
+    "make_model": "mercedes_benz_citan"
+  },
+  {
+    "make_model": "mercedes_benz_citaro"
+  },
+  {
+    "make_model": "mercedes_benz_cla_class"
+  },
+  {
+    "make_model": "mercedes_benz_clc_class"
+  },
+  {
+    "make_model": "mercedes_benz_cle_class"
+  },
+  {
+    "make_model": "mercedes_benz_clk_class"
+  },
+  {
+    "make_model": "mercedes_benz_cls_class"
+  },
+  {
+    "make_model": "mercedes_benz_e_class"
+  },
+  {
+    "make_model": "mercedes_benz_eqb"
+  },
+  {
+    "make_model": "mercedes_benz_eqc"
+  },
+  {
+    "make_model": "mercedes_benz_eqe"
+  },
+  {
+    "make_model": "mercedes_benz_g_class"
+  },
+  {
+    "make_model": "mercedes_benz_gl_class"
+  },
+  {
+    "make_model": "mercedes_benz_gla"
+  },
+  {
+    "make_model": "mercedes_benz_glb_class"
+  },
+  {
+    "make_model": "mercedes_benz_glc"
+  },
+  {
+    "make_model": "mercedes_benz_gle"
+  },
+  {
+    "make_model": "mercedes_benz_glk_class"
+  },
+  {
+    "make_model": "mercedes_benz_gls_class"
+  },
+  {
+    "make_model": "mercedes_benz_m_class"
+  },
+  {
+    "make_model": "mercedes_benz_maybach"
+  },
+  {
+    "make_model": "mercedes_benz_r_class"
+  },
+  {
+    "make_model": "mercedes_benz_s_class"
+  },
+  {
+    "make_model": "mercedes_benz_sl_class"
+  },
+  {
+    "make_model": "mercedes_benz_slc_class"
+  },
+  {
+    "make_model": "mercedes_benz_slk_class"
+  },
+  {
+    "make_model": "mercedes_benz_sls_amg"
+  },
+  {
+    "make_model": "mercedes_benz_sprinter"
+  },
+  {
+    "make_model": "mercedes_benz_tourismo"
+  },
+  {
+    "make_model": "mercedes_benz_v_class"
+  },
+  {
+    "make_model": "mercedes_benz_vario"
+  },
+  {
+    "make_model": "mercedes_benz_vito"
+  },
+  {
+    "make_model": "mercedes_benz_x_class"
+  },
+  {
+    "make_model": "renault_arkana"
+  },
+  {
+    "make_model": "renault_captur"
+  },
+  {
+    "make_model": "renault_clio"
+  },
+  {
+    "make_model": "renault_dokker"
+  },
+  {
+    "make_model": "renault_duster"
+  },
+  {
+    "make_model": "renault_kadjar"
+  },
+  {
+    "make_model": "renault_kangoo"
+  },
+  {
+    "make_model": "renault_kerax"
+  },
+  {
+    "make_model": "renault_koleos"
+  },
+  {
+    "make_model": "renault_kwid"
+  },
+  {
+    "make_model": "renault_logan"
+  },
+  {
+    "make_model": "renault_lutecia"
+  },
+  {
+    "make_model": "renault_master"
+  },
+  {
+    "make_model": "renault_megane"
+  },
+  {
+    "make_model": "renault_midliner"
+  },
+  {
+    "make_model": "renault_midlum"
+  },
+  {
+    "make_model": "renault_modus"
+  },
+  {
+    "make_model": "renault_premium"
+  },
+  {
+    "make_model": "renault_safrane"
+  },
+  {
+    "make_model": "renault_samsung_qm3"
+  },
+  {
+    "make_model": "renault_samsung_qm5"
+  },
+  {
+    "make_model": "renault_samsung_qm6"
+  },
+  {
+    "make_model": "renault_samsung_sm3"
+  },
+  {
+    "make_model": "renault_samsung_sm5"
+  },
+  {
+    "make_model": "renault_samsung_sm6"
+  },
+  {
+    "make_model": "renault_samsung_sm7"
+  },
+  {
+    "make_model": "renault_samsung_xm3"
+  },
+  {
+    "make_model": "renault_scenic"
+  },
+  {
+    "make_model": "renault_symbol"
+  },
+  {
+    "make_model": "renault_t_range"
+  },
+  {
+    "make_model": "renault_talisman"
+  },
+  {
+    "make_model": "renault_trafic"
+  },
+  {
+    "make_model": "renault_twingo"
+  },
+  {
+    "make_model": "renault_twizy"
+  },
+  {
+    "make_model": "renault_zoe"
+  },
+  {
+    "make_model": "toyota_4runner"
+  },
+  {
+    "make_model": "toyota_alphard"
+  },
+  {
+    "make_model": "toyota_aqua"
+  },
+  {
+    "make_model": "toyota_auris"
+  },
+  {
+    "make_model": "toyota_avalon"
+  },
+  {
+    "make_model": "toyota_avanza"
+  },
+  {
+    "make_model": "toyota_avensis"
+  },
+  {
+    "make_model": "toyota_aygo"
+  },
+  {
+    "make_model": "toyota_bb"
+  },
+  {
+    "make_model": "toyota_belta"
+  },
+  {
+    "make_model": "toyota_bz3"
+  },
+  {
+    "make_model": "toyota_bz3x"
+  },
+  {
+    "make_model": "toyota_bz4x"
+  },
+  {
+    "make_model": "toyota_c_hr"
+  },
+  {
+    "make_model": "toyota_camry"
+  },
+  {
+    "make_model": "toyota_coaster"
+  },
+  {
+    "make_model": "toyota_commuter"
+  },
+  {
+    "make_model": "toyota_corolla"
+  },
+  {
+    "make_model": "toyota_corolla_axio"
+  },
+  {
+    "make_model": "toyota_corolla_cross"
+  },
+  {
+    "make_model": "toyota_corolla_fielder"
+  },
+  {
+    "make_model": "toyota_corolla_im"
+  },
+  {
+    "make_model": "toyota_cross"
+  },
+  {
+    "make_model": "toyota_crown"
+  },
+  {
+    "make_model": "toyota_crown_signia"
+  },
+  {
+    "make_model": "toyota_dyna"
+  },
+  {
+    "make_model": "toyota_esquire"
+  },
+  {
+    "make_model": "toyota_estima"
+  },
+  {
+    "make_model": "toyota_fj_cruiser"
+  },
+  {
+    "make_model": "toyota_fortuner"
+  },
+  {
+    "make_model": "toyota_fr_s"
+  },
+  {
+    "make_model": "toyota_frontlander"
+  },
+  {
+    "make_model": "toyota_gr86"
+  },
+  {
+    "make_model": "toyota_gr_supra"
+  },
+  {
+    "make_model": "toyota_grand_highlander"
+  },
+  {
+    "make_model": "toyota_granvia"
+  },
+  {
+    "make_model": "toyota_harrier"
+  },
+  {
+    "make_model": "toyota_hiace"
+  },
+  {
+    "make_model": "toyota_highlander"
+  },
+  {
+    "make_model": "toyota_hijet"
+  },
+  {
+    "make_model": "toyota_hilux"
+  },
+  {
+    "make_model": "toyota_innova"
+  },
+  {
+    "make_model": "toyota_isis"
+  },
+  {
+    "make_model": "toyota_izoa"
+  },
+  {
+    "make_model": "toyota_kluger"
+  },
+  {
+    "make_model": "toyota_land_cruiser"
+  },
+  {
+    "make_model": "toyota_land_cruiser_prado"
+  },
+  {
+    "make_model": "toyota_levin"
+  },
+  {
+    "make_model": "toyota_liteace"
+  },
+  {
+    "make_model": "toyota_mark_x"
+  },
+  {
+    "make_model": "toyota_matrix"
+  },
+  {
+    "make_model": "toyota_noah"
+  },
+  {
+    "make_model": "toyota_passo"
+  },
+  {
+    "make_model": "toyota_pickup"
+  },
+  {
+    "make_model": "toyota_porte"
+  },
+  {
+    "make_model": "toyota_premio"
+  },
+  {
+    "make_model": "toyota_previa"
+  },
+  {
+    "make_model": "toyota_prius"
+  },
+  {
+    "make_model": "toyota_proace"
+  },
+  {
+    "make_model": "toyota_proace_city"
+  },
+  {
+    "make_model": "toyota_probox"
+  },
+  {
+    "make_model": "toyota_ractis"
+  },
+  {
+    "make_model": "toyota_raize"
+  },
+  {
+    "make_model": "toyota_rav4"
+  },
+  {
+    "make_model": "toyota_regius_ace"
+  },
+  {
+    "make_model": "toyota_rukus"
+  },
+  {
+    "make_model": "toyota_rumion"
+  },
+  {
+    "make_model": "toyota_rush"
+  },
+  {
+    "make_model": "toyota_scion"
+  },
+  {
+    "make_model": "toyota_sequoia"
+  },
+  {
+    "make_model": "toyota_sienna"
+  },
+  {
+    "make_model": "toyota_sienta"
+  },
+  {
+    "make_model": "toyota_soluna"
+  },
+  {
+    "make_model": "toyota_spade"
+  },
+  {
+    "make_model": "toyota_starlet"
+  },
+  {
+    "make_model": "toyota_succeed"
+  },
+  {
+    "make_model": "toyota_tacoma"
+  },
+  {
+    "make_model": "toyota_townace"
+  },
+  {
+    "make_model": "toyota_tundra"
+  },
+  {
+    "make_model": "toyota_urban_cruiser"
+  },
+  {
+    "make_model": "toyota_vanguard"
+  },
+  {
+    "make_model": "toyota_vellfire"
+  },
+  {
+    "make_model": "toyota_veloz"
+  },
+  {
+    "make_model": "toyota_venza"
+  },
+  {
+    "make_model": "toyota_verso"
+  },
+  {
+    "make_model": "toyota_vios"
+  },
+  {
+    "make_model": "toyota_vitz"
+  },
+  {
+    "make_model": "toyota_voxy"
+  },
+  {
+    "make_model": "toyota_wildlander"
+  },
+  {
+    "make_model": "toyota_wish"
+  },
+  {
+    "make_model": "toyota_yaris"
+  },
+  {
+    "make_model": "toyota_yaris_cross"
+  },
+  {
+    "make_model": "volkswagen_caddy"
+  },
+  {
+    "make_model": "volkswagen_crafter"
+  },
+  {
+    "make_model": "volkswagen_teramont (atlas)"
+  },
+  {
+    "make_model": "volkswagen_tiguan"
+  },
+  {
+    "make_model": "volkswagen_VS7 (Jetta VS7)"
+  },
+  {
+    "make_model": "volkswagen_touareg"
+  },
+  {
+    "make_model": "volkswagen_golf"
+  },
+  {
+    "make_model": "volkswagen_jetta"
+  }
+]
