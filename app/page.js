@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useTokens } from './Context/TokenContext'
 import PresetSelector from './components/PresetSelector'
 import PricingModal from './components/PricingModal'
+import modelsList from '@/data/models_list.json'
 
 const CONTINENT_ORIGIN_GROUPS = [
   {
@@ -619,7 +620,7 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => setIsPricingModalOpen(true)}
-                            style={{ background: '#05643c', color: '#ffffff', border: 'none', padding: '6px 14px', borderRadius: '6px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                            style={{ background: '#05643c', color: '#ffffff', border: '1px solid #05643c', padding: '6px 14px', borderRadius: '6px', fontWeight: '700', fontSize: '12px', cursor: 'pointer', whiteSpace: 'nowrap' }}
                           >
                             Buy Tokens 🪙
                           </button>
@@ -632,7 +633,7 @@ export default function Home() {
 
               {mode === 'free' && (
                 <div style={{ padding: '12px 16px', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0', color: '#166534', fontSize: '12px', fontWeight: '500', marginBottom: '20px', lineHeight: '1.4' }}>
-                  💡 <strong>Free Mode Active:</strong> Select a car from the quick presets or type your car details below to calculate duty instantly for free.
+                  💡 <strong>Free Mode Active:</strong> Select a car from the quick presets or choose from our verified database models below to calculate duty instantly for free.
                 </div>
               )}
 
@@ -645,10 +646,32 @@ export default function Home() {
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Make *</label>
                   <input className="form-input premium-input-field" type="text" placeholder="e.g. Hyundai, Toyota" value={fields.make} onChange={e => setFields(p => ({ ...p, make: e.target.value }))} disabled={mode === 'premium'} style={{ padding: '10px 12px' }} />
                 </div>
+                
+                {/* PREDETERMINED SMART MODEL SELECTION FIELD */}
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Model *</label>
-                  <input className="form-input premium-input-field" type="text" placeholder="e.g. Sonata, RAV4" value={fields.model} onChange={e => setFields(p => ({ ...p, model: e.target.value }))} disabled={mode === 'premium'} style={{ padding: '10px 12px' }} />
+                  <input 
+                    className="form-input premium-input-field" 
+                    type="text" 
+                    list="database-car-models"
+                    placeholder={mode === 'premium' ? 'Enter any model name...' : 'Select or type preloaded model...'} 
+                    value={fields.model} 
+                    onChange={e => setFields(p => ({ ...p, model: e.target.value }))} 
+                    disabled={mode === 'premium'}
+                    style={{ padding: '10px 12px' }} 
+                  />
+                  <datalist id="database-car-models">
+                    {modelsList.map(modelName => (
+                      <option key={modelName} value={modelName} />
+                    ))}
+                  </datalist>
+                  {mode === 'free' && (
+                    <span style={{ fontSize: '10px', color: '#64748b', marginTop: '3px', display: 'block' }}>
+                      Free searches match preloaded GRA database records. Use VIN Autofill for custom imports.
+                    </span>
+                  )}
                 </div>
+
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Trim Variant (Optional)</label>
                   <input 

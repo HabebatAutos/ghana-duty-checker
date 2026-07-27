@@ -520,7 +520,7 @@ function normalizeLineupProperties(array, userEngine = '', userBodyType = '', ta
   });
 }
 
-async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userBodyType = '', isBackgroundSync = false, originCode = '') {
+async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userBodyType = '', isBackgroundSync = false, originCode = '', vin = '') {
   const cleanMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
   const cleanModel = model.toLowerCase().replace(/[^a-z0-9]/g, '');
   
@@ -541,7 +541,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     
     // Strict Match: Include specific model files OR bulk brand range files (e.g. gra_2010-2025_infiniti.json)
     let matchedFiles = files.filter(file => {
-      if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
+      if (!file.endsWith('.json') || file === 'dynamic_cache.json' || file === 'models_list.json') return false;
       const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
       
       // If it's a bulk GRA range file for the brand, make sure it matches the brand and contains the model text
@@ -707,46 +707,52 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     };
   }
 
-  // BUDGET PROTECTOR SHIELD: Immediately abort and return empty arrays if background sync checks run
-  if (isBackgroundSync) {
+  // BUDGET PROTECTOR SHIELD: Abort live AI queries for manual free searches. 
+  // AI is strictly reserved for paid/token-backed VIN lookups or explicit system overrides.
+  const isVinRequest = vin && vin.trim().length === 17;
+  if (!isVinRequest || !process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === 'mock-key') {
+    const basePriceValue = targetCurrency === 'USD' ? 24500 : (targetCurrency === 'CAD' ? 31000 : 2800000);
+    const genericLineup = [
+      { trim: `${model.toUpperCase()} Base Metric`, price: basePriceValue, currency: targetCurrency, originCode: targetCode, isFallback: true, source: 'GRA Administrative Estimation Baseline' },
+      { trim: `${model.toUpperCase()} Luxury Edition`, price: basePriceValue * 1.3, currency: targetCurrency, originCode: targetCode, isFallback: true, source: 'GRA Administrative Estimation Baseline' }
+    ];
+
     return {
-      lineup: [],
-      isFallback: false,
-      availableOrigins: [],
+      lineup: normalizeLineupProperties(genericLineup, userEngine, userBodyType, targetCurrency),
+      isFallback: true,
+      availableOrigins: [targetCode],
       requestedOrigin: targetCode
     };
   }
 
-  // 4. LIVE LLM HOOK (Only executes if a car completely fails to exist within local data blocks)
-  if (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'mock-key') {
-    try {
-      console.log(`[EXTERNAL CLAUDE QUERY CALL] Authorized spending request for: ${year} ${make} ${model} (${targetCode})`);
-      const query = `Provide the complete breakdown list of standard factory trim variations, engines, and original MSRP values for a ${year} ${make} ${model} with an engine capacity size of ${userEngine || 'standard'} within the ${origin || targetCode} market.`;
-      const response = await client.messages.create({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1200,
-        system: [{ type: 'text', text: MSRP_PROMPT, cache_control: { type: 'ephemeral' } }],
-        messages: [{ role: 'user', content: query }]
-      });
+  // 4. LIVE LLM HOOK (Only executes for verified VIN lookup users)
+  try {
+    console.log(`[EXTERNAL CLAUDE QUERY CALL] Authorized VIN lookup spending request for: ${year} ${make} ${model} (${targetCode})`);
+    const query = `Provide the complete breakdown list of standard factory trim variations, engines, and original MSRP values for a ${year} ${make} ${model} with an engine capacity size of ${userEngine || 'standard'} within the ${origin || targetCode} market.`;
+    const response = await client.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1200,
+      system: [{ type: 'text', text: MSRP_PROMPT, cache_control: { type: 'ephemeral' } }],
+      messages: [{ role: 'user', content: query }]
+    });
 
-      const text = response.content.filter(b => b.type === 'text').map(b => b.text).join('');
-      const jsonMatch = text.match(/\[[\s\S]*\]/);
-      const clean = jsonMatch ? jsonMatch[0] : text.trim();
-      const lineup = JSON.parse(clean);
-      const normalized = normalizeLineupProperties(lineup, userEngine, userBodyType, targetCurrency);
-      
-      set(cKey, normalized, TTL.MSRP);
-      await writeToDynamicFileCache(fileCacheKey, normalized);
+    const text = response.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    const jsonMatch = text.match(/\[[\s\S]*\]/);
+    const clean = jsonMatch ? jsonMatch[0] : text.trim();
+    const lineup = JSON.parse(clean);
+    const normalized = normalizeLineupProperties(lineup, userEngine, userBodyType, targetCurrency);
+    
+    set(cKey, normalized, TTL.MSRP);
+    await writeToDynamicFileCache(fileCacheKey, normalized);
 
-      return {
-        lineup: normalized,
-        isFallback: false,
-        availableOrigins: [targetCode],
-        requestedOrigin: targetCode
-      };
-    } catch (aiErr) {
-      console.error('[AI STREAM FAIL]', aiErr.message);
-    }
+    return {
+      lineup: normalized,
+      isFallback: false,
+      availableOrigins: [targetCode],
+      requestedOrigin: targetCode
+    };
+  } catch (aiErr) {
+    console.error('[AI STREAM FAIL]', aiErr.message);
   }
 
   const basePriceValue = targetCurrency === 'USD' ? 24500 : (targetCurrency === 'CAD' ? 31000 : 2800000);
@@ -843,7 +849,7 @@ export async function POST(request) {
     const freightUsd = parseFloat(freight) || 1500
 
     const [lineupData, fxData] = await Promise.all([
-      fetchMsrpLineup(year, make, model, origin, engine, bodyType, isBackgroundSync, originCode),
+      fetchMsrpLineup(year, make, model, origin, engine, bodyType, isBackgroundSync, originCode, vin),
       fetchRates(origin),
     ]);
 
