@@ -411,7 +411,7 @@ const PRESET_FILENAME_MAP = {
   'toyota-camry': 'toyota_camry.json',
   'toyota-corolla': 'toyota_corolla.json',
   'toyota-corollaaxio': 'toyota_corolla_axio.json',
-  'toyota-corollacross': 'toyota_corolla_cross.json',
+  'toyotacorollacross': 'toyota_corolla_cross.json',
   'toyota-crown': 'toyota_crown.json',
   'toyota-fortuner': 'toyota_fortuner.json',
   'toyota-grandhighlander': 'toyota_grand_highlander.json',
@@ -539,11 +539,16 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     const normMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
     const normModel = model.toLowerCase().replace(/[^a-z0-9]/g, '');
     
-    // Strict Match: Only include files containing both make and model, explicitly omitting bulk cross-make sets
+    // Strict Match: Include specific model files OR bulk brand range files (e.g. gra_2010-2025_infiniti.json)
     let matchedFiles = files.filter(file => {
       if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
       const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (fileLow.startsWith('gra_20') && !fileLow.includes(normModel)) return false;
+      
+      // If it's a bulk GRA range file for the brand, make sure it matches the brand and contains the model text
+      if (fileLow.startsWith('gra_') || fileLow.startsWith('gra-')) {
+        return fileLow.includes(normMake) && fileLow.includes(normModel);
+      }
+      
       return fileLow.includes(normMake) && fileLow.includes(normModel);
     });
 
