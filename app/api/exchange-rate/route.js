@@ -8,9 +8,7 @@
 // - Germany/Europe → EUR/GHS
 // - UK    → GBP/GHS
 // - Korea → KRW/GHS
-
 import { get, set, TTL } from '@/lib/cache'
-
 // Origin → currency mapping
 // UAE uses USD because international car trade there is dollar-denominated
 export const ORIGIN_CURRENCY = {
@@ -22,27 +20,24 @@ export const ORIGIN_CURRENCY = {
   'UAE':          { code: 'USD', symbol: '$',   name: 'US Dollar',      useUsd: true  },
   'South Korea': { code: 'KRW', symbol: '₩',   name: 'Korean Won',     useUsd: false },
 }
-
 async function fetchAllRates() {
   const cacheKey = 'fx:all_rates'
   const cached = get(cacheKey)
   if (cached) return cached
-
   console.log('[FX] Fetching fresh exchange rates')
-
   try {
     // open.er-api.com — free, reliable, includes GHS
     // Added { next: { revalidate: 43200 } } to force Next.js to pull fresh data twice daily
+    // Added a 5s timeout so a hung connection doesn't stall the whole request
     const res = await fetch('https://open.er-api.com/v6/latest/USD', {
-      next: { revalidate: 43200 }
+      next: { revalidate: 43200 },
+      signal: AbortSignal.timeout(5000)
     })
     
     if (!res.ok) throw new Error('open.er-api failed')
     const data = await res.json()
     if (!data.rates?.GHS) throw new Error('GHS not in response')
-
     const usdGhs = data.rates.GHS
-
     const rates = {
       // Direct rates: 1 unit of foreign currency = X GHS
       USD: parseFloat(usdGhs.toFixed(4)),
@@ -57,14 +52,11 @@ async function fetchAllRates() {
       date: new Date().toISOString().split('T')[0],
       source: 'Bank of Ghana',
     }
-
     set(cacheKey, rates, TTL.EXCHANGE_RATE)
     console.log(`[FX] Live rates cached: 1 USD = GH₵ ${rates.USD}, 1 JPY = GH₵ ${rates.JPY}, 1 CNY = GH₵ ${rates.CNY}`)
     return rates
-
   } catch (e1) {
-    console.warn('[FX] Primary source failed:', e1.message)
-
+    console.warn('[FX] Primary source failed:', e1.message, e1.cause?.code || e1.cause || '')
     // Fallback — aligned closer to current reference rates (~11.63 USD/GHS)
     const fallback = {
       USD:     11.63,
@@ -84,15 +76,12 @@ async function fetchAllRates() {
     return fallback
   }
 }
-
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
   const origin = searchParams.get('origin') || 'USA'
   const currency = ORIGIN_CURRENCY[origin] || ORIGIN_CURRENCY['USA']
-
   const rates = await fetchAllRates()
   const rateToGhs = rates[currency.code]
-
   return Response.json({
     origin,
     currency_code: currency.code,
