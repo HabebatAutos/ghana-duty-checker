@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { checkEligibility } from '@/lib/dutyCalculator'
 import { get, set, TTL } from '@/lib/cache'
 import { supabase } from '@/lib/supabase'
+import { fetchAllRates, getRateForOrigin } from '@/lib/fx'
 import fs from 'fs/promises'
 import path from 'path'
 
@@ -796,37 +797,24 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
   };
 }
 
-// Fixed fetchRates with cache-control and updated fallback baseline
+// Calls the shared FX logic directly (see lib/fx.js) instead of making
+// an HTTP request back to this app's own /api/exchange-rate route.
+// That self-fetch was the real source of the FALLBACK APPLIED errors.
 async function fetchRates(origin) {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cediduty.com';
-    const res = await fetch(`${baseUrl}/api/exchange-rate?origin=${encodeURIComponent(origin)}`, {
-      cache: 'no-store' // Prevents Next.js internal static fetch caching
-    });
-    if (!res.ok) throw new Error('FX endpoint failed');
-    return await res.json();
-  } catch (err) {
-    console.error('[CALCULATE FX FETCH ERROR - FALLBACK APPLIED]', err.message);
-    return {
-      currency_code: 'USD',
-      currency_symbol: '$',
-      rate_to_ghs: 11.63,
-      usd_to_ghs: 11.63,
-      all_rates: { 
-        USD: 11.63, 
-        CAD: 8.26, 
-        AED: 3.16, 
-        JPY: 0.0711, 
-        CNY: 1.718, 
-        EUR: 13.25, 
-        GBP: 15.52, 
-        KRW: 0.0084 
-      },
-      date: new Date().toISOString().split('T')[0],
-      source: 'Bank of Ghana (Fallback)',
-      label: '1 USD = GH₵ 11.63',
-    };
-  }
+  const rates = await fetchAllRates();
+  const currency = getRateForOrigin(origin);
+  const rateToGhs = rates[currency.code];
+
+  return {
+    currency_code: currency.code,
+    currency_symbol: currency.symbol,
+    rate_to_ghs: rateToGhs,
+    usd_to_ghs: rates.USD_GHS,
+    all_rates: rates,
+    date: rates.date,
+    source: rates.source,
+    label: `1 ${currency.code} = GH₵ ${rateToGhs}`,
+  };
 }
 
 export async function POST(request) {

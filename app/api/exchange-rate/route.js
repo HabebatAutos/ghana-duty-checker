@@ -3,85 +3,27 @@
 // Key insight from GRA Unipass data:
 // - Japan → JPY/GHS
 // - USA   → USD/GHS
-// - UAE   → USD/GHS (UAE dealers price in USD, AED pegged to dollar)
+// - UAE   → AED/GHS (UAE dealers price in AED, pegged to dollar)
 // - China → CNY/GHS
 // - Germany/Europe → EUR/GHS
 // - UK    → GBP/GHS
 // - Korea → KRW/GHS
-import { get, set, TTL } from '@/lib/cache'
-// Origin → currency mapping
-// UAE uses USD because international car trade there is dollar-denominated
-export const ORIGIN_CURRENCY = {
-  'USA':          { code: 'USD', symbol: '$',   name: 'US Dollar',      useUsd: true  },
-  'Japan':        { code: 'JPY', symbol: '¥',   name: 'Japanese Yen',    useUsd: false },
-  'China':        { code: 'CNY', symbol: '¥',   name: 'Chinese Yuan',    useUsd: false },
-  'Germany':      { code: 'EUR', symbol: '€',   name: 'Euro',            useUsd: false },
-  'UK':           { code: 'GBP', symbol: '£',   name: 'British Pound',  useUsd: false },
-  'UAE':          { code: 'USD', symbol: '$',   name: 'US Dollar',      useUsd: true  },
-  'South Korea': { code: 'KRW', symbol: '₩',   name: 'Korean Won',     useUsd: false },
-}
-async function fetchAllRates() {
-  const cacheKey = 'fx:all_rates'
-  const cached = get(cacheKey)
-  if (cached) return cached
-  console.log('[FX] Fetching fresh exchange rates')
-  try {
-    // open.er-api.com — free, reliable, includes GHS
-    // Added { next: { revalidate: 43200 } } to force Next.js to pull fresh data twice daily
-    // Added a 5s timeout so a hung connection doesn't stall the whole request
-    const res = await fetch('https://open.er-api.com/v6/latest/USD', {
-      next: { revalidate: 43200 },
-      signal: AbortSignal.timeout(5000)
-    })
-    
-    if (!res.ok) throw new Error('open.er-api failed')
-    const data = await res.json()
-    if (!data.rates?.GHS) throw new Error('GHS not in response')
-    const usdGhs = data.rates.GHS
-    const rates = {
-      // Direct rates: 1 unit of foreign currency = X GHS
-      USD: parseFloat(usdGhs.toFixed(4)),
-      JPY: parseFloat((usdGhs / data.rates.JPY).toFixed(6)),
-      CNY: parseFloat((usdGhs / data.rates.CNY).toFixed(4)),
-      EUR: parseFloat((usdGhs / data.rates.EUR).toFixed(4)),
-      GBP: parseFloat((usdGhs / data.rates.GBP).toFixed(4)),
-      AED: parseFloat((usdGhs / data.rates.AED).toFixed(4)),
-      KRW: parseFloat((usdGhs / data.rates.KRW).toFixed(6)),
-      // Store USD→GHS for internal calculations
-      USD_GHS: parseFloat(usdGhs.toFixed(4)),
-      date: new Date().toISOString().split('T')[0],
-      source: 'Bank of Ghana',
-    }
-    set(cacheKey, rates, TTL.EXCHANGE_RATE)
-    console.log(`[FX] Live rates cached: 1 USD = GH₵ ${rates.USD}, 1 JPY = GH₵ ${rates.JPY}, 1 CNY = GH₵ ${rates.CNY}`)
-    return rates
-  } catch (e1) {
-    console.warn('[FX] Primary source failed:', e1.message, e1.cause?.code || e1.cause || '')
-    // Fallback — aligned closer to current reference rates (~11.63 USD/GHS)
-    const fallback = {
-      USD:     11.63,
-      JPY:     0.0711,
-      CNY:     1.718,
-      EUR:     13.25,
-      GBP:     15.52,
-      AED:     3.16,
-      KRW:     0.0084,
-      USD_GHS: 11.63,
-      date: new Date().toISOString().split('T')[0],
-      source: 'Bank of Ghana (Fallback)',
-    }
-    
-    // Store fallback for only 15 minutes so it retries live polling shortly
-    set(cacheKey, fallback, 15 * 60 * 1000) 
-    return fallback
-  }
-}
+//
+// The actual rate fetching logic now lives in lib/fx.js and is shared
+// with app/api/calculate/route.js, which imports it directly instead
+// of making an HTTP request to this route. That self-fetch was the
+// real cause of the FALLBACK APPLIED errors in production.
+
+import { ORIGIN_CURRENCY, fetchAllRates } from '@/lib/fx'
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
   const origin = searchParams.get('origin') || 'USA'
   const currency = ORIGIN_CURRENCY[origin] || ORIGIN_CURRENCY['USA']
+
   const rates = await fetchAllRates()
   const rateToGhs = rates[currency.code]
+
   return Response.json({
     origin,
     currency_code: currency.code,
