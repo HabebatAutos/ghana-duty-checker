@@ -1,5 +1,14 @@
 [
   {
+    "make_model": "acura_mdx"
+  },
+  {
+    "make_model": "acura_rdx"
+  },
+  {
+    "make_model": "acura_tlx"
+  },
+  {
     "make_model": "audi_a1"
   },
   {
@@ -121,6 +130,42 @@
   },
   {
     "make_model": "bmw_z4"
+  },
+  {
+    "make_model": "chevrolet_aveo"
+  },
+  {
+    "make_model": "chevrolet_corvette"
+  },
+  {
+    "make_model": "chevrolet_cruze"
+  },
+  {
+    "make_model": "chevrolet_equinox"
+  },
+  {
+    "make_model": "chevrolet_impala"
+  },
+  {
+    "make_model": "chevrolet_malibu"
+  },
+  {
+    "make_model": "chevrolet_sonic"
+  },
+  {
+    "make_model": "chevrolet_spark"
+  },
+  {
+    "make_model": "chevrolet_suburban"
+  },
+  {
+    "make_model": "chevrolet_tahoe"
+  },
+  {
+    "make_model": "chevrolet_traverse"
+  },
+  {
+    "make_model": "chevrolet_trax"
   },
   {
     "make_model": "daewoo_alpheon"
@@ -747,6 +792,81 @@
     "make_model": "jeep_wrangler"
   },
   {
+    "make_model": "kia_carens"
+  },
+  {
+    "make_model": "kia_carnival"
+  },
+  {
+    "make_model": "kia_cee_d"
+  },
+  {
+    "make_model": "kia_cerato"
+  },
+  {
+    "make_model": "kia_forte"
+  },
+  {
+    "make_model": "kia_k5"
+  },
+  {
+    "make_model": "kia_morning"
+  },
+  {
+    "make_model": "kia_niro"
+  },
+  {
+    "make_model": "kia_optima"
+  },
+  {
+    "make_model": "kia_pride"
+  },
+  {
+    "make_model": "kia_rio"
+  },
+  {
+    "make_model": "kia_sedona"
+  },
+  {
+    "make_model": "kia_seltos"
+  },
+  {
+    "make_model": "kia_sorento"
+  },
+  {
+    "make_model": "kia_soul"
+  },
+  {
+    "make_model": "kia_sportage"
+  },
+  {
+    "make_model": "kia_telluride"
+  },
+  {
+    "make_model": "landrover_defender"
+  },
+  {
+    "make_model": "landrover_discovery"
+  },
+  {
+    "make_model": "landrover_discovery_sportxlsx"
+  },
+  {
+    "make_model": "landrover_evoque"
+  },
+  {
+    "make_model": "landrover_range_over_sport"
+  },
+  {
+    "make_model": "landrover_range_rover"
+  },
+  {
+    "make_model": "landrover_range_rover_evoque"
+  },
+  {
+    "make_model": "landrover_range_rover_velar"
+  },
+  {
     "make_model": "lexus_es"
   },
   {
@@ -781,6 +901,36 @@
   },
   {
     "make_model": "lexus_ux"
+  },
+  {
+    "make_model": "mazda_2"
+  },
+  {
+    "make_model": "mazda_3"
+  },
+  {
+    "make_model": "mazda_5"
+  },
+  {
+    "make_model": "mazda_6"
+  },
+  {
+    "make_model": "mazda_cx-3"
+  },
+  {
+    "make_model": "mazda_cx-5"
+  },
+  {
+    "make_model": "mazda_cx-7"
+  },
+  {
+    "make_model": "mazda_cx-9"
+  },
+  {
+    "make_model": "mazda_demio"
+  },
+  {
+    "make_model": "mazda_mazda3"
   },
   {
     "make_model": "mercedes_benz_a_class"
@@ -913,6 +1063,111 @@
   },
   {
     "make_model": "mercedes_benz_x_class"
+  },
+  {
+    "make_model": "mitsubishi_asx"
+  },
+  {
+    "make_model": "mitsubishi_colt"
+  },
+  {
+    "make_model": "mitsubishi_eclipse"
+  },
+  {
+    "make_model": "mitsubishi_eclipse_cross"
+  },
+  {
+    "make_model": "mitsubishi_l200"
+  },
+  {
+    "make_model": "mitsubishi_lencer"
+  },
+  {
+    "make_model": "mitsubishi_mirage"
+  },
+  {
+    "make_model": "mitsubishi_montero"
+  },
+  {
+    "make_model": "mitsubishi_montero_sport"
+  },
+  {
+    "make_model": "mitsubishi_outlander"
+  },
+  {
+    "make_model": "mitsubishi_outlander_phev"
+  },
+  {
+    "make_model": "mitsubishi_outlander_sport"
+  },
+  {
+    "make_model": "mitsubishi_pajero"
+  },
+  {
+    "make_model": "mitsubishi_pajero_sport"
+  },
+  {
+    "make_model": "mitsubishi_rvr"
+  },
+  {
+    "make_model": "nissan_altima"
+  },
+  {
+    "make_model": "nissan_caravan"
+  },
+  {
+    "make_model": "nissan_frontier"
+  },
+  {
+    "make_model": "nissan_hardbody_np300"
+  },
+  {
+    "make_model": "nissan_juke"
+  },
+  {
+    "make_model": "nissan_kicks"
+  },
+  {
+    "make_model": "nissan_march"
+  },
+  {
+    "make_model": "nissan_maxima"
+  },
+  {
+    "make_model": "nissan_micra"
+  },
+  {
+    "make_model": "nissan_navara"
+  },
+  {
+    "make_model": "nissan_note"
+  },
+  {
+    "make_model": "nissan_pathfinder"
+  },
+  {
+    "make_model": "nissan_patrol"
+  },
+  {
+    "make_model": "nissan_qashqai"
+  },
+  {
+    "make_model": "nissan_quest"
+  },
+  {
+    "make_model": "nissan_rogue"
+  },
+  {
+    "make_model": "nissan_sentra"
+  },
+  {
+    "make_model": "nissan_vehicles"
+  },
+  {
+    "make_model": "nissan_versa"
+  },
+  {
+    "make_model": "nissan_x_trail"
   },
   {
     "make_model": "renault_arkana"
@@ -1302,21 +1557,21 @@
     "make_model": "volkswagen_crafter"
   },
   {
+    "make_model": "volkswagen_golf"
+  },
+  {
+    "make_model": "volkswagen_jetta"
+  },
+  {
     "make_model": "volkswagen_teramont (atlas)"
   },
   {
     "make_model": "volkswagen_tiguan"
   },
   {
-    "make_model": "volkswagen_VS7 (Jetta VS7)"
-  },
-  {
     "make_model": "volkswagen_touareg"
   },
   {
-    "make_model": "volkswagen_golf"
-  },
-  {
-    "make_model": "volkswagen_jetta"
+    "make_model": "volkswagen_VS7 (Jetta VS7)"
   }
 ]
