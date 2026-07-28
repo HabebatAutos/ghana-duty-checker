@@ -16,6 +16,20 @@ function formatModelLabel(raw) {
     .join(' ');
 }
 
+// Normalize models_list.json once into { raw, make, modelLabel } entries.
+// Handles multi-word model tokens (e.g. "audi_e_tron") by splitting only on the first underscore.
+const MODEL_INDEX = modelsList.map(item => {
+  const raw = typeof item === 'string' ? item : (item.make_model || '');
+  const firstUnderscore = raw.indexOf('_');
+  const makeToken = firstUnderscore === -1 ? raw : raw.slice(0, firstUnderscore);
+  const modelToken = firstUnderscore === -1 ? '' : raw.slice(firstUnderscore + 1);
+  return {
+    raw,
+    make: makeToken,
+    modelLabel: formatModelLabel(modelToken),
+  };
+}).filter(m => m.make && m.modelLabel);
+
 const CONTINENT_ORIGIN_GROUPS = [
   {
     continent: 'North America',
@@ -104,6 +118,8 @@ export default function Home() {
   const [fields, setFields] = useState({
     year: '', make: '', model: '', trim: '', engine: '', bodyType: 'Sedan'
   });
+  const [modelQuery, setModelQuery] = useState('');
+  const [showModelSuggestions, setShowModelSuggestions] = useState(false);
   const [vin, setVin] = useState('');
   const [vinData, setVinData] = useState(null);
   const [vinStatus, setVinStatus] = useState('');
@@ -213,6 +229,8 @@ export default function Home() {
     };
     const targetOrigin = payload.origin || 'USA';
     setFields(newFields);
+    setModelQuery(newFields.model || '');
+    setShowModelSuggestions(false);
     setOrigin(targetOrigin);
     setActiveContinent(findContinentForCountry(targetOrigin));
     setPurchasePrice(payload.hdv || '');
@@ -289,6 +307,8 @@ export default function Home() {
         bodyType: normaliseBodyType(v2.bodyType),
       };
       setFields(newFields);
+      setModelQuery(newFields.model || '');
+      setShowModelSuggestions(false);
         
       let detectedOrigin = 'USA';
       if (v2.plantCountry) {
@@ -653,32 +673,99 @@ export default function Home() {
                 </div>
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Make *</label>
-                  <input className="form-input premium-input-field" type="text" placeholder="e.g. Hyundai, Toyota" value={fields.make} onChange={e => setFields(p => ({ ...p, make: e.target.value }))} disabled={mode === 'premium'} style={{ padding: '10px 12px' }} />
-                </div>
-                
-                {/* PREDETERMINED SMART MODEL SELECTION FIELD */}
-                <div className="form-group">
-                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Model *</label>
-                  <input 
-                    className="form-input premium-input-field" 
-                    type="text" 
-                    list="database-car-models"
-                    placeholder={mode === 'premium' ? 'Enter any model name...' : 'Select or type preloaded model...'} 
-                    value={fields.model} 
-                    onChange={e => setFields(p => ({ ...p, model: e.target.value }))} 
+                  <input
+                    className="form-input premium-input-field"
+                    type="text"
+                    placeholder="e.g. Hyundai, Toyota"
+                    value={fields.make}
+                    onChange={e => {
+                      const val = e.target.value;
+                      setFields(p => ({ ...p, make: val, model: '' }));
+                      setModelQuery('');
+                      setShowModelSuggestions(false);
+                    }}
                     disabled={mode === 'premium'}
-                    style={{ padding: '10px 12px' }} 
+                    style={{ padding: '10px 12px' }}
                   />
-                  <datalist id="database-car-models">
-                    {modelsList.map(item => {
-                      const raw = typeof item === 'string' ? item : (item.make_model || '');
-                      const label = formatModelLabel(raw);
-                      return <option key={raw} value={label} />;
-                    })}
-                  </datalist>
+                </div>
+
+                {/* PREDETERMINED SMART MODEL SELECTION FIELD — make-scoped, selection-only search */}
+                <div className="form-group" style={{ position: 'relative' }}>
+                  <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Model *</label>
+                  {(() => {
+                    const normalizedMake = fields.make.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+                    const query = modelQuery.trim().toLowerCase();
+                    const matchedModels = (normalizedMake && query.length >= 2)
+                      ? MODEL_INDEX.filter(m => m.make === normalizedMake && m.modelLabel.toLowerCase().includes(query))
+                      : [];
+                    const modelKnownMake = normalizedMake && MODEL_INDEX.some(m => m.make === normalizedMake);
+
+                    return (
+                      <>
+                        <input
+                          className="form-input premium-input-field"
+                          type="text"
+                          placeholder={
+                            mode === 'premium'
+                              ? 'Enter any model name...'
+                              : !fields.make
+                                ? 'Enter car make first...'
+                                : 'Type 2+ letters (e.g. "el" for Elantra)...'
+                          }
+                          value={mode === 'premium' ? fields.model : modelQuery}
+                          onChange={e => {
+                            const val = e.target.value;
+                            setModelQuery(val);
+                            setFields(p => ({ ...p, model: '' })); // require an explicit selection before this counts as filled
+                            setShowModelSuggestions(val.trim().length >= 2);
+                          }}
+                          onFocus={() => setShowModelSuggestions(modelQuery.trim().length >= 2)}
+                          onBlur={() => setTimeout(() => setShowModelSuggestions(false), 150)}
+                          disabled={mode === 'premium' || !fields.make}
+                          autoComplete="off"
+                          style={{ padding: '10px 12px' }}
+                        />
+                        {mode === 'free' && showModelSuggestions && matchedModels.length > 0 && (
+                          <ul style={{
+                            position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 20,
+                            margin: '4px 0 0 0', padding: '4px', listStyle: 'none',
+                            background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px',
+                            boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)', maxHeight: '220px', overflowY: 'auto'
+                          }}>
+                            {matchedModels.map(m => (
+                              <li
+                                key={m.raw}
+                                onMouseDown={() => {
+                                  setFields(p => ({ ...p, model: m.modelLabel }));
+                                  setModelQuery(m.modelLabel);
+                                  setShowModelSuggestions(false);
+                                }}
+                                style={{ padding: '8px 10px', fontSize: '13px', color: '#1e293b', cursor: 'pointer', borderRadius: '6px' }}
+                                onMouseEnter={e => { e.currentTarget.style.background = '#f0fdf4'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                              >
+                                {m.modelLabel}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {mode === 'free' && showModelSuggestions && query.length >= 2 && matchedModels.length === 0 && (
+                          <div style={{
+                            position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 20,
+                            marginTop: '4px', padding: '10px 12px', fontSize: '12px', color: '#92400e',
+                            background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '8px'
+                          }}>
+                            {modelKnownMake
+                              ? `No preloaded model matches "${modelQuery.trim()}" for ${fields.make}.`
+                              : `No preloaded models found for "${fields.make}". Check the spelling, or use VIN Autofill for custom imports.`}
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
                   {mode === 'free' && (
                     <span style={{ fontSize: '10px', color: '#64748b', marginTop: '3px', display: 'block' }}>
-                      Free searches match preloaded GRA database records. Use VIN Autofill for custom imports.
+                      Enter the make first, then type at least 2 letters and select a model from the list.
                     </span>
                   )}
                 </div>
