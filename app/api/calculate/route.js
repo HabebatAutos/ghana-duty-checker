@@ -343,7 +343,7 @@ const PRESET_FILENAME_MAP = {
   'mitsubishi-outlanderphev': 'mitsubishi_outlander_phev.json',
   'mitsubishi-outlandersport': 'mitsubishi_outlander_sport.json',
   'mitsubishi-pajero': 'mitsubishi_pajero.json',
-  'mitsubishipajerosport': 'mitsubishi_pajero_sport.json',
+  'mitsubishi-pajerosport': 'mitsubishi_pajero_sport.json',
   'mitsubishi-rvr': 'mitsubishi_rvr.json',
   'mitsubishiasx': 'mitsubishi_asx.json',
   'mitsubishicolt': 'mitsubishi_colt.json',
@@ -598,15 +598,25 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
       }).filter(Boolean);
       const availableOrigins = Array.from(new Set(rawAvailableCodes)).sort();
 
-      // Filter 2: Flexible Origin Code Matching (Handles variant naming discrepancies)
+      // Filter 2: Flexible Origin Code Matching (Handles global export hub variants)
       let matches = yearMatches.filter(row => {
         const rawOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? '';
         const rowCode = normalizeOriginCode(rawOrigin);
         if (!rowCode) return true; // Include rows lacking explicit origin tags as universal fallback
         return rowCode === targetCode || 
+               // North America
                (targetCode === 'US' && (rowCode === 'USA' || rowCode === 'U.S.')) ||
                (targetCode === 'CA' && rowCode === 'CANADA') ||
-               (targetCode === 'KR' && (rowCode === 'KOREA' || rowCode === 'SOUTH KOREA'));
+               // Europe
+               (targetCode === 'DE' && (rowCode === 'GERMANY' || rowCode === 'DEUTSCHLAND')) ||
+               (targetCode === 'BE' && rowCode === 'BELGIUM') ||
+               (targetCode === 'GB' && (rowCode === 'UK' || rowCode === 'UNITED KINGDOM')) ||
+               (targetCode === 'NL' && rowCode === 'NETHERLANDS') ||
+               // Asia & Middle East
+               (targetCode === 'JP' && rowCode === 'JAPAN') ||
+               (targetCode === 'KR' && (rowCode === 'KOREA' || rowCode === 'SOUTH KOREA')) ||
+               (targetCode === 'CN' && rowCode === 'CHINA') ||
+               (targetCode === 'AE' && (rowCode === 'UAE' || rowCode === 'UNITED ARAB EMIRATES'));
       });
 
       let isFallbackOrigin = false;
