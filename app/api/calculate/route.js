@@ -2,6 +2,8 @@ import Anthropic from '@anthropic-ai/sdk'
 import { checkEligibility } from '@/lib/dutyCalculator'
 import { get, set, TTL } from '@/lib/cache'
 import { supabase } from '@/lib/supabase'
+import fs from 'fs/promises'
+import path from 'path'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || 'mock-key' })
 
@@ -341,7 +343,7 @@ const PRESET_FILENAME_MAP = {
   'mitsubishi-outlanderphev': 'mitsubishi_outlander_phev.json',
   'mitsubishi-outlandersport': 'mitsubishi_outlander_sport.json',
   'mitsubishi-pajero': 'mitsubishi_pajero.json',
-  'mitsubishi-pajerosport': 'mitsubishi_pajero_sport.json',
+  'mitsubishipajerosport': 'mitsubishi_pajero_sport.json',
   'mitsubishi-rvr': 'mitsubishi_rvr.json',
   'mitsubishiasx': 'mitsubishi_asx.json',
   'mitsubishicolt': 'mitsubishi_colt.json',
@@ -596,15 +598,23 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
       }).filter(Boolean);
       const availableOrigins = Array.from(new Set(rawAvailableCodes)).sort();
 
-      // Filter 2: Match Specific Origin Code
+      // Filter 2: Flexible Origin Code Matching (Handles variant naming discrepancies)
       let matches = yearMatches.filter(row => {
         const rawOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? '';
         const rowCode = normalizeOriginCode(rawOrigin);
-        return rowCode === targetCode || (targetCode === 'US' && (rowCode === 'USA' || rowCode === ''));
+        if (!rowCode) return true; // Include rows lacking explicit origin tags as universal fallback
+        return rowCode === targetCode || 
+               (targetCode === 'US' && (rowCode === 'USA' || rowCode === 'U.S.')) ||
+               (targetCode === 'CA' && rowCode === 'CANADA') ||
+               (targetCode === 'KR' && (rowCode === 'KOREA' || rowCode === 'SOUTH KOREA'));
       });
 
       let isFallbackOrigin = false;
       if (matches.length === 0 && yearMatches.length > 0) {
+        matches = yearMatches;
+        isFallbackOrigin = true;
+      } else if (matches.length === 0) {
+        // If still empty, grab all year matches to prevent blank/generic fallback overrides
         matches = yearMatches;
         isFallbackOrigin = true;
       }
