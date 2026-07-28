@@ -1,6 +1,9 @@
-'use client'
-
 import Link from 'next/link'
+
+export const metadata = {
+  title: 'About CediDuty — Ghana Vehicle Import Duty Calculator',
+  description: 'CediDuty helps importers get transparent, accurate vehicle customs duty estimates for Ghana using live exchange rates and GRA tariff rules.',
+};
 
 export default function AboutPage() {
   return (
