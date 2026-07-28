@@ -4,6 +4,9 @@ import Link from 'next/link'
 export const metadata = {
   title: 'FAQ — CediDuty Ghana Vehicle Import Duty Calculator',
   description: 'Frequently asked questions about Ghana vehicle import duty, customs calculations, depreciation rules, and using the CediDuty calculator.',
+  alternates: {
+    canonical: '/faq',
+  },
 };
 
 const faqs = [
@@ -41,7 +44,7 @@ const faqs = [
   },
   {
     q: 'Are the figures from GhanaDuty official?',
-    a: 'No. GhanaDuty provides estimates for planning purposes computed using the methodology prescribed under Customs Act 2015 (Act 891). Actual duty amounts are determined by Ghana Revenue Authority at time of clearance and may vary based on the BOG exchange rate on your declaration date, actual freight and insurance invoices, vehicle inspection findings, and the customs officer\'s valuation. Always consult a licensed clearing agent for your official assessment.',
+    a: 'No. GhanaDuty provides estimates for planning purposes computed using the methodology prescribed under Customs Act 2015 (Act 891). Actual duty amounts are determined by Ghana Revenue Authority at time of clearance and may vary based on the BOG exchange rate on your declaration date, actual freight and insurance invoices, vehicle inspection findings, and the customs officer's valuation. Always consult a licensed clearing agent for your official assessment.',
   },
   {
     q: 'Can I import a bus or minibus?',

@@ -4,6 +4,9 @@ import Link from 'next/link'
 export const metadata = {
   title: 'How It Works — GhanaDuty',
   description: 'Learn how GhanaDuty calculates vehicle import taxes in Ghana using real-time manufacturer prices, Bank of Ghana exchange rates, and Ghana Customs guidelines.',
+  alternates: {
+    canonical: '/how-it-works',
+  },
 };
 
 export default function HowItWorks() {

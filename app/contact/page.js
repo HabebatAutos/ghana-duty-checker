@@ -1,6 +1,9 @@
 export const metadata = {
   title: 'Contact Us — CediDuty Ghana Vehicle Import Support',
   description: 'Get in touch with the CediDuty support desk for help with vehicle valuation, customs duty questions, and port entry clearing at Tema and Takoradi.',
+  alternates: {
+    canonical: '/contact',
+  },
 };
 
 export default function ContactPage() {

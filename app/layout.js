@@ -5,9 +5,13 @@ import Navbar from './components/Navbar'
 import './globals.css'
 
 export const metadata = {
+  metadataBase: new URL('https://www.cediduty.com'),
   title: 'GhanaDuty — Vehicle Import Duty Calculator',
   description: 'Calculate Ghana Customs import duty for any vehicle from any country. Uses live MSRP data and Bank of Ghana exchange rates. Accurate, fast, and legally compliant with Customs Act 2015 (Act 891).',
   keywords: 'Ghana vehicle import duty, Ghana customs calculator, car import duty Ghana, GRA duty calculator, Tema port import duty',
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'GhanaDuty — Ghana Vehicle Import Duty Calculator',
     description: 'Calculate Ghana Customs import duty for any vehicle. Live MSRP + Bank of Ghana rates.',
