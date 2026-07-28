@@ -1,7 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { checkEligibility } from '@/lib/dutyCalculator'
 import { get, set, TTL } from '@/lib/cache'
-import { supabase } from '@/lib/supabase'
 import fs from 'fs/promises'
 import path from 'path'
 
@@ -46,7 +45,7 @@ const SANITY = {
   KRW: { min: 5000000, max: 500000000 },
 };
 
-// Helper to normalize country names and codes into clean 2-letter ISO codes
+// Helper to normalize country names and codes into clean 2-letter codes
 function normalizeOriginCode(rawVal) {
   if (!rawVal) return '';
   const str = String(rawVal).trim().toUpperCase();
@@ -56,7 +55,7 @@ function normalizeOriginCode(rawVal) {
   if (str === 'JP' || str === 'JAPAN') return 'JP';
   if (str === 'KR' || str === 'KOREA' || str === 'SOUTH KOREA') return 'KR';
   if (str === 'AE' || str === 'UAE' || str === 'UNITED ARAB EMIRATES') return 'AE';
-  if (str === 'DE' || str === 'GERMANY') return 'DE';
+  if (str === 'DE' || str === 'GERMANY' || str === 'DEUTSCHLAND') return 'DE';
   if (str === 'BE' || str === 'BELGIUM') return 'BE';
   if (str === 'NL' || str === 'NETHERLANDS') return 'NL';
   if (str === 'GB' || str === 'UK' || str === 'UNITED KINGDOM') return 'GB';
@@ -65,45 +64,8 @@ function normalizeOriginCode(rawVal) {
   return str;
 }
 
-// Preset Filename Registry
+// Legacy dictionary kept strictly as an emergency fallback channel
 const PRESET_FILENAME_MAP = {
-  // --- NEW TOYOTA DATASETS ---
-  'toyota-aqua': 'toyota_aqua.json',
-  'toyotaaqua': 'toyota_aqua.json',
-  'toyota-auris': 'toyota_auris.json',
-  'toyotaauris': 'toyota_auris.json',
-  'toyota-prius': 'toyota_prius.json',
-  'toyotaprius': 'toyota_prius.json',
-  'toyota-verso': 'toyota_verso.json',
-  'toyotaverso': 'toyota_verso.json',
-  'toyota-avanza': 'toyota_avanza.json',
-  'toyotaavanza': 'toyota_avanza.json',
-  'toyota-pickup': 'toyota_pickup.json',
-  'toyotapickup': 'toyota_pickup.json',
-  'toyota-hilux': 'toyota_pickup.json',
-  'toyotahilux': 'toyota_pickup.json',
-  'toyota-alphard': 'toyota_alphard.json',
-  'toyotaalphard': 'toyota_alphard.json',
-
-  // --- NEW VOLKSWAGEN DATASETS ---
-  'volkswagen-touareg': 'volkswagen_touareg.json',
-  'volkwagentouareg': 'volkswagen_touareg.json',
-  'vw-touareg': 'volkswagen_touareg.json',
-  'vwtouareg': 'volkswagen_touareg.json',
-  'volkswagen-tiguan': 'volkswagen_tiguan.json',
-  'volkwagentiguan': 'volkswagen_tiguan.json',
-  'vw-tiguan': 'volkswagen_tiguan.json',
-  'vwtiguan': 'volkswagen_tiguan.json',
-  'volkswagen-golf': 'volkswagen_golf.json',
-  'volkwagengolf': 'volkswagen_golf.json',
-  'vw-golf': 'volkswagen_golf.json',
-  'vwgolf': 'volkswagen_golf.json',
-  'volkswagen-jetta': 'volkswagen_jetta.json',
-  'volkwagenjetta': 'volkswagen_jetta.json',
-  'vw-jetta': 'volkswagen_jetta.json',
-  'vwjetta': 'volkswagen_jetta.json',
-
-  // --- EXISTING DATASETS ---
   'acura-mdx': 'acura_mdx.json',
   'acura-rdx': 'acura_rdx.json',
   'acura-tlx': 'acura_tlx.json',
@@ -419,6 +381,7 @@ const PRESET_FILENAME_MAP = {
   'toyota-harrier': 'toyota_harrier.json',
   'toyota-hiace': 'toyota_hiace.json',
   'toyota-highlander': 'toyota_highlander.json',
+  'toyota-hilux': 'toyota_hilux.json',
   'toyota-landcruiser': 'toyota_landCruiser.json',
   'toyota-landcruiserprado': 'toyota_landcruiserprado.json',
   'toyota-matrix': 'toyota_matrix.json',
@@ -449,6 +412,7 @@ const PRESET_FILENAME_MAP = {
   'toyotaharrier': 'toyota_harrier.json',
   'toyotahiace': 'toyota_hiace.json',
   'toyotahighlander': 'toyota_highlander.json',
+  'toyotahilux': 'toyota_hilux.json',
   'toyotalandcruiser': 'toyotalandcruiser.json',
   'toyotalandcruiserprado': 'toyotalandcruiserprado.json',
   'toyotamatrix': 'toyota_matrix.json',
@@ -466,30 +430,22 @@ const PRESET_FILENAME_MAP = {
   'toyotayaris': 'Toyota_yaris.json',
 };
 
-async function readDynamicCache(key) {
+const DYNAMIC_CACHE_FILE = path.join(process.cwd(), 'data', 'dynamic_cache.json');
+
+async function readDynamicFileCache() {
   try {
-    const { data, error } = await supabase
-      .from('dynamic_msrp_cache')
-      .select('lineup')
-      .eq('cache_key', key)
-      .maybeSingle();
-    if (error) throw error;
-    return data?.lineup || null;
-  } catch (err) {
-    console.error('[SUPABASE CACHE READ ERROR]', err.message);
-    return null;
-  }
+    const rawData = await fs.readFile(DYNAMIC_CACHE_FILE, 'utf-8');
+    return JSON.parse(rawData);
+  } catch { return {}; }
 }
 
-async function writeToDynamicCache(key, catalogData) {
+async function writeToDynamicFileCache(key, catalogData) {
   try {
-    const { error } = await supabase
-      .from('dynamic_msrp_cache')
-      .upsert({ cache_key: key, lineup: catalogData, cached_at: new Date().toISOString() });
-    if (error) throw error;
-  } catch (err) {
-    console.error('[SUPABASE CACHE WRITE ERROR]', err.message);
-  }
+    const currentCache = await readDynamicFileCache();
+    currentCache[key] = { lineup: catalogData, cachedAt: new Date().toISOString() };
+    await fs.mkdir(path.dirname(DYNAMIC_CACHE_FILE), { recursive: true });
+    await fs.writeFile(DYNAMIC_CACHE_FILE, JSON.stringify(currentCache, null, 2), 'utf-8');
+  } catch (err) { console.error('[CACHE FILE WRITE ERROR]', err.message); }
 }
 
 function normalizeLineupProperties(array, userEngine = '', userBodyType = '', targetCurrency = 'USD') {
@@ -506,13 +462,9 @@ function normalizeLineupProperties(array, userEngine = '', userBodyType = '', ta
     }
 
     let resolvedTrim = 'Base / Standard';
-    const candidateTrim = item.trim ?? item['Trim Level'] ?? item['Trim'];
-    if (candidateTrim !== undefined && candidateTrim !== null) {
-      const trimStr = String(candidateTrim).trim();
-      if (trimStr !== '' && trimStr.toUpperCase() !== 'NIL' && trimStr.toUpperCase() !== 'NA' && trimStr.toUpperCase() !== 'N/A' && trimStr.toUpperCase() !== 'NAN') {
-        resolvedTrim = trimStr;
-      }
-    }
+    if (item.trim !== undefined && item.trim !== null && String(item.trim).trim() !== 'NIL') resolvedTrim = item.trim;
+    else if (item['Trim Level'] !== undefined && item['Trim Level'] !== null && String(item['Trim Level']).trim() !== 'NIL') resolvedTrim = item['Trim Level'];
+    else if (item['Trim'] !== undefined && item['Trim'] !== null && String(item['Trim']).trim() !== 'NIL') resolvedTrim = item['Trim'];
 
     return {
       trim: String(resolvedTrim).trim(),
@@ -529,7 +481,7 @@ function normalizeLineupProperties(array, userEngine = '', userBodyType = '', ta
   });
 }
 
-async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userBodyType = '', isBackgroundSync = false, originCode = '', vin = '') {
+async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userBodyType = '', isBackgroundSync = false, originCode = '') {
   const cleanMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
   const cleanModel = model.toLowerCase().replace(/[^a-z0-9]/g, '');
   
@@ -540,7 +492,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
   const engineToken = userEngine ? userEngine.toLowerCase().replace(/[^a-z0-9]/g, '') : 'default';
   const fileCacheKey = `${year}-${cleanMake}-${cleanModel}-${targetCode}-${engineToken}`;
 
-  // 1. AUTOMATED LOCAL SPREADSHEET SCANNER (STRICT MODEL MATCH ONLY)
+  // 1. AUTOMATED LOCAL SPREADSHEET SCANNER FILTERED BY ORIGIN CODE & YEAR
   try {
     const dataDirPath = path.join(process.cwd(), 'data');
     const files = await fs.readdir(dataDirPath);
@@ -548,18 +500,21 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     const normMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
     const normModel = model.toLowerCase().replace(/[^a-z0-9]/g, '');
     
-    // Strict Match: Include specific model files OR bulk brand range files (e.g. gra_2010-2025_infiniti.json)
+    // Primary Filter: Find filenames matching both Make and Model
     let matchedFiles = files.filter(file => {
-      if (!file.endsWith('.json') || file === 'dynamic_cache.json' || file === 'models_list.json') return false;
+      if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
       const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
-      
-      // If it's a bulk GRA range file for the brand, make sure it matches the brand and contains the model text
-      if (fileLow.startsWith('gra_') || fileLow.startsWith('gra-')) {
-        return fileLow.includes(normMake) && fileLow.includes(normModel);
-      }
-      
       return fileLow.includes(normMake) && fileLow.includes(normModel);
     });
+
+    // Fallback Filter: Match Model alone if Make+Model didn't match
+    if (matchedFiles.length === 0) {
+      matchedFiles = files.filter(file => {
+        if (!file.endsWith('.json') || file === 'dynamic_cache.json') return false;
+        const fileLow = file.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return fileLow.includes(normModel);
+      });
+    }
 
     let targetPresetFile = null;
     if (matchedFiles.length > 0) {
@@ -567,7 +522,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
       targetPresetFile = matchedFiles[0];
     }
     
-    // Safety Net: Fall back to dictionary maps
+    // Safety Net: Fall back to legacy dictionary maps
     if (!targetPresetFile) {
       let carKey = `${cleanMake}-${cleanModel}`;
       if (!PRESET_FILENAME_MAP[carKey]) carKey = `${cleanMake}${cleanModel}`;
@@ -580,7 +535,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
       const repairedRawData = rawData.replace(/:\s*NaN\b/gi, ': null');
       const parsedData = JSON.parse(repairedRawData);
 
-      // Extract array whether root is an array or an object wrapper
+      // 🛡️ Bulletproof check: extract array whether root is an array or an object wrapper
       const records = Array.isArray(parsedData) 
         ? parsedData 
         : (parsedData.data || parsedData.records || Object.values(parsedData).find(v => Array.isArray(v)) || []);
@@ -598,33 +553,15 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
       }).filter(Boolean);
       const availableOrigins = Array.from(new Set(rawAvailableCodes)).sort();
 
-      // Filter 2: Flexible Origin Code Matching (Handles global export hub variants)
+      // Filter 2: Resilient Origin Code Matching (Restored from stable version behavior)
       let matches = yearMatches.filter(row => {
         const rawOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? '';
         const rowCode = normalizeOriginCode(rawOrigin);
-        if (!rowCode) return true; // Include rows lacking explicit origin tags as universal fallback
-        return rowCode === targetCode || 
-               // North America
-               (targetCode === 'US' && (rowCode === 'USA' || rowCode === 'U.S.')) ||
-               (targetCode === 'CA' && rowCode === 'CANADA') ||
-               // Europe
-               (targetCode === 'DE' && (rowCode === 'GERMANY' || rowCode === 'DEUTSCHLAND')) ||
-               (targetCode === 'BE' && rowCode === 'BELGIUM') ||
-               (targetCode === 'GB' && (rowCode === 'UK' || rowCode === 'UNITED KINGDOM')) ||
-               (targetCode === 'NL' && rowCode === 'NETHERLANDS') ||
-               // Asia & Middle East
-               (targetCode === 'JP' && rowCode === 'JAPAN') ||
-               (targetCode === 'KR' && (rowCode === 'KOREA' || rowCode === 'SOUTH KOREA')) ||
-               (targetCode === 'CN' && rowCode === 'CHINA') ||
-               (targetCode === 'AE' && (rowCode === 'UAE' || rowCode === 'UNITED ARAB EMIRATES'));
+        return rowCode === targetCode || rowCode === '' || (targetCode === 'US' && rowCode === 'USA');
       });
 
       let isFallbackOrigin = false;
       if (matches.length === 0 && yearMatches.length > 0) {
-        matches = yearMatches;
-        isFallbackOrigin = true;
-      } else if (matches.length === 0) {
-        // If still empty, grab all year matches to prevent blank/generic fallback overrides
         matches = yearMatches;
         isFallbackOrigin = true;
       }
@@ -634,22 +571,18 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
         
         matches.forEach(row => {
           let rawTrim = 'Base / Standard';
-          const candidateTrim = row.trim ?? row['Trim Level'] ?? row['Trim'];
-          if (candidateTrim !== undefined && candidateTrim !== null) {
-            const trimStr = String(candidateTrim).trim();
-            if (trimStr !== '' && trimStr.toUpperCase() !== 'NIL' && trimStr.toUpperCase() !== 'NA' && trimStr.toUpperCase() !== 'N/A' && trimStr.toUpperCase() !== 'NAN') {
-              rawTrim = trimStr;
-            }
-          }
+          if (row.trim !== undefined && row.trim !== null) rawTrim = row.trim;
+          else if (row['Trim Level'] !== undefined && row['Trim Level'] !== null) rawTrim = row['Trim Level'];
+          else if (row['Trim'] !== undefined && row['Trim'] !== null) rawTrim = row['Trim'];
 
           const cleanTrim = String(rawTrim).toUpperCase().trim();
-          const hdv = parseFloat(row.hdv ?? row['HDV'] ?? row['price'] ?? row['MSRP'] ?? row['CIF NCY'] ?? 0);
+          const hdv = parseFloat(row.hdv ?? row['HDV'] ?? row['price'] ?? row['MSRP'] ?? 0);
           const rowCurrency = row.currency ?? row['Currency'] ?? targetCurrency;
           
           const rawRowOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? targetCode;
           const rowOriginCode = normalizeOriginCode(rawRowOrigin) || targetCode;
 
-          if (cleanTrim === 'NAN' || isNaN(hdv) || hdv === 0) return;
+          if (cleanTrim === 'NIL' || cleanTrim === 'NAN' || isNaN(hdv) || hdv === 0) return;
 
           if (!uniqueVariants[cleanTrim]) {
             uniqueVariants[cleanTrim] = { 
@@ -711,11 +644,11 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     console.error(`[PRESET INTERCEPT ERROR]`, fileErr.message);
   }
 
-  // 2. SUPABASE DYNAMIC CACHE INTERCEPTION
-  const cachedLineup = await readDynamicCache(fileCacheKey);
-  if (cachedLineup) {
+  // 2. FILE DYNAMIC CACHE INTERCEPTION
+  const dynamicCache = await readDynamicFileCache();
+  if (dynamicCache[fileCacheKey]) {
     return {
-      lineup: normalizeLineupProperties(cachedLineup, userEngine, userBodyType, targetCurrency),
+      lineup: normalizeLineupProperties(dynamicCache[fileCacheKey].lineup, userEngine, userBodyType, targetCurrency),
       isFallback: false,
       availableOrigins: [targetCode],
       requestedOrigin: targetCode
@@ -734,52 +667,46 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     };
   }
 
-  // BUDGET PROTECTOR SHIELD: Abort live AI queries for manual free searches. 
-  // AI is strictly reserved for paid/token-backed VIN lookups or explicit system overrides.
-  const isVinRequest = vin && vin.trim().length === 17;
-  if (!isVinRequest || !process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === 'mock-key') {
-    const basePriceValue = targetCurrency === 'USD' ? 24500 : (targetCurrency === 'CAD' ? 31000 : 2800000);
-    const genericLineup = [
-      { trim: `${model.toUpperCase()} Base Metric`, price: basePriceValue, currency: targetCurrency, originCode: targetCode, isFallback: true, source: 'GRA Administrative Estimation Baseline' },
-      { trim: `${model.toUpperCase()} Luxury Edition`, price: basePriceValue * 1.3, currency: targetCurrency, originCode: targetCode, isFallback: true, source: 'GRA Administrative Estimation Baseline' }
-    ];
-
+  // BUDGET PROTECTOR SHIELD: Immediately abort and return empty arrays if background sync checks run
+  if (isBackgroundSync) {
     return {
-      lineup: normalizeLineupProperties(genericLineup, userEngine, userBodyType, targetCurrency),
-      isFallback: true,
-      availableOrigins: [targetCode],
+      lineup: [],
+      isFallback: false,
+      availableOrigins: [],
       requestedOrigin: targetCode
     };
   }
 
-  // 4. LIVE LLM HOOK (Only executes for verified VIN lookup users)
-  try {
-    console.log(`[EXTERNAL CLAUDE QUERY CALL] Authorized VIN lookup spending request for: ${year} ${make} ${model} (${targetCode})`);
-    const query = `Provide the complete breakdown list of standard factory trim variations, engines, and original MSRP values for a ${year} ${make} ${model} with an engine capacity size of ${userEngine || 'standard'} within the ${origin || targetCode} market.`;
-    const response = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1200,
-      system: [{ type: 'text', text: MSRP_PROMPT, cache_control: { type: 'ephemeral' } }],
-      messages: [{ role: 'user', content: query }]
-    });
+  // 4. LIVE LLM HOOK (Only executes if a car completely fails to exist within local data blocks)
+  if (process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'mock-key') {
+    try {
+      console.log(`[EXTERNAL CLAUDE QUERY CALL] Authorized spending request for: ${year} ${make} ${model} (${targetCode})`);
+      const query = `Provide the complete breakdown list of standard factory trim variations, engines, and original MSRP values for a ${year} ${make} ${model} with an engine capacity size of ${userEngine || 'standard'} within the ${origin || targetCode} market.`;
+      const response = await client.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1200,
+        system: [{ type: 'text', text: MSRP_PROMPT, cache_control: { type: 'ephemeral' } }],
+        messages: [{ role: 'user', content: query }]
+      });
 
-    const text = response.content.filter(b => b.type === 'text').map(b => b.text).join('');
-    const jsonMatch = text.match(/\[[\s\S]*\]/);
-    const clean = jsonMatch ? jsonMatch[0] : text.trim();
-    const lineup = JSON.parse(clean);
-    const normalized = normalizeLineupProperties(lineup, userEngine, userBodyType, targetCurrency);
-    
-    set(cKey, normalized, TTL.MSRP);
-    await writeToDynamicCache(fileCacheKey, normalized);
+      const text = response.content.filter(b => b.type === 'text').map(b => b.text).join('');
+      const jsonMatch = text.match(/\[[\s\S]*\]/);
+      const clean = jsonMatch ? jsonMatch[0] : text.trim();
+      const lineup = JSON.parse(clean);
+      const normalized = normalizeLineupProperties(lineup, userEngine, userBodyType, targetCurrency);
+      
+      set(cKey, normalized, TTL.MSRP);
+      await writeToDynamicFileCache(fileCacheKey, normalized);
 
-    return {
-      lineup: normalized,
-      isFallback: false,
-      availableOrigins: [targetCode],
-      requestedOrigin: targetCode
-    };
-  } catch (aiErr) {
-    console.error('[AI STREAM FAIL]', aiErr.message);
+      return {
+        lineup: normalized,
+        isFallback: false,
+        availableOrigins: [targetCode],
+        requestedOrigin: targetCode
+      };
+    } catch (aiErr) {
+      console.error('[AI STREAM FAIL]', aiErr.message);
+    }
   }
 
   const basePriceValue = targetCurrency === 'USD' ? 24500 : (targetCurrency === 'CAD' ? 31000 : 2800000);
@@ -796,35 +723,17 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
   };
 }
 
-// Fixed fetchRates with cache-control and updated fallback baseline
 async function fetchRates(origin) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cediduty.com';
-    const res = await fetch(`${baseUrl}/api/exchange-rate?origin=${encodeURIComponent(origin)}`, {
-      cache: 'no-store' // Prevents Next.js internal static fetch caching
-    });
+    const res = await fetch(`${baseUrl}/api/exchange-rate?origin=${encodeURIComponent(origin)}`);
     if (!res.ok) throw new Error('FX endpoint failed');
     return await res.json();
   } catch (err) {
-    console.error('[CALCULATE FX FETCH ERROR - FALLBACK APPLIED]', err.message);
     return {
-      currency_code: 'USD',
-      currency_symbol: '$',
-      rate_to_ghs: 11.63,
-      usd_to_ghs: 11.63,
-      all_rates: { 
-        USD: 11.63, 
-        CAD: 8.26, 
-        AED: 3.16, 
-        JPY: 0.0711, 
-        CNY: 1.718, 
-        EUR: 13.25, 
-        GBP: 15.52, 
-        KRW: 0.0084 
-      },
-      date: new Date().toISOString().split('T')[0],
-      source: 'Bank of Ghana (Fallback)',
-      label: '1 USD = GH₵ 11.63',
+      currency_code: 'USD', currency_symbol: '$', rate_to_ghs: 11.77, usd_to_ghs: 11.77,
+      all_rates: { USD: 11.77, CAD: 8.65, AED: 3.20, JPY: 0.0782, CNY: 1.623, EUR: 13.21, GBP: 15.54, KRW: 0.00855 },
+      date: new Date().toISOString().split('T')[0], source: 'Bank of Ghana (cached)', label: '1 USD = GHC 11.77',
     };
   }
 }
@@ -876,7 +785,7 @@ export async function POST(request) {
     const freightUsd = parseFloat(freight) || 1500
 
     const [lineupData, fxData] = await Promise.all([
-      fetchMsrpLineup(year, make, model, origin, engine, bodyType, isBackgroundSync, originCode, vin),
+      fetchMsrpLineup(year, make, model, origin, engine, bodyType, isBackgroundSync, originCode),
       fetchRates(origin),
     ]);
 
@@ -921,8 +830,8 @@ export async function POST(request) {
       const overagePenaltyGhs = cifGhs * overagePenaltyRate;
 
       const importDuty   = cifGhs * 0.10;
-      const nhil         = cifGhs * 0.025;
-      const getfund      = cifGhs * 0.025;
+      const nhil          = cifGhs * 0.025;
+      const getfund       = cifGhs * 0.025;
       const importVat    = cifGhs * 0.15;
       const ecowas       = cifGhs * 0.005;
       const examFee      = cifGhs * 0.01;
