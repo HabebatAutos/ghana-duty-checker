@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { checkEligibility } from '@/lib/dutyCalculator'
 import { get, set, TTL } from '@/lib/cache'
-import { supabase } from '@/lib/supabaseClient'
+import { supabase } from '@/lib/supabase'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || 'mock-key' })
 
