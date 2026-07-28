@@ -7,6 +7,15 @@ import PresetSelector from './components/PresetSelector'
 import PricingModal from './components/PricingModal'
 import modelsList from '@/data/models_list.json'
 
+// Convert a raw make_model entry like "audi_a1" into a clean display label "Audi A1"
+function formatModelLabel(raw) {
+  return String(raw)
+    .split(/[_\s]+/)
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 const CONTINENT_ORIGIN_GROUPS = [
   {
     continent: 'North America',
@@ -661,9 +670,11 @@ export default function Home() {
                     style={{ padding: '10px 12px' }} 
                   />
                   <datalist id="database-car-models">
-                    {modelsList.map(modelName => (
-                      <option key={modelName} value={modelName} />
-                    ))}
+                    {modelsList.map(item => {
+                      const raw = typeof item === 'string' ? item : (item.make_model || '');
+                      const label = formatModelLabel(raw);
+                      return <option key={raw} value={label} />;
+                    })}
                   </datalist>
                   {mode === 'free' && (
                     <span style={{ fontSize: '10px', color: '#64748b', marginTop: '3px', display: 'block' }}>
