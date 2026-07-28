@@ -1,8 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { checkEligibility } from '@/lib/dutyCalculator'
 import { get, set, TTL } from '@/lib/cache'
-import fs from 'fs/promises'
-import path from 'path'
+import { supabase } from '@/lib/supabaseClient'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || 'mock-key' })
 
@@ -465,22 +464,30 @@ const PRESET_FILENAME_MAP = {
   'toyotayaris': 'Toyota_yaris.json',
 };
 
-const DYNAMIC_CACHE_FILE = path.join(process.cwd(), 'data', 'dynamic_cache.json');
-
-async function readDynamicFileCache() {
+async function readDynamicCache(key) {
   try {
-    const rawData = await fs.readFile(DYNAMIC_CACHE_FILE, 'utf-8');
-    return JSON.parse(rawData);
-  } catch { return {}; }
+    const { data, error } = await supabase
+      .from('dynamic_msrp_cache')
+      .select('lineup')
+      .eq('cache_key', key)
+      .maybeSingle();
+    if (error) throw error;
+    return data?.lineup || null;
+  } catch (err) {
+    console.error('[SUPABASE CACHE READ ERROR]', err.message);
+    return null;
+  }
 }
 
-async function writeToDynamicFileCache(key, catalogData) {
+async function writeToDynamicCache(key, catalogData) {
   try {
-    const currentCache = await readDynamicFileCache();
-    currentCache[key] = { lineup: catalogData, cachedAt: new Date().toISOString() };
-    await fs.mkdir(path.dirname(DYNAMIC_CACHE_FILE), { recursive: true });
-    await fs.writeFile(DYNAMIC_CACHE_FILE, JSON.stringify(currentCache, null, 2), 'utf-8');
-  } catch (err) { console.error('[CACHE FILE WRITE ERROR]', err.message); }
+    const { error } = await supabase
+      .from('dynamic_msrp_cache')
+      .upsert({ cache_key: key, lineup: catalogData, cached_at: new Date().toISOString() });
+    if (error) throw error;
+  } catch (err) {
+    console.error('[SUPABASE CACHE WRITE ERROR]', err.message);
+  }
 }
 
 function normalizeLineupProperties(array, userEngine = '', userBodyType = '', targetCurrency = 'USD') {
@@ -684,11 +691,11 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     console.error(`[PRESET INTERCEPT ERROR]`, fileErr.message);
   }
 
-  // 2. FILE DYNAMIC CACHE INTERCEPTION
-  const dynamicCache = await readDynamicFileCache();
-  if (dynamicCache[fileCacheKey]) {
+  // 2. SUPABASE DYNAMIC CACHE INTERCEPTION
+  const cachedLineup = await readDynamicCache(fileCacheKey);
+  if (cachedLineup) {
     return {
-      lineup: normalizeLineupProperties(dynamicCache[fileCacheKey].lineup, userEngine, userBodyType, targetCurrency),
+      lineup: normalizeLineupProperties(cachedLineup, userEngine, userBodyType, targetCurrency),
       isFallback: false,
       availableOrigins: [targetCode],
       requestedOrigin: targetCode
@@ -743,7 +750,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     const normalized = normalizeLineupProperties(lineup, userEngine, userBodyType, targetCurrency);
     
     set(cKey, normalized, TTL.MSRP);
-    await writeToDynamicFileCache(fileCacheKey, normalized);
+    await writeToDynamicCache(fileCacheKey, normalized);
 
     return {
       lineup: normalized,
