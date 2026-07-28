@@ -86,7 +86,7 @@ function inferMakeFromFilename(filename) {
   if (clean.includes('honda')) return 'Honda';
   if (clean.includes('ford')) return 'Ford';
   if (clean.includes('dodge')) return 'Dodge';
-  if (clean.includes('infinity') || clean.includes('infiniti')) return 'Infiniti';
+  if (clean.includes('infiniti') || clean.includes('infiniti')) return 'Infiniti';
   if (clean.includes('fiat')) return 'Fiat';
   if (clean.includes('daewoo')) return 'Daewoo';
   if (clean.includes('bmw')) return 'BMW';
