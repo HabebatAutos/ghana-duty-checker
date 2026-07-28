@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { checkEligibility } from '@/lib/dutyCalculator'
 import { get, set, TTL } from '@/lib/cache'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 import { fetchAllRates, getRateForOrigin } from '@/lib/fx'
 import fs from 'fs/promises'
 import path from 'path'
@@ -469,7 +469,7 @@ const PRESET_FILENAME_MAP = {
 
 async function readDynamicCache(key) {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('dynamic_msrp_cache')
       .select('lineup')
       .eq('cache_key', key)
@@ -484,7 +484,7 @@ async function readDynamicCache(key) {
 
 async function writeToDynamicCache(key, catalogData) {
   try {
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from('dynamic_msrp_cache')
       .upsert({ cache_key: key, lineup: catalogData, cached_at: new Date().toISOString() });
     if (error) throw error;
@@ -759,7 +759,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     const query = `Provide the complete breakdown list of standard factory trim variations, engines, and original MSRP values for a ${year} ${make} ${model} with an engine capacity size of ${userEngine || 'standard'} within the ${origin || targetCode} market.`;
     const response = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1200,
+      max_tokens: 4096,
       system: [{ type: 'text', text: MSRP_PROMPT, cache_control: { type: 'ephemeral' } }],
       messages: [{ role: 'user', content: query }]
     });
