@@ -739,16 +739,16 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
   // AI is strictly reserved for paid/token-backed VIN lookups or explicit system overrides.
   const isVinRequest = vin && vin.trim().length === 17;
   if (!isVinRequest || !process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === 'mock-key') {
-    const basePriceValue = targetCurrency === 'USD' ? 24500 : (targetCurrency === 'CAD' ? 31000 : 2800000);
-    const genericLineup = [
-      { trim: `${model.toUpperCase()} Base Metric`, price: basePriceValue, currency: targetCurrency, originCode: targetCode, isFallback: true, source: 'GRA Administrative Estimation Baseline' },
-      { trim: `${model.toUpperCase()} Luxury Edition`, price: basePriceValue * 1.3, currency: targetCurrency, originCode: targetCode, isFallback: true, source: 'GRA Administrative Estimation Baseline' }
-    ];
-
+    // No local match, no cache, and not eligible for a live AI lookup — do NOT
+    // fabricate a price. A made-up number presented as a GRA-sourced figure is
+    // worse than no number at all for a customs duty calculator. Tell the
+    // caller plainly that we have nothing, and point them at VIN lookup,
+    // which IS allowed to consult AI and will very likely resolve this.
     return {
-      lineup: normalizeLineupProperties(genericLineup, userEngine, userBodyType, targetCurrency),
+      lineup: [],
       isFallback: true,
-      availableOrigins: [targetCode],
+      noDataAvailable: true,
+      availableOrigins: [],
       requestedOrigin: targetCode
     };
   }
@@ -783,16 +783,15 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     console.error('[AI STREAM FAIL]', aiErr.message);
   }
 
-  const basePriceValue = targetCurrency === 'USD' ? 24500 : (targetCurrency === 'CAD' ? 31000 : 2800000);
-  const genericLineup = [
-    { trim: `${model.toUpperCase()} Base Metric`, price: basePriceValue, currency: targetCurrency, originCode: targetCode, isFallback: true, source: 'GRA Administrative Estimation Baseline' },
-    { trim: `${model.toUpperCase()} Luxury Edition`, price: basePriceValue * 1.3, currency: targetCurrency, originCode: targetCode, isFallback: true, source: 'GRA Administrative Estimation Baseline' }
-  ];
-
+  // Even a paid, token-eligible VIN request can land here if AI itself
+  // errored or returned unusable data. The user already spent a token on
+  // the expectation of a real answer — give them an honest "not found"
+  // rather than a fabricated price that has nothing to do with their vehicle.
   return {
-    lineup: normalizeLineupProperties(genericLineup, userEngine, userBodyType, targetCurrency),
+    lineup: [],
     isFallback: true,
-    availableOrigins: [targetCode],
+    noDataAvailable: true,
+    availableOrigins: [],
     requestedOrigin: targetCode
   };
 }
@@ -870,6 +869,7 @@ export async function POST(request) {
 
     const lineup = lineupData?.lineup || (Array.isArray(lineupData) ? lineupData : []);
     const isFallback = lineupData?.isFallback || false;
+    const noDataAvailable = lineupData?.noDataAvailable || false;
     const availableOrigins = lineupData?.availableOrigins || [];
     const market = MARKET_CONFIG[origin] || MARKET_CONFIG[originCode] || MARKET_CONFIG['USA'];
     const requestedOrigin = lineupData?.requestedOrigin || normalizeOriginCode(originCode || market?.code || 'US');
@@ -951,6 +951,7 @@ export async function POST(request) {
       isLineup: true, 
       lineup, 
       isFallback,
+      noDataAvailable,
       requestedOrigin,
       availableOrigins,
       extendedSpecifications: extendedNhtsaData, 

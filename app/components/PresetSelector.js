@@ -154,6 +154,10 @@ export default function PresetSelector({ onSelectVehicle }) {
     const rawModel = selectedVehicle.model || selectedVehicle.Model || selectedVehicle.MODEL || ''
     const rawEngine = selectedVehicle.engine || selectedVehicle.Engine || selectedVehicle.ENGINE || ''
     const rawBody = selectedVehicle.bodyType || selectedVehicle.BodyType || selectedVehicle.BODY_TYPE || 'Sedan'
+    // Currency wasn't previously extracted — the caller had to re-derive it from
+    // origin instead of trusting the record's own value. Pull it directly so the
+    // preset's price is used exactly as recorded, with no re-guessing downstream.
+    const rawCurrency = selectedVehicle.currency || selectedVehicle.Currency || selectedVehicle.CURRENCY || ''
 
     onSelectVehicle({
       make: makeFormatted,
@@ -163,6 +167,7 @@ export default function PresetSelector({ onSelectVehicle }) {
       engine: rawEngine,
       trim: formatTrimName(rawTrim),
       hdv: rawHdv,
+      currency: rawCurrency,
       origin: normalizeOrigin(rawOrigin)
     })
   }
