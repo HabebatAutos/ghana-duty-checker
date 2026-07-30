@@ -983,7 +983,7 @@ export default function Home() {
               <p style={{ margin: '0 auto 16px auto', maxWidth: '440px', fontSize: '13px', color: '#64748b', lineHeight: '1.5' }}>
                 {vinData
                   ? "We couldn't retrieve a verified value for this vehicle, even through our AI-assisted lookup. Please try again shortly, or contact support for manual assistance."
-                  : "This vehicle isn't in our local records yet. For an instant, AI-verified price lookup, use VIN Lookup below instead of manual entry."}
+                  : "This vehicle isn't in our local records yet. For an instant, Web-verified price lookup, use VIN Lookup below instead of manual entry."}
               </p>
               {!vinData && (
                 <button
