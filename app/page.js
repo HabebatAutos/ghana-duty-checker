@@ -7,12 +7,28 @@ import PresetSelector from './components/PresetSelector'
 import PricingModal from './components/PricingModal'
 import modelsList from '@/data/models_list.json'
 
-// Convert a raw make_model entry like "audi_a1" into a clean display label "Audi A1"
+// Convert a raw make_model entry like "audi_a1" into a clean display label "Audi A1".
+// Alphanumeric tokens (e.g. "np300", "VS7") are upper-cased as codes rather than title-cased,
+// and parenthetical alt-names (e.g. "(atlas)") are preserved with their own casing.
 function formatModelLabel(raw) {
   return String(raw)
     .split(/[_\s]+/)
     .filter(Boolean)
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map(token => {
+      const match = token.match(/^([(]*)([^()]*)([)]*)$/);
+      const prefix = match ? match[1] : '';
+      const core = match ? match[2] : token;
+      const suffix = match ? match[3] : '';
+      let formatted;
+      if (/\d/.test(core)) {
+        formatted = core.toUpperCase();
+      } else if (core.length) {
+        formatted = core.charAt(0).toUpperCase() + core.slice(1).toLowerCase();
+      } else {
+        formatted = core;
+      }
+      return prefix + formatted + suffix;
+    })
     .join(' ');
 }
 
@@ -109,7 +125,7 @@ function scrollToCalculator() {
 }
 
 export default function Home() {
-  const { tokens, spendToken } = useTokens()
+  const { tokens, isUnlimited, spendToken } = useTokens()
   const [mode, setMode] = useState('free');
   const [activeContinent, setActiveContinent] = useState('North America');
   const [origin, setOrigin] = useState('USA');
@@ -264,7 +280,7 @@ export default function Home() {
     const v = vin.trim().toUpperCase();
     if (v.length !== 17) { setVinError('Please enter a full 17-character VIN (Chassis Number).'); return; }
 
-    if (tokens < 1) {
+    if (!isUnlimited && tokens < 1) {
       setVinError('You have no tokens left. Please buy tokens to use automatic VIN lookup.');
       setIsPricingModalOpen(true);
       return;
@@ -645,7 +661,7 @@ export default function Home() {
                     {vinError && (
                       <div style={{ marginTop: '12px', padding: '10px 14px', background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
                         <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: '500' }}>{vinError}</span>
-                        {tokens < 1 && (
+                        {!isUnlimited && tokens < 1 && (
                           <button
                             type="button"
                             onClick={() => setIsPricingModalOpen(true)}

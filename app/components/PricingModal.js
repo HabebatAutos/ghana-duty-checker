@@ -9,7 +9,103 @@ export default function PricingModal({ isOpen, onClose }) {
   const [loadingPlan, setLoadingPlan] = useState(null)
   const [modalError, setModalError] = useState('')
 
+  // --- Restore access flow ---
+  const [showRestore, setShowRestore] = useState(false)
+  const [restoreStep, setRestoreStep] = useState('email') // 'email' | 'code'
+  const [restoreEmail, setRestoreEmail] = useState('')
+  const [restoreCode, setRestoreCode] = useState('')
+  const [restoreLoading, setRestoreLoading] = useState(false)
+  const [restoreError, setRestoreError] = useState('')
+  const [restoreSuccessMsg, setRestoreSuccessMsg] = useState('')
+
   if (!isOpen) return null
+
+  const resetRestoreState = () => {
+    setShowRestore(false)
+    setRestoreStep('email')
+    setRestoreEmail('')
+    setRestoreCode('')
+    setRestoreError('')
+    setRestoreSuccessMsg('')
+  }
+
+  const handleRequestCode = async () => {
+    setRestoreError('')
+    if (!restoreEmail || !restoreEmail.includes('@')) {
+      setRestoreError('Please enter a valid email address.')
+      return
+    }
+
+    setRestoreLoading(true)
+    try {
+      const res = await fetch('/api/request-restore-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: restoreEmail.trim() }),
+      })
+      const data = await res.json()
+
+      if (!data.success) {
+        setRestoreError(data.error || 'Could not send verification code.')
+        setRestoreLoading(false)
+        return
+      }
+
+      setRestoreStep('code')
+      setRestoreLoading(false)
+    } catch {
+      setRestoreError('Network error. Please try again.')
+      setRestoreLoading(false)
+    }
+  }
+
+  const handleVerifyCode = async () => {
+    setRestoreError('')
+    if (!restoreCode || restoreCode.trim().length !== 6) {
+      setRestoreError('Please enter the 6-digit code from your email.')
+      return
+    }
+
+    setRestoreLoading(true)
+    try {
+      const res = await fetch('/api/verify-restore-code', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: restoreEmail.trim(), code: restoreCode.trim() }),
+      })
+      const data = await res.json()
+
+      if (!data.success) {
+        setRestoreError(data.error || 'Verification failed.')
+        setRestoreLoading(false)
+        return
+      }
+
+      // Load the restored wallet into this device's state + localStorage.
+      applyPaymentResult(data)
+      setRestoreLoading(false)
+
+      if (data.isPro || data.tokens > 0) {
+        setRestoreSuccessMsg(
+          data.isPro
+            ? 'Account restored! Your unlimited access is now active on this device.'
+            : `Account restored! You have ${data.tokens} token(s) available.`
+        )
+        setTimeout(() => {
+          resetRestoreState()
+          onClose()
+        }, 2000)
+      } else {
+        // Depleted balance — drop them back into the purchase view.
+        setRestoreSuccessMsg('')
+        resetRestoreState()
+        setModalError('Your token balance is empty. Choose a package below to continue.')
+      }
+    } catch {
+      setRestoreError('Network error. Please try again.')
+      setRestoreLoading(false)
+    }
+  }
 
   const handlePurchase = (amount, planType) => {
     setModalError('')
@@ -83,13 +179,123 @@ export default function PricingModal({ isOpen, onClose }) {
           <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: '#0f172a' }}>
             Choose Token Package
           </h3>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer', color: '#64748b' }}
           >
             ✕
           </button>
         </div>
+
+        {/* RESTORE ACCESS TOGGLE */}
+        {!showRestore && (
+          <button
+            onClick={() => { setShowRestore(true); setModalError(''); }}
+            style={{
+              background: 'none', border: 'none', color: '#05643c', fontSize: '12px',
+              fontWeight: '700', cursor: 'pointer', textDecoration: 'underline',
+              padding: 0, marginBottom: '18px', display: 'block'
+            }}
+          >
+            Already purchased? Restore access on this device
+          </button>
+        )}
+
+        {/* RESTORE ACCESS PANEL */}
+        {showRestore && (
+          <div style={{
+            border: '1px solid #bbf7d0', background: '#f0fdf4', borderRadius: '10px',
+            padding: '16px', marginBottom: '20px'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <h4 style={{ margin: 0, fontSize: '13px', fontWeight: '800', color: '#166534' }}>
+                🔑 Restore Access
+              </h4>
+              <button
+                onClick={resetRestoreState}
+                style={{ background: 'none', border: 'none', fontSize: '12px', color: '#64748b', cursor: 'pointer' }}
+              >
+                Cancel
+              </button>
+            </div>
+
+            {restoreSuccessMsg ? (
+              <p style={{ fontSize: '13px', color: '#166534', fontWeight: '700', margin: 0 }}>
+                ✅ {restoreSuccessMsg}
+              </p>
+            ) : restoreStep === 'email' ? (
+              <>
+                <p style={{ fontSize: '12px', color: '#475569', marginBottom: '10px' }}>
+                  Enter the email you used to purchase. We'll send a verification code.
+                </p>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="email"
+                    placeholder="e.g. kwame@example.com"
+                    value={restoreEmail}
+                    onChange={(e) => setRestoreEmail(e.target.value)}
+                    className="premium-input-field"
+                    style={{ flex: 1, padding: '10px 12px', fontSize: '13px', boxSizing: 'border-box' }}
+                  />
+                  <button
+                    onClick={handleRequestCode}
+                    disabled={restoreLoading}
+                    style={{
+                      background: '#05643c', color: '#fff', border: 'none', padding: '10px 14px',
+                      borderRadius: '8px', fontWeight: '700', fontSize: '12px',
+                      cursor: restoreLoading ? 'default' : 'pointer', opacity: restoreLoading ? 0.6 : 1,
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    {restoreLoading ? 'Sending...' : 'Send Code'}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p style={{ fontSize: '12px', color: '#475569', marginBottom: '10px' }}>
+                  Enter the 6-digit code sent to <strong>{restoreEmail}</strong>.
+                </p>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={6}
+                    placeholder="123456"
+                    value={restoreCode}
+                    onChange={(e) => setRestoreCode(e.target.value.replace(/\D/g, ''))}
+                    className="premium-input-field"
+                    style={{ flex: 1, padding: '10px 12px', fontSize: '15px', letterSpacing: '4px', boxSizing: 'border-box' }}
+                  />
+                  <button
+                    onClick={handleVerifyCode}
+                    disabled={restoreLoading}
+                    style={{
+                      background: '#05643c', color: '#fff', border: 'none', padding: '10px 14px',
+                      borderRadius: '8px', fontWeight: '700', fontSize: '12px',
+                      cursor: restoreLoading ? 'default' : 'pointer', opacity: restoreLoading ? 0.6 : 1,
+                      whiteSpace: 'nowrap'
+                    }}
+                  >
+                    {restoreLoading ? 'Verifying...' : 'Verify'}
+                  </button>
+                </div>
+                <button
+                  onClick={() => { setRestoreStep('email'); setRestoreCode(''); setRestoreError(''); }}
+                  style={{ background: 'none', border: 'none', color: '#64748b', fontSize: '11px', cursor: 'pointer', marginTop: '8px', padding: 0 }}
+                >
+                  Use a different email
+                </button>
+              </>
+            )}
+
+            {restoreError && (
+              <div style={{ marginTop: '10px', padding: '8px 10px', background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '6px', color: '#dc2626', fontSize: '11px' }}>
+                ⚠️ {restoreError}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* EMAIL INPUT FIELD */}
         <div style={{ marginBottom: '20px' }}>
