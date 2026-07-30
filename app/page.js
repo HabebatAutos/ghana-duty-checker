@@ -82,6 +82,17 @@ function getOriginCode(originValue) {
   return 'US';
 }
 
+// Used as a fallback when a preset record doesn't carry its own currency
+// field — reuses the same origin→currency mapping already defined above
+// rather than duplicating it.
+function getCurrencyForOrigin(originValue) {
+  for (const group of CONTINENT_ORIGIN_GROUPS) {
+    const found = group.countries.find(c => c.value === originValue);
+    if (found) return found.currency;
+  }
+  return 'USD';
+}
+
 function findContinentForCountry(countryValue) {
   for (const group of CONTINENT_ORIGIN_GROUPS) {
     if (group.countries.some(c => c.value === countryValue)) {
@@ -163,14 +174,14 @@ export default function Home() {
   const [clearingAgentLeadSent, setClearingAgentLeadSent] = useState(false);
   const [inspectionLeadSent, setInspectionLeadSent] = useState(false);
 
-  async function fetchLineupForFields(targetFields, targetOrigin, allowAIFallback) {
+  async function fetchLineupForFields(targetFields, targetOrigin, allowAIFallback, vinOverride = null) {
     if (!targetFields.year || !targetFields.make || !targetFields.model) return;
     setLineupLoading(true);
     setCalcError('');
     setResult(null);
     setMasterLineup([]);
     setDropdownTrims([]);
-    setLineupMeta({ isFallback: false, availableOrigins: [] });
+    setLineupMeta({ isFallback: false, availableOrigins: [], noDataAvailable: false });
     const originCode = getOriginCode(targetOrigin);
     try {
       const res = await fetch('/api/calculate', {
@@ -186,16 +197,27 @@ export default function Home() {
           originCode: originCode,
           freight,
           condition,
+          // Passing the VIN here is what actually unlocks the paid AI-verified
+          // lookup on the backend when local records come up empty — it was
+          // previously omitted from this specific call, so every request
+          // (VIN or not) looked identical to the server.
+          vin: vinOverride || null,
           isLineupQuery: true,
           isBackgroundSync: !allowAIFallback 
         }),
       });
       const data = await res.json();
-      if (res.ok && data.isLineup && data.lineup) {
+      if (res.ok && data.isLineup && data.noDataAvailable) {
+        // Genuinely no data anywhere (local files, cache, and — if this was
+        // a VIN request — AI too). Don't show a fabricated price; tell the
+        // user plainly and point them at VIN lookup if they haven't used it.
+        setLineupMeta({ isFallback: false, availableOrigins: [], noDataAvailable: true });
+      } else if (res.ok && data.isLineup && data.lineup) {
         setMasterLineup(data.lineup);
         setLineupMeta({
           isFallback: !!data.isFallback,
-          availableOrigins: data.availableOrigins || []
+          availableOrigins: data.availableOrigins || [],
+          noDataAvailable: false
         });
         
         const extractedTrims = data.lineup.map(item => {
@@ -229,7 +251,7 @@ export default function Home() {
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
     if (fields.year && fields.make && fields.model) {
-      fetchLineupForFields(fields, newOrigin, false);
+      fetchLineupForFields(fields, newOrigin, false, vinData?.vin || null);
     }
   }
 
@@ -255,11 +277,44 @@ export default function Home() {
     setVinData(null);
     setCalcError('');
     setResult(null);
-    setMasterLineup([]);
-    setDropdownTrims([]);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-    fetchLineupForFields(newFields, targetOrigin, false);
+
+    // Presets carry an exact, trusted hdv/currency/origin straight from the
+    // selected record — there is no reason to ask the backend to
+    // independently re-match this vehicle against a different dataset (and
+    // risk it coming up empty there, even though the very record the user
+    // just picked proves this vehicle/year genuinely has data). Build the
+    // lineup directly from what we already know instead.
+    const presetPrice = parseFloat(payload.hdv);
+    if (!payload.hdv || isNaN(presetPrice) || presetPrice <= 0) {
+      // Defensive fallback — shouldn't happen since presets only list years
+      // that have a real hdv, but don't silently show a $0 card if it does.
+      setMasterLineup([]);
+      setDropdownTrims([]);
+      setLineupMeta({ isFallback: false, availableOrigins: [], noDataAvailable: true });
+      setTimeout(scrollToCalculator, 150);
+      return;
+    }
+
+    const originCode = getOriginCode(targetOrigin);
+    const presetCurrency = payload.currency || getCurrencyForOrigin(targetOrigin);
+    const presetLineup = [{
+      trim: payload.trim ? `${newFields.model.toUpperCase()} ${payload.trim}` : `${newFields.model.toUpperCase()} Base / Standard`,
+      body_style: newFields.bodyType,
+      engine: newFields.engine || 'Standard Spec',
+      fuel_type: 'Gasoline',
+      price: presetPrice,
+      currency: presetCurrency,
+      originCode,
+      isFallback: false,
+      source: 'Quick Preset — Verified Record',
+      notes: ''
+    }];
+
+    setMasterLineup(presetLineup);
+    setDropdownTrims([]); // single confirmed trim — no need for a trim picker
+    setLineupMeta({ isFallback: false, availableOrigins: [originCode], noDataAvailable: false });
 
     // Auto-scroll mobile view down
     setTimeout(scrollToCalculator, 150);
@@ -343,7 +398,10 @@ export default function Home() {
       setActiveContinent(findContinentForCountry(detectedOrigin));
       setVinData(v2);
       setVinStatus('');
-      fetchLineupForFields(newFields, detectedOrigin, false);
+      // Passing v (the decoded VIN) here is the actual fix for VIN lookups
+      // silently falling back to a fabricated price — this call previously
+      // never told the backend a VIN was involved at all.
+      fetchLineupForFields(newFields, detectedOrigin, false, v);
     } catch (e) {
       setVinStatus('');
       setVinError('VIN lookup timed out. Please try again or fill in the details manually.');
@@ -913,6 +971,29 @@ export default function Home() {
               <p style={{ margin: 0, fontSize: '13px', fontWeight: '500' }}>
                 Fetching official GRA valuation records for {fields.year} {fields.make} {fields.model} [{getOriginCode(origin)}]...
               </p>
+            </div>
+          )}
+
+          {lineupMeta.noDataAvailable && !result && !lineupLoading && (
+            <div className="premium-card-wrapper" style={{ padding: '24px', textAlign: 'center' }}>
+              <div style={{ fontSize: '28px', marginBottom: '8px' }}>🔍</div>
+              <h4 style={{ margin: '0 0 6px 0', fontSize: '15px', color: '#0f172a' }}>
+                No pricing data available for {fields.year} {fields.make} {fields.model}
+              </h4>
+              <p style={{ margin: '0 auto 16px auto', maxWidth: '440px', fontSize: '13px', color: '#64748b', lineHeight: '1.5' }}>
+                {vinData
+                  ? "We couldn't retrieve a verified value for this vehicle, even through our AI-assisted lookup. Please try again shortly, or contact support for manual assistance."
+                  : "This vehicle isn't in our local records yet. For an instant, AI-verified price lookup, use VIN Lookup below instead of manual entry."}
+              </p>
+              {!vinData && (
+                <button
+                  onClick={() => switchMode('premium')}
+                  className="calc-btn"
+                  style={{ borderRadius: '8px', padding: '10px 20px', fontSize: '13px', fontWeight: '700' }}
+                >
+                  Switch to VIN Lookup
+                </button>
+              )}
             </div>
           )}
 
