@@ -9,8 +9,19 @@ import path from 'path'
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || 'mock-key' })
 
 const MSRP_PROMPT = `You are an expert vehicle valuation assistant specializing in international automotive markets.
-Your task is to provide a comprehensive list of standard factory trim packages and model variations for a specified vehicle model year.
-Return ONLY a valid JSON array of objects. Do not wrap the response in markdown code blocks or include conversational text.`;
+Your task is to provide a comprehensive list of standard factory trim packages and model variations for a specified vehicle model year, with accurate original manufacturer suggested retail prices in the requested market's currency.
+
+Return ONLY a valid JSON array of objects. Do not wrap the response in markdown code blocks or include conversational text.
+
+Each object in the array MUST use exactly these keys:
+- "trim": string, the trim level name (e.g. "E 300", "E 300 AMG Line")
+- "price": number, the numeric MSRP as it would have been priced new, with no currency symbols, commas, or text
+- "currency": string, the 3-letter ISO currency code (e.g. "EUR", "USD")
+- "engine": string, engine description (e.g. "2.0L 4-cyl Gasoline")
+- "body_style": string, body style (e.g. "Sedan")
+- "fuel_type": string, fuel type (e.g. "Gasoline", "Diesel", "Hybrid")
+
+Prices must reflect realistic, differentiated market pricing per trim level, not a single repeated estimate across all trims. Use your best knowledge of actual manufacturer pricing for that model year and market.`;
 
 const MARKET_CONFIG = {
   'USA':          { currency: 'USD', code: 'US' },
@@ -769,7 +780,15 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     const clean = jsonMatch ? jsonMatch[0] : text.trim();
     const lineup = JSON.parse(clean);
     const normalized = normalizeLineupProperties(lineup, userEngine, userBodyType, targetCurrency);
-    
+
+    const fallbackCount = lineup.filter(item => {
+      const raw = item.price ?? item.msrp ?? item.base_price ?? item.hdv ?? item.HDV ?? item.value;
+      return isNaN(parseFloat(raw));
+    }).length;
+    if (fallbackCount > 0) {
+      console.warn(`[AI PRICE PARSE WARNING] ${fallbackCount}/${lineup.length} trims missing/unparseable price field for ${year} ${make} ${model} (${targetCode})`);
+    }
+
     set(cKey, normalized, TTL.MSRP);
     await writeToDynamicCache(fileCacheKey, normalized);
 
