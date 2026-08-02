@@ -743,7 +743,7 @@ export default function Home() {
               <div className="responsive-form-grid">
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Year of Manufacture *</label>
-                  <input className="form-input premium-input-field" type="number" placeholder="e.g. 2022" value={fields.year} onChange={e => setFields(p => ({ ...p, year: e.target.value }))} disabled={mode === 'premium'} style={{ padding: '10px 12px' }} />
+                  <input className="form-input premium-input-field" type="number" placeholder="e.g. 2022" value={fields.year} onChange={e => setFields(p => ({ ...p, year: e.target.value }))} disabled={mode === 'premium' && !vinData} style={{ padding: '10px 12px' }} />
                 </div>
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Make *</label>
@@ -758,7 +758,7 @@ export default function Home() {
                       setModelQuery('');
                       setShowModelSuggestions(false);
                     }}
-                    disabled={mode === 'premium'}
+                    disabled={mode === 'premium' && !vinData}
                     style={{ padding: '10px 12px' }}
                   />
                 </div>
@@ -777,28 +777,32 @@ export default function Home() {
                     return (
                       <>
                         <input
-                          className="form-input premium-input-field"
-                          type="text"
-                          placeholder={
-                            mode === 'premium'
-                              ? 'Enter any model name...'
-                              : !fields.make
-                                ? 'Enter car make first...'
-                                : 'Type 2+ letters (e.g. "el" for Elantra)...'
-                          }
-                          value={mode === 'premium' ? fields.model : modelQuery}
-                          onChange={e => {
-                            const val = e.target.value;
-                            setModelQuery(val);
-                            setFields(p => ({ ...p, model: '' })); // require an explicit selection before this counts as filled
-                            setShowModelSuggestions(val.trim().length >= 2);
-                          }}
-                          onFocus={() => setShowModelSuggestions(modelQuery.trim().length >= 2)}
-                          onBlur={() => setTimeout(() => setShowModelSuggestions(false), 150)}
-                          disabled={mode === 'premium' || !fields.make}
-                          autoComplete="off"
-                          style={{ padding: '10px 12px' }}
-                        />
+  className="form-input premium-input-field"
+  type="text"
+  placeholder={
+    mode === 'premium'
+      ? 'Enter any model name...'
+      : !fields.make
+        ? 'Enter car make first...'
+        : 'Type 2+ letters (e.g. "el" for Elantra)...'
+  }
+  value={mode === 'premium' ? fields.model : modelQuery}
+  onChange={e => {
+    const val = e.target.value;
+    if (mode === 'premium') {
+      setFields(p => ({ ...p, model: val }));
+    } else {
+      setModelQuery(val);
+      setFields(p => ({ ...p, model: '' })); // require an explicit selection before this counts as filled
+      setShowModelSuggestions(val.trim().length >= 2);
+    }
+  }}
+  onFocus={() => setShowModelSuggestions(modelQuery.trim().length >= 2)}
+  onBlur={() => setTimeout(() => setShowModelSuggestions(false), 150)}
+  disabled={mode === 'premium' && !vinData}
+  autoComplete="off"
+  style={{ padding: '10px 12px' }}
+/>
                         {mode === 'free' && showModelSuggestions && matchedModels.length > 0 && (
                           <ul style={{
                             position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 20,
