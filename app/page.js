@@ -328,7 +328,11 @@ export default function Home() {
     setResult(null);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-    fetchLineupForFields(fields, origin, true);
+    // If a VIN was decoded, keep passing it through even if the user edited
+    // year/make/model afterward — editing a field post-decode shouldn't
+    // demote this into a pure manual entry and lose access to the AI
+    // fallback lookup on the backend.
+    fetchLineupForFields(fields, origin, true, vinData?.vin || null);
   }
 
   async function decodeVin() {
