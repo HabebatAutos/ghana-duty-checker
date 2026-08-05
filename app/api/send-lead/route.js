@@ -98,7 +98,7 @@ export async function POST(request) {
     console.log(`[LEAD ENGINE] Shipping out generated mail block packet via Resend to: ${targetReceiver}...`);
     
     await resend.emails.send({
-      from: 'GhanaDuty Marketplace <onboarding@resend.dev>',
+      from: 'CEDIDUTY <support@cediduty.com>',
       to: [targetReceiver],
       subject: `🚨 Lead Alert: ${leadDetails.name} - ${calculationResult.vehicle_label}`,
       html: htmlBody,

@@ -66,7 +66,7 @@ export async function POST(req) {
     }
 
     await resend.emails.send({
-      from: 'CEDIDUTY <onboarding@resend.dev>',
+      from: 'CEDIDUTY <support@cediduty.com>',
       to: [email],
       subject: `Your CEDIDUTY verification code: ${code}`,
       html: `
