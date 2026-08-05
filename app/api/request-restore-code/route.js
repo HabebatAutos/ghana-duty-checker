@@ -1,11 +1,12 @@
 // app/api/request-restore-code/route.js
 import { NextResponse } from 'next/server'
 import { randomInt } from 'crypto'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 import { supabaseAdmin, normalizeEmail } from '@/lib/supabase'
 
 const CODE_TTL_MINUTES = 10
 const RESEND_COOLDOWN_SECONDS = 60
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req) {
   try {
@@ -16,8 +17,6 @@ export async function POST(req) {
       return NextResponse.json({ success: false, error: 'A valid email address is required.' }, { status: 400 })
     }
 
-    // Only issue codes for emails that actually have a wallet — no point
-    // emailing a code to someone who's never purchased anything.
     const { data: wallet, error: walletErr } = await supabaseAdmin
       .from('user_wallets')
       .select('email')
@@ -36,8 +35,6 @@ export async function POST(req) {
       )
     }
 
-    // Cooldown — don't let the same email trigger a fresh code more than
-    // once a minute (prevents accidental double-taps and casual abuse).
     const { data: recentCode } = await supabaseAdmin
       .from('restore_codes')
       .select('created_at')
@@ -56,7 +53,7 @@ export async function POST(req) {
       }
     }
 
-    const code = String(randomInt(100000, 1000000)) // always 6 digits
+    const code = String(randomInt(100000, 1000000))
     const expiresAt = new Date(Date.now() + CODE_TTL_MINUTES * 60 * 1000).toISOString()
 
     const { error: insertErr } = await supabaseAdmin
@@ -68,21 +65,9 @@ export async function POST(req) {
       return NextResponse.json({ success: false, error: 'Failed to generate code.' }, { status: 500 })
     }
 
-    const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com'
-    const smtpPort = parseInt(process.env.SMTP_PORT || '465')
-    const isSecureConnection = smtpPort === 465
-
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: smtpPort,
-      secure: isSecureConnection,
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-      tls: { rejectUnauthorized: false },
-    })
-
-    await transporter.sendMail({
-      from: `"CEDIDUTY" <${process.env.SMTP_USER}>`,
-      to: email,
+    await resend.emails.send({
+      from: 'CEDIDUTY <onboarding@resend.dev>',
+      to: [email],
       subject: `Your CEDIDUTY verification code: ${code}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px;">

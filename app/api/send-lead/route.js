@@ -1,6 +1,8 @@
 // app/api/send-lead/route.js
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request) {
   console.log('[LEAD ENGINE] Intercepted new client lead payload form...');
@@ -14,30 +16,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Required contact parameter fields are missing.' }, { status: 400 });
     }
 
-    const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
-    const smtpPort = parseInt(process.env.SMTP_PORT || '465');
-    
-    // Auto-detect secure state based on the selected port profile
-    const isSecureConnection = smtpPort === 465;
-
-    console.log(`[LEAD ENGINE] Initializing SMTP transport on ${smtpHost}:${smtpPort} (Secure: ${isSecureConnection})...`);
-
-    // Initialize the transmission transporter with localized environment parameters
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: smtpPort,
-      secure: isSecureConnection, 
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-      // Local Network Shield: Prevents localhost environment handshakes from dropping due to self-signed certificates
-      tls: {
-        rejectUnauthorized: false
-      }
-    });
-
-    const targetReceiver = process.env.LEAD_RECEIVER_EMAIL || process.env.SMTP_USER;
+    const targetReceiver = process.env.LEAD_RECEIVER_EMAIL || 'samdork6@gmail.com';
     
     // Construct the HTML message envelope
     const htmlBody = `
@@ -111,26 +90,27 @@ export async function POST(request) {
         </div>
 
         <div style="margin-top: 30px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 11px; color: #94a3b8;">
-          This submission statement was dispatched via local deployment nodes instantly matching on-screen transaction executions.
+          This submission statement was dispatched via Resend API nodes instantly matching on-screen transaction executions.
         </div>
       </div>
     `;
 
-    console.log(`[LEAD ENGINE] Shipping out generated mail block packet to destination inbox: ${targetReceiver}...`);
+    console.log(`[LEAD ENGINE] Shipping out generated mail block packet via Resend to: ${targetReceiver}...`);
     
-    await transporter.sendMail({
-      from: `"GhanaDuty Marketplace" <${process.env.SMTP_USER}>`,
-      to: targetReceiver,
+    await resend.emails.send({
+      from: 'GhanaDuty Marketplace <onboarding@resend.dev>',
+      to: [targetReceiver],
       subject: `🚨 Lead Alert: ${leadDetails.name} - ${calculationResult.vehicle_label}`,
       html: htmlBody,
     });
 
-    console.log('[LEAD ENGINE SUCCESS] Lead packet dispatched successfully!');
+    console.log('[LEAD ENGINE SUCCESS] Lead packet dispatched successfully via Resend!');
     return NextResponse.json({ success: true, message: 'Lead recorded downstream safely.' });
 
   } catch (error) {
-    // CRUCIAL DEBUG LOG: This will output the exact underlying network or auth rejection trace code directly to your terminal screen
-    console.error('[GLOBAL LEAD ENGINE CRASH TRACE]:', error);
-    return NextResponse.json({ error: 'Internal server endpoint failed to broadcast layout data.' }, { status: 500 });
+    console.error('[GLOBAL LEAD ENGINE CRASH TRACE]:', {
+      message: error.message,
+    });
+    return NextResponse.json({ error: 'Internal server endpoint failed to broadcast layout data.', details: error.message }, { status: 500 });
   }
 }
