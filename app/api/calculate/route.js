@@ -911,8 +911,11 @@ export async function POST(request) {
     if (useManualMsrp && purchasePrice && parseFloat(purchasePrice) > 0) {
       // User explicitly checked "I know the exact original price" and entered a value
       msrp_source_type = 'user_provided';
-    } else if (body.selectedSource && (body.selectedSource.includes('AI') || body.selectedSource.includes('ai'))) {
-      // The selected price came from AI VIN lookup
+    } else if (body.selectedSource && /\bAI\b/.test(body.selectedSource)) {
+      // The selected price came from AI VIN lookup. Match the standalone
+      // word "AI" only — a loose .includes('ai') substring match previously
+      // false-positived on words like "Appraisal" (which contains "ai"),
+      // mislabeling genuine GRA preset data as AI-assisted.
       msrp_source_type = 'ai_assisted';
     } else if (body.selectedSource && body.selectedSource.includes('Preset')) {
       // Preset = local database, so it's GRA verified
