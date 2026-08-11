@@ -6,7 +6,6 @@ import { useTokens } from './Context/TokenContext'
 import PresetSelector from './components/PresetSelector'
 import PricingModal from './components/PricingModal'
 import modelsList from '@/data/models_list.json'
-
 // Convert a raw make_model entry like "audi_a1" into a clean display label "Audi A1".
 // Alphanumeric tokens (e.g. "np300", "VS7") are upper-cased as codes rather than title-cased,
 // and parenthetical alt-names (e.g. "(atlas)") are preserved with their own casing.
@@ -31,7 +30,6 @@ function formatModelLabel(raw) {
     })
     .join(' ');
 }
-
 // Normalize models_list.json once into { raw, make, modelLabel } entries.
 // Handles multi-word model tokens (e.g. "audi_e_tron") by splitting only on the first underscore.
 const MODEL_INDEX = modelsList.map(item => {
@@ -45,7 +43,6 @@ const MODEL_INDEX = modelsList.map(item => {
     modelLabel: formatModelLabel(modelToken),
   };
 }).filter(m => m.make && m.modelLabel);
-
 const CONTINENT_ORIGIN_GROUPS = [
   {
     continent: 'North America',
@@ -73,7 +70,6 @@ const CONTINENT_ORIGIN_GROUPS = [
     ]
   }
 ];
-
 function getOriginCode(originValue) {
   for (const group of CONTINENT_ORIGIN_GROUPS) {
     const found = group.countries.find(c => c.value === originValue);
@@ -81,7 +77,6 @@ function getOriginCode(originValue) {
   }
   return 'US';
 }
-
 // Used as a fallback when a preset record doesn't carry its own currency
 // field — reuses the same origin→currency mapping already defined above
 // rather than duplicating it.
@@ -92,7 +87,6 @@ function getCurrencyForOrigin(originValue) {
   }
   return 'USD';
 }
-
 function findContinentForCountry(countryValue) {
   for (const group of CONTINENT_ORIGIN_GROUPS) {
     if (group.countries.some(c => c.value === countryValue)) {
@@ -101,15 +95,12 @@ function findContinentForCountry(countryValue) {
   }
   return 'North America';
 }
-
 function fmtGhs(n) {
   return 'GHC ' + parseFloat(n || 0).toLocaleString('en-GH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
 function fmtUsd(n) {
   return '$' + parseFloat(n || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
-
 function normaliseBodyType(nhtsa) {
   if (!nhtsa) return 'Sedan';
   const b = nhtsa.toLowerCase();
@@ -122,7 +113,6 @@ function normaliseBodyType(nhtsa) {
   if (b.includes('electric')) return 'Electric Vehicle (EV)';
   return 'Sedan';
 }
-
 // Mobile Scroll Utility Function (Updated to scroll further down to action button)
 function scrollToCalculator() {
   if (typeof window !== 'undefined' && window.innerWidth < 768) {
@@ -134,7 +124,6 @@ function scrollToCalculator() {
     }
   }
 }
-
 export default function Home() {
   const { tokens, isUnlimited, spendToken } = useTokens()
   const [mode, setMode] = useState('free');
@@ -152,6 +141,7 @@ export default function Home() {
   const [vinStatus, setVinStatus] = useState('');
   const [vinError, setVinError] = useState('');
   const [purchasePrice, setPurchasePrice] = useState('');
+  const [useManualMsrp, setUseManualMsrp] = useState(false);
   const [freight, setFreight] = useState('1500');
   const [calcStatus, setCalcStatus] = useState('');
   const [calcError, setCalcError] = useState('');
@@ -163,7 +153,6 @@ export default function Home() {
   const [lineupLoading, setLineupLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [pdfLoading, setPdfLoading] = useState(false);
-
   // INTERACTIVE POPUP MODAL HOOK STATES
   const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -173,8 +162,7 @@ export default function Home() {
   const [leadForm, setLeadForm] = useState({ name: '', phone: '', email: '', notes: '' });
   const [clearingAgentLeadSent, setClearingAgentLeadSent] = useState(false);
   const [inspectionLeadSent, setInspectionLeadSent] = useState(false);
-
-  async function fetchLineupForFields(targetFields, targetOrigin, allowAIFallback, vinOverride = null) {
+  async function fetchLineupForFields(targetFields, targetOrigin, allowAIFallback, vinOverride = null, manualMsrpOptions = null) {
     if (!targetFields.year || !targetFields.make || !targetFields.model) return;
     setLineupLoading(true);
     setCalcError('');
@@ -197,20 +185,15 @@ export default function Home() {
           originCode: originCode,
           freight,
           condition,
-          // Passing the VIN here is what actually unlocks the paid AI-verified
-          // lookup on the backend when local records come up empty — it was
-          // previously omitted from this specific call, so every request
-          // (VIN or not) looked identical to the server.
           vin: vinOverride || null,
           isLineupQuery: true,
-          isBackgroundSync: !allowAIFallback 
+          isBackgroundSync: !allowAIFallback,
+          useManualMsrp: manualMsrpOptions?.useManualMsrp || false,
+          purchasePrice: manualMsrpOptions?.purchasePrice || null,
         }),
       });
       const data = await res.json();
       if (res.ok && data.isLineup && data.noDataAvailable) {
-        // Genuinely no data anywhere (local files, cache, and — if this was
-        // a VIN request — AI too). Don't show a fabricated price; tell the
-        // user plainly and point them at VIN lookup if they haven't used it.
         setLineupMeta({ isFallback: false, availableOrigins: [], noDataAvailable: true });
       } else if (res.ok && data.isLineup && data.lineup) {
         setMasterLineup(data.lineup);
@@ -231,8 +214,6 @@ export default function Home() {
         
         const uniqueOptions = Array.from(new Set(extractedTrims)).filter(Boolean).sort();
         setDropdownTrims(uniqueOptions);
-
-        // Auto-scroll mobile view down to selection/results interface
         setTimeout(scrollToCalculator, 100);
       } else if (data.error) {
         setCalcError(data.error);
@@ -244,7 +225,6 @@ export default function Home() {
       setLineupLoading(false);
     }
   }
-
   function handleSelectOrigin(newOrigin) {
     setOrigin(newOrigin);
     setResult(null);
@@ -254,7 +234,6 @@ export default function Home() {
       fetchLineupForFields(fields, newOrigin, false, vinData?.vin || null);
     }
   }
-
   function handleLoadVehiclePreset(payload) {
     setMode('free');
     const newFields = {
@@ -279,24 +258,14 @@ export default function Home() {
     setResult(null);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-
-    // Presets carry an exact, trusted hdv/currency/origin straight from the
-    // selected record — there is no reason to ask the backend to
-    // independently re-match this vehicle against a different dataset (and
-    // risk it coming up empty there, even though the very record the user
-    // just picked proves this vehicle/year genuinely has data). Build the
-    // lineup directly from what we already know instead.
     const presetPrice = parseFloat(payload.hdv);
     if (!payload.hdv || isNaN(presetPrice) || presetPrice <= 0) {
-      // Defensive fallback — shouldn't happen since presets only list years
-      // that have a real hdv, but don't silently show a $0 card if it does.
       setMasterLineup([]);
       setDropdownTrims([]);
       setLineupMeta({ isFallback: false, availableOrigins: [], noDataAvailable: true });
       setTimeout(scrollToCalculator, 150);
       return;
     }
-
     const originCode = getOriginCode(targetOrigin);
     const presetCurrency = payload.currency || getCurrencyForOrigin(targetOrigin);
     const presetLineup = [{
@@ -311,15 +280,11 @@ export default function Home() {
       source: 'Quick Preset — Verified Record',
       notes: ''
     }];
-
     setMasterLineup(presetLineup);
-    setDropdownTrims([]); // single confirmed trim — no need for a trim picker
+    setDropdownTrims([]);
     setLineupMeta({ isFallback: false, availableOrigins: [originCode], noDataAvailable: false });
-
-    // Auto-scroll mobile view down
     setTimeout(scrollToCalculator, 150);
   }
-
   function handleManualCalculateTrigger() {
     if (!fields.year || !fields.make || !fields.model) {
       setCalcError('Please enter the Year, Make, and Model of the vehicle.');
@@ -328,17 +293,64 @@ export default function Home() {
     setResult(null);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-    // If a VIN was decoded, keep passing it through even if the user edited
-    // year/make/model afterward — editing a field post-decode shouldn't
-    // demote this into a pure manual entry and lose access to the AI
-    // fallback lookup on the backend.
     fetchLineupForFields(fields, origin, true, vinData?.vin || null);
   }
-
+  async function runCalculationWithUserMsrp() {
+    if (!purchasePrice || parseFloat(purchasePrice) <= 0) {
+      setCalcError('Please enter a valid MSRP price.');
+      return;
+    }
+    
+    setResult(null);
+    setClearingAgentLeadSent(false);
+    setInspectionLeadSent(false);
+    setCalcStatus('Calculating itemized customs duty and port clearing taxes...');
+    
+    try {
+      const res = await fetch('/api/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          year: fields.year,
+          make: fields.make,
+          model: fields.model,
+          trim: `${fields.model} User-Provided MSRP`,
+          engine: fields.engine,
+          bodyType: fields.bodyType,
+          origin,
+          originCode: getOriginCode(origin),
+          purchasePrice,
+          freight,
+          condition,
+          vin: vinData?.vin || null,
+          selectedPrice: parseFloat(purchasePrice),
+          selectedCurrency: 'USD',
+          selectedSource: 'User-Provided MSRP',
+          selectedTrim: `${fields.model} User-Provided MSRP`,
+          useManualMsrp: true,
+          isLineupQuery: false,
+          isBackgroundSync: false
+        }),
+      });
+      
+      const data = await res.json();
+      setCalcStatus('');
+      
+      if (!res.ok) {
+        setCalcError(data.error || 'Calculation failed. Please check your inputs and try again.');
+        return;
+      }
+      
+      setResult(data.result);
+      setTimeout(scrollToCalculator, 100);
+    } catch (e) {
+      setCalcStatus('');
+      setCalcError('Connection error. Please check your network connection.');
+    }
+  }
   async function decodeVin() {
     const v = vin.trim().toUpperCase();
     if (v.length !== 17) { setVinError('Please enter a full 17-character VIN (Chassis Number).'); return; }
-
     if (!isUnlimited && tokens < 1) {
       setVinError('You have no tokens left. Please buy tokens to use automatic VIN lookup.');
       setIsPricingModalOpen(true);
@@ -352,18 +364,15 @@ export default function Home() {
     setDropdownTrims([]);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-
     try {
       const res = await fetch(`/api/decode-vin?vin=${v}`);
       const data = await res.json();
-
       if (!res.ok) {
         setVinStatus('');
         setMode('free');
         setVinError('Could not auto-fill details for this VIN. Please enter car details manually.');
         return;
       }
-
       const spendOk = await spendToken();
       if (!spendOk) {
         setVinStatus('');
@@ -371,7 +380,6 @@ export default function Home() {
         setIsPricingModalOpen(true);
         return;
       }
-
       const v2 = data.vehicle;
       const newFields = {
         year: v2.year || '',
@@ -402,16 +410,12 @@ export default function Home() {
       setActiveContinent(findContinentForCountry(detectedOrigin));
       setVinData(v2);
       setVinStatus('');
-      // Passing v (the decoded VIN) here is the actual fix for VIN lookups
-      // silently falling back to a fabricated price — this call previously
-      // never told the backend a VIN was involved at all.
       fetchLineupForFields(newFields, detectedOrigin, false, v);
     } catch (e) {
       setVinStatus('');
       setVinError('VIN lookup timed out. Please try again or fill in the details manually.');
     }
   }
-
   async function runFinalCalculation(selectedOption) {
     setCalcError('');
     setCalcStatus('Calculating itemized customs duty and port clearing taxes...');
@@ -457,7 +461,6 @@ export default function Home() {
       setCalcError('Connection error. Please check your network connection.');
     }
   }
-
   async function downloadPdf() {
     if (!result) return;
     setPdfLoading(true);
@@ -484,23 +487,22 @@ export default function Home() {
     }
     setPdfLoading(false);
   }
-
   function switchMode(m) {
     setMode(m);
     setResult(null);
     setMasterLineup([]);
     setDropdownTrims([]);
     setCalcError('');
+    setPurchasePrice('');
+    setUseManualMsrp(false);
     if (m === 'free') setVinData(null);
   }
-
   function triggerOpenLeadModal(serviceTypeString) {
     setLeadTargetType(serviceTypeString);
     setLeadError('');
     setLeadForm({ name: '', phone: '', email: '', notes: '' });
     setIsLeadModalOpen(true);
   }
-
   async function executeLeadFormSubmission(e) {
     e.preventDefault();
     setLeadError('');
@@ -534,16 +536,13 @@ export default function Home() {
       setLeadSubmitting(false);
     }
   }
-
   const displayedLineupCards = masterLineup.filter(item => {
     if (!fields.trim) return true;
     const itemTrimUpper = item.trim.toUpperCase();
     const searchTrimUpper = fields.trim.toUpperCase();
     return itemTrimUpper.includes(searchTrimUpper) || searchTrimUpper.includes(itemTrimUpper);
   });
-
   const d = result?.duties || {};
-
   return (
     <div suppressHydrationWarning>
       <style suppressHydrationWarning>{`
@@ -565,7 +564,6 @@ export default function Home() {
         .modal-inner-surface { background: #ffffff; width: 100%; max-width: 460px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); overflow: hidden; animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes modalPop { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         
-        /* 2-COLUMN APP CONTAINER GRID ARCHITECTURE */
         .app-container-grid {
           display: grid;
           grid-template-columns: 1fr;
@@ -629,13 +627,11 @@ export default function Home() {
           }
         }
       `}</style>
-
       {/* BACKGROUND IMAGE & OVERLAY */}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -2, overflow: 'hidden', backgroundColor: '#090d16' }}>
         <Image src="/bg-hero.jpg" alt="Tema Harbor Terminal Background" fill priority quality={95} style={{ objectFit: 'cover' }} />
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.20) 0%, rgba(15, 23, 42, 0.40) 100%)' }} />
       </div>
-
       <div className="hero" style={{ background: 'linear-gradient(135deg, #05643c, #047857)', padding: '32px 16px', color: '#ffffff', textAlign: 'center', marginBottom: '24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
         
         {/* HERO LOGO & TITLE CONTAINER */}
@@ -671,7 +667,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
       <div className="app-container-grid">
         
         {/* MAIN CALCULATOR FORM & RESULTS */}
@@ -706,7 +701,6 @@ export default function Home() {
                   </span>
                 </button>
               </div>
-
               {mode === 'premium' && (
                 <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '20px', boxSizing: 'border-box' }}>
                   <div style={{ fontSize: '14px', fontWeight: '600', color: '#1e293b', marginBottom: '4px' }}>Automatic VIN Search</div>
@@ -715,7 +709,7 @@ export default function Home() {
                   </div>
                   <div className="form-group full" style={{ marginBottom: 0 }}>
                     <div className="vin-row" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                      <input className="form-input premium-input-field" type="text" placeholder="e.g. 1FTEW1EP9HFC23632" maxLength={17} value={vin} onChange={e => setVin(e.target.value.toUpperCase())} style={{ flex: 1, minWidth: '200px', padding: '10px 12px' }} />
+                      <input id="vin-input-field" className="form-input premium-input-field" type="text" placeholder="e.g. 1FTEW1EP9HFC23632" maxLength={17} value={vin} onChange={e => setVin(e.target.value.toUpperCase())} style={{ flex: 1, minWidth: '200px', padding: '10px 12px' }} />
                       <button className="vin-decode-btn" style={{ borderRadius: '8px', padding: '10px 18px', background: '#05643c', color: '#ffffff', fontWeight: '700', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }} onClick={decodeVin}>Decode VIN</button>
                     </div>
                     {vinStatus && <div className="status-bar" style={{ marginTop: '8px', fontSize: '12px', color: '#05643c' }}>{vinStatus}</div>}
@@ -737,13 +731,11 @@ export default function Home() {
                   </div>
                 </div>
               )}
-
               {mode === 'free' && (
                 <div style={{ padding: '12px 16px', background: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0', color: '#166534', fontSize: '12px', fontWeight: '500', marginBottom: '20px', lineHeight: '1.4' }}>
                   💡 <strong>Free Mode Active:</strong> Select a car from the quick presets or choose from our verified database models below to calculate duty instantly for free.
                 </div>
               )}
-
               <div className="responsive-form-grid">
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Year of Manufacture *</label>
@@ -766,7 +758,6 @@ export default function Home() {
                     style={{ padding: '10px 12px' }}
                   />
                 </div>
-
                 {/* PREDETERMINED SMART MODEL SELECTION FIELD — make-scoped, selection-only search */}
                 <div className="form-group" style={{ position: 'relative' }}>
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Car Model *</label>
@@ -777,7 +768,6 @@ export default function Home() {
                       ? MODEL_INDEX.filter(m => m.make === normalizedMake && m.modelLabel.toLowerCase().includes(query))
                       : [];
                     const modelKnownMake = normalizedMake && MODEL_INDEX.some(m => m.make === normalizedMake);
-
                     return (
                       <>
                         <input
@@ -797,7 +787,7 @@ export default function Home() {
       setFields(p => ({ ...p, model: val }));
     } else {
       setModelQuery(val);
-      setFields(p => ({ ...p, model: '' })); // require an explicit selection before this counts as filled
+      setFields(p => ({ ...p, model: '' }));
       setShowModelSuggestions(val.trim().length >= 2);
     }
   }}
@@ -851,7 +841,6 @@ export default function Home() {
                     </span>
                   )}
                 </div>
-
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Trim Variant (Optional)</label>
                   <input 
@@ -881,10 +870,11 @@ export default function Home() {
                     <option>Pickup Truck</option>
                     <option>Van / Minivan</option>
                     <option>Hatchback</option>
+                    <option>Commercial / Heavy Duty</option>
+                    <option>Minibus/Bus</option>
                   </select>
                 </div>
               </div>
-
               <div className="responsive-form-grid" style={{ marginBottom: '16px' }}>
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Customs Base Price / MSRP (USD)</label>
@@ -901,8 +891,7 @@ export default function Home() {
                   <input className="form-input premium-input-field" type="number" value={freight} onChange={e => setFreight(e.target.value)} style={{ padding: '10px 12px' }} />
                 </div>
               </div>
-
-              {/* REACTIVE CONTINENT & COUNTRY ORIGIN SELECTOR */}
+              {/* REACTIVE CONTINENT & COUNTRY ORIGIN SELECTOR - PRESERVED EXACTLY */}
               <div className="form-group full" style={{ marginTop: 16 }}>
                 <label className="form-label" style={{ fontWeight: '700', color: '#1e293b', marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px', fontSize: '12px' }}>
                   <span>Country Shipping From (Origin Code Filter) *</span>
@@ -935,7 +924,6 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
-
                 {/* Tier 2: Country Selector Pills */}
                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', padding: '10px', background: '#f1f5f9', borderRadius: '10px' }}>
                   {CONTINENT_ORIGIN_GROUPS.find(g => g.continent === activeContinent)?.countries.map(c => (
@@ -960,19 +948,16 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-
               {/* CALCULATOR ACTION SECTION WRAPPER TARGET FOR MOBILE AUTO-SCROLL */}
               <div id="calculator-action-section" style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
                 <button className="calc-btn" style={{ flex: 1, borderRadius: '8px', padding: '12px', fontSize: '14px', fontWeight: '700' }} onClick={handleManualCalculateTrigger}>
                   Fetch Trims & Calculate Duty
                 </button>
               </div>
-
               {calcStatus && <div className="status-bar" style={{ marginTop: '10px', fontSize: '12px', color: '#05643c' }}>{calcStatus}</div>}
               {calcError && <div className="error-msg" style={{ marginTop: '10px', fontSize: '12px', color: '#dc2626' }}>{calcError}</div>}
             </div>
           </div>
-
           {lineupLoading && !result && (
             <div className="premium-card-wrapper" style={{ padding: '30px', textAlign: 'center', color: '#4b5563' }}>
               <div style={{ display: 'inline-block', width: '24px', height: '24px', border: '3px solid #05643c', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: '12px' }} />
@@ -981,7 +966,6 @@ export default function Home() {
               </p>
             </div>
           )}
-
           {lineupMeta.noDataAvailable && !result && !lineupLoading && (
             <div className="premium-card-wrapper" style={{ padding: '24px', textAlign: 'center' }}>
               <div style={{ fontSize: '28px', marginBottom: '8px' }}>🔍</div>
@@ -991,20 +975,62 @@ export default function Home() {
               <p style={{ margin: '0 auto 16px auto', maxWidth: '440px', fontSize: '13px', color: '#64748b', lineHeight: '1.5' }}>
                 {vinData
                   ? "We couldn't retrieve a verified value for this vehicle, even through our AI-assisted lookup. Please try again shortly, or contact support for manual assistance."
-                  : "This vehicle isn't in our local records yet. For an instant, Web-verified price lookup, use VIN Lookup below instead of manual entry."}
+                  : "This vehicle isn't in our local records yet. You have two options below:"}
               </p>
+              
+              {/* MANUAL MSRP ENTRY - ONLY SHOWS HERE */}
+              <div style={{ background: '#fffbeb', padding: '16px', borderRadius: '12px', border: '1px solid #fde68a', marginBottom: '16px', textAlign: 'left' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '12px' }}>
+                  <input
+                    type="checkbox"
+                    id="manual-msrp-checkbox"
+                    checked={useManualMsrp}
+                    onChange={e => setUseManualMsrp(e.target.checked)}
+                    style={{ marginTop: '2px', cursor: 'pointer' }}
+                  />
+                  <label htmlFor="manual-msrp-checkbox" style={{ fontSize: '13px', fontWeight: '600', color: '#92400e', cursor: 'pointer', margin: 0 }}>
+                    I know the exact original price — use this instead of GRA records
+                  </label>
+                </div>
+                {useManualMsrp && (
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <input
+                      className="form-input premium-input-field"
+                      type="number"
+                      placeholder="Original MSRP in USD"
+                      value={purchasePrice}
+                      onChange={e => setPurchasePrice(e.target.value)}
+                      style={{ flex: 1, minWidth: '180px', padding: '10px 12px' }}
+                    />
+                    <button
+                      onClick={() => runCalculationWithUserMsrp()}
+                      style={{ borderRadius: '8px', padding: '10px 18px', background: '#05643c', color: '#ffffff', fontWeight: '700', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                    >
+                      Calculate Duty with My Price
+                    </button>
+                  </div>
+                )}
+              </div>
+
               {!vinData && (
                 <button
-                  onClick={() => switchMode('premium')}
+                  onClick={() => {
+                    switchMode('premium');
+                    setTimeout(() => {
+                      const vinField = document.getElementById('vin-input-field');
+                      if (vinField) {
+                        vinField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }
+                    }, 100);
+                  }}
                   className="calc-btn"
                   style={{ borderRadius: '8px', padding: '10px 20px', fontSize: '13px', fontWeight: '700' }}
                 >
-                  Switch to VIN Lookup
+                  Or Switch to VIN Lookup
                 </button>
               )}
             </div>
           )}
-
           {displayedLineupCards.length > 0 && !result && !lineupLoading && (
             <div className="premium-card-wrapper" style={{ padding: '20px' }}>
               
@@ -1027,7 +1053,6 @@ export default function Home() {
                   </p>
                 </div>
               )}
-
               <div className="responsive-two-cols">
                 {displayedLineupCards.map((opt, idx) => (
                   <div
@@ -1054,14 +1079,12 @@ export default function Home() {
               </div>
             </div>
           )}
-
           {result && (
             <div className="premium-card-wrapper result-card" style={{ padding: '20px' }}>
               <div className="result-header">
                 <h3 style={{ margin: '0 0 4px 0', fontSize: '18px', color: '#0f172a' }}>{result.vehicle_label}</h3>
                 <p style={{ margin: '0 0 16px 0', fontSize: '12px', color: '#64748b' }}>Customs Exchange Rate: {result.exchange_label} — Tema / Takoradi Port</p>
               </div>
-
               <div className="metrics-grid">
                 <div className="metric-cell" style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '500' }}>CIF Value</div>
@@ -1079,7 +1102,28 @@ export default function Home() {
                   <div style={{ fontSize: '10px', color: '#94a3b8' }}>Total budget needed</div>
                 </div>
               </div>
-
+              {result.msrp_source_type === 'user_provided' && (
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#fef3c7', borderLeft: '4px solid #fbbf24', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '16px' }}>⚠️</span>
+                  <div>
+                    <h4 style={{ color: '#92400e', margin: '0 0 2px 0', fontSize: '13px', fontWeight: '600' }}>MSRP Not Verified</h4>
+                    <p style={{ color: '#b45309', margin: '0', fontSize: '12px', lineHeight: '1.4' }}>
+                      The original manufacturer price used in this calculation was <strong>provided directly by you</strong> and has not been verified against GRA records or any external source. Final duty may vary based on port valuation.
+                    </p>
+                  </div>
+                </div>
+              )}
+              {result.msrp_source_type === 'ai_assisted' && (
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#ede9fe', borderLeft: '4px solid #a78bfa', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '16px' }}>ℹ️</span>
+                  <div>
+                    <h4 style={{ color: '#6d28d9', margin: '0 0 2px 0', fontSize: '13px', fontWeight: '600' }}>MSRP AI-Estimated</h4>
+                    <p style={{ color: '#7c3aed', margin: '0', fontSize: '12px', lineHeight: '1.4' }}>
+                      The original manufacturer price used in this calculation was <strong>estimated using AI-assisted research</strong> and has not been independently verified against GRA records. Final duty may vary based on port valuation.
+                    </p>
+                  </div>
+                </div>
+              )}
               {result.vehicle_age >= 11 && (
                 <div className="overage-warning-box" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#fff9e6', borderLeft: '4px solid #d97706', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
                   <span style={{ fontSize: '16px' }}>⚠️</span>
@@ -1091,7 +1135,6 @@ export default function Home() {
                   </div>
                 </div>
               )}
-
               <div className="report-section-title">Section 1 — Customs CIF Value Breakdown</div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="report-table">
@@ -1125,7 +1168,6 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
-
               <div className="report-section-title">Section 2 — Itemized Port Taxes & Duties (GRA Act 891)</div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="report-table">
@@ -1162,51 +1204,6 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
-
-              <div className="report-section-title">💼 Need Help Clearing Your Car?</div>
-              <div className="responsive-two-cols" style={{ marginTop: '12px' }}>
-                
-                <div className="marketplace-card">
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '10px', fontWeight: '800', background: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px' }}>TEMA & TAKORADI</span>
-                      <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
-                    </div>
-                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>Licensed Clearing Agents</h4>
-                    <p style={{ margin: 0, fontSize: '11px', color: '#64748b', lineHeight: '1.4' }}>
-                      Get connected with trusted, licensed clearing agents at Tema or Takoradi ports to handle documents.
-                    </p>
-                  </div>
-                  <button 
-                    onClick={() => triggerOpenLeadModal('Clearing Agent Support')}
-                    disabled={clearingAgentLeadSent}
-                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: clearingAgentLeadSent ? '#e2e8f0' : '#05643c', color: clearingAgentLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: clearingAgentLeadSent ? 'default' : 'pointer' }}
-                  >
-                    {clearingAgentLeadSent ? '✓ Request Submitted' : 'Connect with Clearing Agents'}
-                  </button>
-                </div>
-
-                <div className="marketplace-card">
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '10px', fontWeight: '800', background: '#fef3c7', color: '#b45309', padding: '2px 6px', borderRadius: '4px' }}>VALUATION REVIEW</span>
-                      <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
-                    </div>
-                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>Vehicle Valuation & Inspection</h4>
-                    <p style={{ margin: 0, fontSize: '11px', color: '#64748b', lineHeight: '1.4' }}>
-                      Request a physical condition check or dispute an over-estimated valuation at the port.
-                    </p>
-                  </div>
-                  <button 
-                    onClick={() => triggerOpenLeadModal('Valuation & Inspection Review')}
-                    disabled={inspectionLeadSent}
-                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: inspectionLeadSent ? '#e2e8f0' : '#0f172a', color: inspectionLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: inspectionLeadSent ? 'default' : 'pointer' }}
-                  >
-                    {inspectionLeadSent ? '✓ Request Submitted' : 'Request Inspection & Review'}
-                  </button>
-                </div>
-              </div>
-
               <div className="report-section-title">Section 3 — Total Estimated Investment</div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="report-table">
@@ -1229,11 +1226,51 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
-
+              <div className="report-section-title">💼 Need Help Clearing Your Car?</div>
+              <div className="responsive-two-cols" style={{ marginTop: '12px' }}>
+                
+                <div className="marketplace-card">
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '10px', fontWeight: '800', background: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px' }}>TEMA & TAKORADI</span>
+                      <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
+                    </div>
+                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>Licensed Clearing Agents</h4>
+                    <p style={{ margin: 0, fontSize: '11px', color: '#64748b', lineHeight: '1.4' }}>
+                      Get connected with trusted, licensed clearing agents at Tema or Takoradi ports to handle documents.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => triggerOpenLeadModal('Clearing Agent Support')}
+                    disabled={clearingAgentLeadSent}
+                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: clearingAgentLeadSent ? '#e2e8f0' : '#05643c', color: clearingAgentLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: clearingAgentLeadSent ? 'default' : 'pointer' }}
+                  >
+                    {clearingAgentLeadSent ? '✓ Request Submitted' : 'Connect with Clearing Agents'}
+                  </button>
+                </div>
+                <div className="marketplace-card">
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '10px', fontWeight: '800', background: '#fef3c7', color: '#b45309', padding: '2px 6px', borderRadius: '4px' }}>VALUATION REVIEW</span>
+                      <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
+                    </div>
+                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>Vehicle Valuation & Inspection</h4>
+                    <p style={{ margin: 0, fontSize: '11px', color: '#64748b', lineHeight: '1.4' }}>
+                      Request a physical condition check or dispute an over-estimated valuation at the port.
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => triggerOpenLeadModal('Valuation & Inspection Review')}
+                    disabled={inspectionLeadSent}
+                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: inspectionLeadSent ? '#e2e8f0' : '#0f172a', color: inspectionLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: inspectionLeadSent ? 'default' : 'pointer' }}
+                  >
+                    {inspectionLeadSent ? '✓ Request Submitted' : 'Request Inspection & Review'}
+                  </button>
+                </div>
+              </div>
               <div className="disclaimer-box" style={{ background: '#fafafa', border: '1px solid #e2e8f0', padding: '12px', fontSize: '11px', color: '#64748b', borderRadius: '8px', marginTop: '16px', lineHeight: '1.4' }}>
                 <strong>Important Notice:</strong> Calculations are based on the Ghana Revenue Authority Customs Act 2015 (Act 891). Figures shown are estimates for planning purposes.
               </div>
-
               <div style={{ display: 'flex', gap: '10px', marginTop: '20px', flexWrap: 'wrap' }}>
                 <button className="download-btn" style={{ flex: '1 1 180px', background: '#05643c', color: '#ffffff', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '600', border: 'none', cursor: 'pointer' }} onClick={downloadPdf} disabled={pdfLoading}>
                   {pdfLoading ? 'Preparing PDF Report...' : 'Download Official PDF Report'}
@@ -1245,7 +1282,6 @@ export default function Home() {
             </div>
           )}
         </div>
-
         {/* SIDEBAR WRAP */}
         <div className="sidebar-wrap">
           {/* QUICK VEHICLE PRESETS */}
@@ -1255,7 +1291,6 @@ export default function Home() {
             </h3>
             <PresetSelector onSelectVehicle={handleLoadVehiclePreset} />
           </div>
-
           {/* HOW IT WORKS */}
           <div className="premium-card-wrapper howitworks-item" style={{ padding: '16px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: '750', color: '#111827', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -1295,10 +1330,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       {/* PRICING MODAL COMPONENT */}
       <PricingModal isOpen={isPricingModalOpen} onClose={() => setIsPricingModalOpen(false)} />
-
       {/* LEAD GENERATION ASSISTANCE MODAL */}
       {isLeadModalOpen && (
         <div className="modal-overlay-blur">
@@ -1390,7 +1423,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
       <footer className="footer" style={{ marginTop: '48px', background: 'rgba(15, 23, 42, 0.95)', padding: '24px 20px', color: '#cbd5e1', textAlign: 'center' }}>
         <p style={{ margin: '0 0 6px 0', fontSize: '13px', fontWeight: '500' }}>© 2026 CEDIDUTY • Ghana Vehicle Import Duty Calculator</p>
         <p style={{ margin: '0', fontSize: '11px', opacity: 0.8, lineHeight: '1.4' }}>Calculations based on Customs Act 2015 (Act 891) • Estimates for planning purposes only</p>

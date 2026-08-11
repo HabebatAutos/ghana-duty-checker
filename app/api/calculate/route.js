@@ -838,7 +838,7 @@ async function fetchRates(origin) {
 export async function POST(request) {
   try {
     const body = await request.json()
-    let { year, make, model, trim, engine, bodyType, origin, originCode, purchasePrice, freight, vin, condition, customPurchasePriceUsd, isBackgroundSync } = body
+    let { year, make, model, trim, engine, bodyType, origin, originCode, purchasePrice, freight, vin, condition, customPurchasePriceUsd, isBackgroundSync, useManualMsrp = false } = body
     let extendedNhtsaData = null
 
     if (vin && vin.trim().length === 17) {
@@ -893,7 +893,41 @@ export async function POST(request) {
     const market = MARKET_CONFIG[origin] || MARKET_CONFIG[originCode] || MARKET_CONFIG['USA'];
     const requestedOrigin = lineupData?.requestedOrigin || normalizeOriginCode(originCode || market?.code || 'US');
 
-    const activePrice = body.selectedPrice ? parseFloat(body.selectedPrice) : null;
+    // SAFETY CHECK: Never silently override a genuine GRA record with manual entry
+    if (useManualMsrp && purchasePrice && parseFloat(purchasePrice) > 0) {
+      // If a GRA-verified preset exists, reject the manual override
+      if (body.selectedSource && body.selectedSource.includes('Preset')) {
+        return Response.json({
+          success: false,
+          error: 'A verified GRA record already exists for this vehicle. Manual override not permitted when official records are available.',
+          isLineup: false
+        });
+      }
+    }
+
+    // Determine MSRP source type (single source of truth)
+    let msrp_source_type = 'gra_verified'; // default
+
+    if (useManualMsrp && purchasePrice && parseFloat(purchasePrice) > 0) {
+      // User explicitly checked "I know the exact original price" and entered a value
+      msrp_source_type = 'user_provided';
+    } else if (body.selectedSource && (body.selectedSource.includes('AI') || body.selectedSource.includes('ai'))) {
+      // The selected price came from AI VIN lookup
+      msrp_source_type = 'ai_assisted';
+    } else if (body.selectedSource && body.selectedSource.includes('Preset')) {
+      // Preset = local database, so it's GRA verified
+      msrp_source_type = 'gra_verified';
+    } else if (body.selectedPrice) {
+      // Price came from a trim card selection (local database)
+      msrp_source_type = 'gra_verified';
+    }
+
+    const activePrice = useManualMsrp && purchasePrice && parseFloat(purchasePrice) > 0
+      ? parseFloat(purchasePrice)
+      : body.selectedPrice
+        ? parseFloat(body.selectedPrice)
+        : null;
+
     const activeCurrency = body.selectedCurrency || (lineup[0]?.currency || 'USD');
     const activeSource = body.selectedSource || (lineup[0]?.source || 'Estimated Baseline');
     const activeTrimLabel = body.selectedTrim || null;
@@ -946,7 +980,9 @@ export async function POST(request) {
         success: true, isLineup: false, extendedSpecifications: extendedNhtsaData,
         result: {
           vehicle_label: [year, make, model, activeTrimLabel || trim].filter(Boolean).join(' '),
-          msrp_source: activeSource, exchange_rate: rateToGhs, exchange_rate_usd: usdToGhs,
+          msrp_source: activeSource,
+          msrp_source_type: msrp_source_type,
+          exchange_rate: rateToGhs, exchange_rate_usd: usdToGhs,
           exchange_label: dynamicExchangeLabel, currency_code: activeCurrency,
           vehicle_age: age, depreciation_pct: depRate * 100, hdv_origin: Math.round(activePrice), hdv_currency: activeCurrency,
           hdv_formatted: `${Math.round(activePrice).toLocaleString()} ${activeCurrency}`, depreciated_value_origin: Math.round(depreciatedNative),
@@ -958,9 +994,9 @@ export async function POST(request) {
             exim_levy: eximLevy, au_levy: auLevy, cert_fee: 0.50, shippers_fee: 9.00, moti_fee: 5.00, disinfection_fee: disinfection, overage_penalty: overagePenaltyGhs
           },
           total_duty_ghs: parseFloat(totalDutyGhs.toFixed(2)), total_duty_usd: parseFloat((totalDutyGhs / usdToGhs).toFixed(2)),
+          purchase_price_usd: finalPurchasePriceUsd, freight_usd: freightUsd, insurance_usd: (insuranceNative / usdToOrigin),
           landed_cost_usd: parseFloat((finalPurchasePriceUsd + freightUsd + (insuranceNative / usdToOrigin) + (totalDutyGhs / usdToGhs)).toFixed(2)),
-          landed_cost_ghs: parseFloat(((finalPurchasePriceUsd + freightUsd + (insuranceNative / usdToOrigin) + (totalDutyGhs / usdToGhs)) * usdToGhs).toFixed(2)),
-          purchase_price_usd: finalPurchasePriceUsd, freight_usd: freightUsd, insurance_usd: (insuranceNative / usdToOrigin)
+          landed_cost_ghs: parseFloat(((finalPurchasePriceUsd + freightUsd + (insuranceNative / usdToOrigin) + (totalDutyGhs / usdToGhs)) * usdToGhs).toFixed(2))
         }
       });
     }
