@@ -1,9 +1,9 @@
 // app/layout.js
 import Script from 'next/script'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { TokenProvider } from './Context/TokenContext'
 import Navbar from './components/Navbar'
 import './globals.css'
-
 export const metadata = {
   metadataBase: new URL('https://www.cediduty.com'),
   title: 'GhanaDuty — Vehicle Import Duty Calculator',
@@ -18,7 +18,6 @@ export const metadata = {
     type: 'website',
   },
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -39,6 +38,13 @@ export default function RootLayout({ children }) {
           {children}
         </TokenProvider>
       </body>
+      {/* Google Analytics 4 — reads NEXT_PUBLIC_GA_ID from environment.
+          Must be set in Vercel's project env vars (not just .env.local)
+          for it to work in production. Handles page-view tracking on
+          client-side route changes automatically. */}
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
     </html>
   );
 }
