@@ -5,6 +5,7 @@ import { supabaseAdmin } from '@/lib/supabase'
 import { fetchAllRates, getRateForOrigin } from '@/lib/fx'
 import fs from 'fs/promises'
 import path from 'path'
+import { PRESET_DATA } from '@/app/components/presets-data'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || 'mock-key' })
 
@@ -541,6 +542,56 @@ function normalizeLineupProperties(array, userEngine = '', userBodyType = '', ta
   });
 }
 
+// Pulls matching rows out of the auto-generated PRESET_DATA registry
+// (app/components/presets-data.js) for a given year/make/model, and
+// normalizes them into the same { trim, price, currency, originCode, ... }
+// shape the local data/ file scanner below produces. This lets the two
+// sources merge into one deduplicated lineup rather than being two
+// disconnected paths — a vehicle that only exists in PRESET_DATA (no
+// matching data/*.json file) or only in the local files (not yet present
+// in the PRESET_DATA export) is found either way.
+function getPresetDataMatches(year, make, model, targetCode) {
+  const normMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const normModel = model.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+  const yearMatches = PRESET_DATA.filter(row => {
+    const rowMake = String(row.make || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const rowModel = String(row.model || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    return String(row.year) === String(year) && rowMake === normMake && rowModel === normModel;
+  });
+
+  if (yearMatches.length === 0) return { matches: [], availableOrigins: [], isFallbackOrigin: false };
+
+  const rawAvailableCodes = yearMatches
+    .map(row => normalizeOriginCode(row.origin || row.originCode || ''))
+    .filter(Boolean);
+  const availableOrigins = Array.from(new Set(rawAvailableCodes)).sort();
+
+  let matches = yearMatches.filter(row => {
+    const rowCode = normalizeOriginCode(row.origin || row.originCode || '');
+    if (!rowCode) return true;
+    return rowCode === targetCode ||
+      (targetCode === 'US' && (rowCode === 'USA' || rowCode === 'U.S.')) ||
+      (targetCode === 'CA' && rowCode === 'CANADA') ||
+      (targetCode === 'DE' && (rowCode === 'GERMANY' || rowCode === 'DEUTSCHLAND')) ||
+      (targetCode === 'BE' && rowCode === 'BELGIUM') ||
+      (targetCode === 'GB' && (rowCode === 'UK' || rowCode === 'UNITED KINGDOM')) ||
+      (targetCode === 'NL' && rowCode === 'NETHERLANDS') ||
+      (targetCode === 'JP' && rowCode === 'JAPAN') ||
+      (targetCode === 'KR' && (rowCode === 'KOREA' || rowCode === 'SOUTH KOREA')) ||
+      (targetCode === 'CN' && rowCode === 'CHINA') ||
+      (targetCode === 'AE' && (rowCode === 'UAE' || rowCode === 'UNITED ARAB EMIRATES'));
+  });
+
+  let isFallbackOrigin = false;
+  if (matches.length === 0) {
+    matches = yearMatches;
+    isFallbackOrigin = true;
+  }
+
+  return { matches, availableOrigins, isFallbackOrigin };
+}
+
 async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userBodyType = '', isBackgroundSync = false, originCode = '', vin = '') {
   const cleanMake = make.toLowerCase().replace(/[^a-z0-9]/g, '');
   const cleanModel = model.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -552,7 +603,21 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
   const engineToken = userEngine ? userEngine.toLowerCase().replace(/[^a-z0-9]/g, '') : 'default';
   const fileCacheKey = `${year}-${cleanMake}-${cleanModel}-${targetCode}-${engineToken}`;
 
-  // 1. AUTOMATED LOCAL SPREADSHEET SCANNER (STRICT MODEL MATCH ONLY)
+  // 1. AUTOMATED LOCAL SPREADSHEET SCANNER + PRESET_DATA REGISTRY (MERGED)
+  //
+  // Previously this block returned early the moment the local data/*.json
+  // scanner found any matches, meaning PRESET_DATA (app/components/
+  // presets-data.js) was never consulted at all — a vehicle that only
+  // exists in one of the two sources (e.g. Audi A3 was only in
+  // PRESET_DATA, no matching data/*.json file) would incorrectly get
+  // treated as having a single/no result instead of the union of both.
+  // Both sources are now always gathered and merged before deduplication,
+  // so every trigger (preset click, manual entry, VIN lookup) sees every
+  // unique trim available across both.
+  let fileMatches = [];
+  let fileAvailableOrigins = [];
+  let fileIsFallbackOrigin = false;
+
   try {
     const dataDirPath = path.join(process.cwd(), 'data');
     const files = await fs.readdir(dataDirPath);
@@ -608,10 +673,10 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
         const rawOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? '';
         return normalizeOriginCode(rawOrigin);
       }).filter(Boolean);
-      const availableOrigins = Array.from(new Set(rawAvailableCodes)).sort();
+      fileAvailableOrigins = Array.from(new Set(rawAvailableCodes)).sort();
 
       // Filter 2: Flexible Origin Code Matching (Handles global export hub variants)
-      let matches = yearMatches.filter(row => {
+      fileMatches = yearMatches.filter(row => {
         const rawOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? '';
         const rowCode = normalizeOriginCode(rawOrigin);
         if (!rowCode) return true; // Include rows lacking explicit origin tags as universal fallback
@@ -631,96 +696,121 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
                (targetCode === 'AE' && (rowCode === 'UAE' || rowCode === 'UNITED ARAB EMIRATES'));
       });
 
-      let isFallbackOrigin = false;
-      if (matches.length === 0 && yearMatches.length > 0) {
-        matches = yearMatches;
-        isFallbackOrigin = true;
-      } else if (matches.length === 0) {
-        // If still empty, grab all year matches to prevent blank/generic fallback overrides
-        matches = yearMatches;
-        isFallbackOrigin = true;
-      }
-
-      if (matches.length > 0) {
-        const uniqueVariants = {};
-        
-        matches.forEach(row => {
-          let rawTrim = 'Base / Standard';
-          const candidateTrim = row.trim ?? row['Trim Level'] ?? row['Trim'];
-          if (candidateTrim !== undefined && candidateTrim !== null) {
-            const trimStr = String(candidateTrim).trim();
-            if (trimStr !== '' && trimStr.toUpperCase() !== 'NIL' && trimStr.toUpperCase() !== 'NA' && trimStr.toUpperCase() !== 'N/A' && trimStr.toUpperCase() !== 'NAN') {
-              rawTrim = trimStr;
-            }
-          }
-
-          const cleanTrim = String(rawTrim).toUpperCase().trim();
-          const hdv = parseFloat(row.hdv ?? row['HDV'] ?? row['price'] ?? row['MSRP'] ?? row['CIF NCY'] ?? 0);
-          const rowCurrency = row.currency ?? row['Currency'] ?? targetCurrency;
-          
-          const rawRowOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? targetCode;
-          const rowOriginCode = normalizeOriginCode(rawRowOrigin) || targetCode;
-
-          if (cleanTrim === 'NAN' || isNaN(hdv) || hdv === 0) return;
-
-          if (!uniqueVariants[cleanTrim]) {
-            uniqueVariants[cleanTrim] = { 
-              counts: {}, 
-              currency: rowCurrency,
-              originCode: rowOriginCode,
-              fuelType: row.fuel_type || row['Fuel Type'] || 'Gasoline',
-              bodyStyle: row.body_style || row['Body Style'] || ''
-            };
-          }
-          uniqueVariants[cleanTrim].counts[hdv] = (uniqueVariants[cleanTrim].counts[hdv] || 0) + 1;
-        });
-
-        const compiledPresetLineup = Object.keys(uniqueVariants).map(trimName => {
-          const variant = uniqueVariants[trimName];
-          const topPrice = Object.keys(variant.counts).reduce((a, b) => 
-            variant.counts[a] > variant.counts[b] ? a : b, '0'
-          );
-
-          let adjustedTrim = trimName;
-          if (userEngine) {
-            const cleanEngine = userEngine.toUpperCase().trim();
-            adjustedTrim = adjustedTrim.replace(/\b\d+\.\d+\s*L\b/gi, cleanEngine);
-            adjustedTrim = adjustedTrim.replace(/\b\d+L\b/gi, cleanEngine);
-            adjustedTrim = adjustedTrim.replace(/\b\d{1,2},?\d{2,3}\s*cc\b/gi, cleanEngine);
-          }
-
-          const finalTrimLabel = adjustedTrim.toUpperCase().includes(model.toUpperCase())
-            ? adjustedTrim
-            : `${model.toUpperCase()} ${adjustedTrim}`;
-
-          return {
-            trim: finalTrimLabel === `${model.toUpperCase()} NIL` ? `${model.toUpperCase()} Base` : finalTrimLabel,
-            body_style: userBodyType || variant.bodyStyle || 'Sedan',
-            engine: userEngine || 'Standard Spec',
-            fuel_type: variant.fuelType,
-            price: parseFloat(topPrice) || 0,
-            currency: variant.currency || targetCurrency,
-            originCode: variant.originCode || targetCode,
-            isFallback: isFallbackOrigin,
-            source: isFallbackOrigin ? 'GRA Customs Appraisal Record (Alternative Origin)' : 'GRA Customs Appraisal Terminal Record',
-            notes: isFallbackOrigin 
-              ? `Note: General market valuation applied (No direct ${targetCode} records found for ${year}).` 
-              : `Verified GRA record for origin [${targetCode}].`
-          };
-        }).sort((a, b) => a.price - b.price);
-
-        if (compiledPresetLineup.length > 0) {
-          return {
-            lineup: normalizeLineupProperties(compiledPresetLineup, userEngine, userBodyType, targetCurrency),
-            isFallback: isFallbackOrigin,
-            availableOrigins: availableOrigins,
-            requestedOrigin: targetCode
-          };
-        }
+      if (fileMatches.length === 0 && yearMatches.length > 0) {
+        fileMatches = yearMatches;
+        fileIsFallbackOrigin = true;
       }
     }
   } catch (fileErr) {
     console.error(`[PRESET INTERCEPT ERROR]`, fileErr.message);
+  }
+
+  // Pull PRESET_DATA matches and normalize them into the same raw-row
+  // shape (Trim/HDV/Currency/Origin Code keys) fileMatches rows use, so
+  // both can flow through the exact same dedup loop below unmodified.
+  const { matches: presetDataRaw, availableOrigins: presetDataOrigins, isFallbackOrigin: presetDataIsFallback } =
+    getPresetDataMatches(year, make, model, targetCode);
+  const presetDataMatches = presetDataRaw.map(row => ({
+    'Trim Level': row.trim,
+    'HDV': row.hdv,
+    'Currency': row.currency,
+    'Origin Code': row.origin || row.originCode,
+    'Fuel Type': row.fuel_type,
+    'Body Style': row.bodyType,
+  }));
+
+  const matches = [...fileMatches, ...presetDataMatches];
+  const availableOrigins = Array.from(new Set([...fileAvailableOrigins, ...presetDataOrigins])).sort();
+  // Only treat this as an origin fallback if BOTH sources had to fall back —
+  // if either source has a direct match for the requested origin, that's
+  // not a fallback situation, the other source just happened to be empty.
+  const isFallbackOrigin = matches.length > 0
+    ? (fileMatches.length === 0 || fileIsFallbackOrigin) && (presetDataMatches.length === 0 || presetDataIsFallback)
+    : false;
+
+  if (matches.length > 0) {
+    try {
+      const uniqueVariants = {};
+      
+      matches.forEach(row => {
+        let rawTrim = 'Base / Standard';
+        const candidateTrim = row.trim ?? row['Trim Level'] ?? row['Trim'];
+        if (candidateTrim !== undefined && candidateTrim !== null) {
+          const trimStr = String(candidateTrim).trim();
+          if (trimStr !== '' && trimStr.toUpperCase() !== 'NIL' && trimStr.toUpperCase() !== 'NA' && trimStr.toUpperCase() !== 'N/A' && trimStr.toUpperCase() !== 'NAN') {
+            rawTrim = trimStr;
+          }
+        }
+
+        const cleanTrim = String(rawTrim).toUpperCase().trim();
+        const hdv = parseFloat(row.hdv ?? row['HDV'] ?? row['price'] ?? row['MSRP'] ?? row['CIF NCY'] ?? 0);
+        const rowCurrency = row.currency ?? row['Currency'] ?? targetCurrency;
+        
+        const rawRowOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? targetCode;
+        const rowOriginCode = normalizeOriginCode(rawRowOrigin) || targetCode;
+
+        if (cleanTrim === 'NAN' || isNaN(hdv) || hdv === 0) return;
+
+        // Dedup key includes price so two genuinely different price points
+        // for what's nominally "the same" trim name (e.g. one source's
+        // rounding vs another's, or a real trim-level price difference
+        // between sources) aren't silently collapsed into just one of them.
+        const dedupKey = `${cleanTrim}::${hdv}::${rowOriginCode}`;
+
+        if (!uniqueVariants[dedupKey]) {
+          uniqueVariants[dedupKey] = {
+            trimName: cleanTrim,
+            hdv,
+            currency: rowCurrency,
+            originCode: rowOriginCode,
+            fuelType: row.fuel_type || row['Fuel Type'] || 'Gasoline',
+            bodyStyle: row.body_style || row['Body Style'] || '',
+            count: 0
+          };
+        }
+        uniqueVariants[dedupKey].count += 1;
+      });
+
+      const compiledPresetLineup = Object.values(uniqueVariants).map(variant => {
+        let adjustedTrim = variant.trimName;
+        if (userEngine) {
+          const cleanEngine = userEngine.toUpperCase().trim();
+          adjustedTrim = adjustedTrim.replace(/\b\d+\.\d+\s*L\b/gi, cleanEngine);
+          adjustedTrim = adjustedTrim.replace(/\b\d+L\b/gi, cleanEngine);
+          adjustedTrim = adjustedTrim.replace(/\b\d{1,2},?\d{2,3}\s*cc\b/gi, cleanEngine);
+        }
+
+        const finalTrimLabel = adjustedTrim.toUpperCase().includes(model.toUpperCase())
+          ? adjustedTrim
+          : `${model.toUpperCase()} ${adjustedTrim}`;
+
+        return {
+          trim: finalTrimLabel === `${model.toUpperCase()} NIL` ? `${model.toUpperCase()} Base` : finalTrimLabel,
+          body_style: userBodyType || variant.bodyStyle || 'Sedan',
+          engine: userEngine || 'Standard Spec',
+          fuel_type: variant.fuelType,
+          price: variant.hdv || 0,
+          currency: variant.currency || targetCurrency,
+          originCode: variant.originCode || targetCode,
+          isFallback: isFallbackOrigin,
+          source: isFallbackOrigin ? 'GRA Customs Appraisal Record (Alternative Origin)' : 'GRA Customs Appraisal Terminal Record',
+          notes: isFallbackOrigin 
+            ? `Note: General market valuation applied (No direct ${targetCode} records found for ${year}).` 
+            : `Verified GRA record for origin [${targetCode}].`
+        };
+      }).sort((a, b) => a.price - b.price);
+
+      if (compiledPresetLineup.length > 0) {
+        return {
+          lineup: normalizeLineupProperties(compiledPresetLineup, userEngine, userBodyType, targetCurrency),
+          isFallback: isFallbackOrigin,
+          availableOrigins: availableOrigins,
+          requestedOrigin: targetCode
+        };
+      }
+    } catch (dedupErr) {
+      console.error(`[LINEUP MERGE/DEDUP ERROR]`, dedupErr.message);
+    }
   }
 
   // 2. SUPABASE DYNAMIC CACHE INTERCEPTION
