@@ -149,13 +149,6 @@ export default function Home() {
   const [masterLineup, setMasterLineup] = useState([]);
   const [dropdownTrims, setDropdownTrims] = useState([]);
   const [lineupMeta, setLineupMeta] = useState({ isFallback: false, availableOrigins: [] });
-  // True only when masterLineup was populated directly from Quick Vehicle
-  // Presets (handleLoadVehiclePreset), not from a fresh /api/calculate
-  // lineup search. Presets and fetchMsrpLineup's local-file scanner are two
-  // independent data sources that don't always agree on the same vehicle —
-  // this flag lets the "Fetch Trims & Calculate Duty" button skip re-querying
-  // the second source when the first already gave us a confirmed match.
-  const [isPresetLoaded, setIsPresetLoaded] = useState(false);
   
   const [lineupLoading, setLineupLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -257,7 +250,7 @@ export default function Home() {
     setShowModelSuggestions(false);
     setOrigin(targetOrigin);
     setActiveContinent(findContinentForCountry(targetOrigin));
-    setPurchasePrice(payload.hdv || '');
+    setPurchasePrice('');
     setCondition('used'); 
     setVin('');
     setVinData(null);
@@ -265,34 +258,18 @@ export default function Home() {
     setResult(null);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-    const presetPrice = parseFloat(payload.hdv);
-    if (!payload.hdv || isNaN(presetPrice) || presetPrice <= 0) {
-      setMasterLineup([]);
-      setDropdownTrims([]);
-      setLineupMeta({ isFallback: false, availableOrigins: [], noDataAvailable: true });
-      setIsPresetLoaded(false);
-      setTimeout(scrollToCalculator, 150);
-      return;
-    }
-    const originCode = getOriginCode(targetOrigin);
-    const presetCurrency = payload.currency || getCurrencyForOrigin(targetOrigin);
-    const presetLineup = [{
-      trim: payload.trim ? `${newFields.model.toUpperCase()} ${payload.trim}` : `${newFields.model.toUpperCase()} Base / Standard`,
-      body_style: newFields.bodyType,
-      engine: newFields.engine || 'Standard Spec',
-      fuel_type: 'Gasoline',
-      price: presetPrice,
-      currency: presetCurrency,
-      originCode,
-      isFallback: false,
-      source: 'Quick Preset — Verified Record',
-      notes: ''
-    }];
-    setMasterLineup(presetLineup);
-    setDropdownTrims([]);
-    setLineupMeta({ isFallback: false, availableOrigins: [originCode], noDataAvailable: false });
-    setIsPresetLoaded(true);
-    setTimeout(scrollToCalculator, 150);
+
+    // Quick Presets used to manufacture a single fake trim entry directly
+    // from payload.hdv (one price, no variant choice). That diverged from
+    // the real local-file lineup fetchMsrpLineup returns — e.g. a preset
+    // click showed 1 "Base / Standard" Accord trim while the real US
+    // record actually has 17 trims (LX, Sport, EX-L, Touring, etc), which
+    // only appeared once the user manually switched origin and back. A
+    // single-trim shortcut is also actively unhelpful for anyone whose
+    // preferred trim isn't the base model. So a preset click now runs the
+    // same real lineup search manual entry and origin-switching already
+    // use, giving the full, correct trim list immediately on first click.
+    fetchLineupForFields(newFields, targetOrigin, false, null);
   }
   function handleManualCalculateTrigger() {
     if (!fields.year || !fields.make || !fields.model) {
@@ -302,20 +279,6 @@ export default function Home() {
     setResult(null);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-
-    // If a Quick Preset trim is already loaded and confirmed, don't re-run
-    // the lineup search — that search queries a different data source
-    // (fetchMsrpLineup's local file scanner) which may not recognize the
-    // same vehicle the preset sidebar already matched, incorrectly
-    // reporting "no pricing data available" for a car we already have a
-    // price for. Just take the already-selected preset trim straight to
-    // calculation, using whatever the user has since edited (freight,
-    // purchase price, etc — runFinalCalculation reads these live).
-    if (isPresetLoaded && masterLineup.length > 0) {
-      runFinalCalculation(masterLineup[0]);
-      return;
-    }
-
     fetchLineupForFields(fields, origin, true, vinData?.vin || null);
   }
   async function runCalculationWithUserMsrp() {
@@ -387,7 +350,6 @@ export default function Home() {
     setDropdownTrims([]);
     setClearingAgentLeadSent(false);
     setInspectionLeadSent(false);
-    setIsPresetLoaded(false);
     try {
       const res = await fetch(`/api/decode-vin?vin=${v}`);
       const data = await res.json();
@@ -519,7 +481,6 @@ export default function Home() {
     setCalcError('');
     setPurchasePrice('');
     setUseManualMsrp(false);
-    setIsPresetLoaded(false);
     if (m === 'free') setVinData(null);
   }
   function triggerOpenLeadModal(serviceTypeString) {
@@ -778,7 +739,6 @@ export default function Home() {
                       setFields(p => ({ ...p, make: val, model: '' }));
                       setModelQuery('');
                       setShowModelSuggestions(false);
-                      setIsPresetLoaded(false);
                     }}
                     disabled={mode === 'premium' && !vinData}
                     style={{ padding: '10px 12px' }}
@@ -837,7 +797,6 @@ export default function Home() {
                                   setFields(p => ({ ...p, model: m.modelLabel }));
                                   setModelQuery(m.modelLabel);
                                   setShowModelSuggestions(false);
-                                  setIsPresetLoaded(false);
                                 }}
                                 style={{ padding: '8px 10px', fontSize: '13px', color: '#1e293b', cursor: 'pointer', borderRadius: '6px' }}
                                 onMouseEnter={e => { e.currentTarget.style.background = '#f0fdf4'; }}
