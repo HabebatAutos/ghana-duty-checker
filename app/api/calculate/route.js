@@ -1062,7 +1062,7 @@ export async function POST(request) {
       // ECOWAS CET bands. Previous 0.10 was verified wrong, not a
       // classification-specific variant — it undercounted duty by roughly
       // half of this single largest line item.
-      const importDuty   = cifGhs * 0.20;
+      const importDuty   = cifGhs * 0.10;
       const nhil         = cifGhs * 0.025;
       const getfund      = cifGhs * 0.025;
       const importVat    = cifGhs * 0.15;
