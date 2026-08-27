@@ -1089,10 +1089,25 @@ export async function POST(request) {
       const totalDutyGhs = importDuty + nhil + getfund + importVat + ecowas + examFee + network + specialLevy + eximLevy + auLevy + certFee + 14.50 + disinfection + overagePenaltyGhs;
       const dynamicExchangeLabel = `1 ${activeCurrency} = GHC ${rateToGhs.toLocaleString('en-US', { minimumFractionDigits: 4 })}`;
 
+      // Trim labels built by fetchMsrpLineup already prepend the model name
+      // when it's not already present (see finalTrimLabel above), so a
+      // multi-word model like "Accord Hybrid" ends up fully contained in
+      // its own trim string, e.g. trim = "Accord Hybrid Touring". Naively
+      // joining [model, trim] then duplicates it: "Accord Hybrid Accord
+      // Hybrid Touring". Strip the model prefix back out of the trim
+      // before joining, so the trim contributes only its distinguishing
+      // part ("Touring") to the final label.
+      const resolvedTrimLabel = activeTrimLabel || trim || '';
+      const modelUpper = String(model || '').trim().toUpperCase();
+      const trimUpper = String(resolvedTrimLabel).trim().toUpperCase();
+      const trimWithoutModel = (modelUpper && trimUpper.startsWith(modelUpper))
+        ? resolvedTrimLabel.trim().slice(model.trim().length).trim()
+        : resolvedTrimLabel;
+
       return Response.json({
         success: true, isLineup: false, extendedSpecifications: extendedNhtsaData,
         result: {
-          vehicle_label: [year, make, model, activeTrimLabel || trim].filter(Boolean).join(' '),
+          vehicle_label: [year, make, model, trimWithoutModel].filter(Boolean).join(' '),
           msrp_source: activeSource,
           msrp_source_type: msrp_source_type,
           exchange_rate: rateToGhs, exchange_rate_usd: usdToGhs,
