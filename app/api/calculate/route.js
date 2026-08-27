@@ -1054,7 +1054,15 @@ export async function POST(request) {
       else if (age >= 16) overagePenaltyRate = 0.50;
       const overagePenaltyGhs = cifGhs * overagePenaltyRate;
 
-      const importDuty   = cifGhs * 0.10;
+      // Import Duty verified at 20% against three independent real ICUMS
+      // transaction records (2022 & 2023 Accord Hybrid, multiple trims/
+      // dates/exchange rates all consistently showed Tax Code 01 = 20%),
+      // corroborated by independent published guides confirming 20% is
+      // the standard passenger-vehicle Import Duty rate under Ghana's
+      // ECOWAS CET bands. Previous 0.10 was verified wrong, not a
+      // classification-specific variant — it undercounted duty by roughly
+      // half of this single largest line item.
+      const importDuty   = cifGhs * 0.20;
       const nhil         = cifGhs * 0.025;
       const getfund      = cifGhs * 0.025;
       const importVat    = cifGhs * 0.15;
@@ -1065,8 +1073,20 @@ export async function POST(request) {
       const eximLevy     = cifGhs * 0.0075;
       const auLevy       = cifGhs * 0.002;
       const disinfection = 35 * usdToGhs;
+      // Was a flat GHC 0.50 — real ICUMS records show GRA's "Vehicle
+      // Certification" line item (Tax Code 16) as 0.5% of CIF, not a fixed
+      // fee. NOTE: the 1% COVID-19 Health Recovery Levy and its Network
+      // Charge counterpart are deliberately NOT included here — GRA
+      // abolished both effective 1 Jan 2026 (confirmed via GRA's published
+      // VAT reform notice), and since this calculator always computes
+      // duty as of today's date, adding them back would make the result
+      // wrong again in the opposite direction. Transactions in the local
+      // GRA dataset assessed before that date correctly still show them;
+      // that's expected historical variance, not something to replicate
+      // going forward.
+      const certFee      = cifGhs * 0.005;
 
-      const totalDutyGhs = importDuty + nhil + getfund + importVat + ecowas + examFee + network + specialLevy + eximLevy + auLevy + 14.50 + disinfection + overagePenaltyGhs;
+      const totalDutyGhs = importDuty + nhil + getfund + importVat + ecowas + examFee + network + specialLevy + eximLevy + auLevy + certFee + 14.50 + disinfection + overagePenaltyGhs;
       const dynamicExchangeLabel = `1 ${activeCurrency} = GHC ${rateToGhs.toLocaleString('en-US', { minimumFractionDigits: 4 })}`;
 
       return Response.json({
@@ -1084,7 +1104,7 @@ export async function POST(request) {
           duties: {
             import_duty: importDuty, nhil, getfund, import_vat: importVat, ecowas, exam_fee: examFee, network_charges: network,
             network_nhil: network * 0.025, network_getfund: network * 0.025, network_vat: network * 0.15, special_import_levy: specialLevy,
-            exim_levy: eximLevy, au_levy: auLevy, cert_fee: 0.50, shippers_fee: 9.00, moti_fee: 5.00, disinfection_fee: disinfection, overage_penalty: overagePenaltyGhs
+            exim_levy: eximLevy, au_levy: auLevy, cert_fee: certFee, shippers_fee: 9.00, moti_fee: 5.00, disinfection_fee: disinfection, overage_penalty: overagePenaltyGhs
           },
           total_duty_ghs: parseFloat(totalDutyGhs.toFixed(2)), total_duty_usd: parseFloat((totalDutyGhs / usdToGhs).toFixed(2)),
           purchase_price_usd: finalPurchasePriceUsd, freight_usd: freightUsd, insurance_usd: (insuranceNative / usdToOrigin),
