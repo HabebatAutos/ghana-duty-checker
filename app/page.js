@@ -1160,7 +1160,7 @@ export default function Home() {
                 <table className="report-table">
                   <tbody>
                     {[
-                      ['Import Duty Rate (10%)', d.import_duty],
+                      [`Import Duty Rate${result.import_duty_rate_label ? ` (${result.import_duty_rate_label})` : ''}`, d.import_duty],
                       ['National Health Insurance Levy (NHIL 2.5%)', d.nhil],
                       ['GETFund Levy (2.5%)', d.getfund],
                       ['Import Value Added Tax (VAT 15%)', d.import_vat],
