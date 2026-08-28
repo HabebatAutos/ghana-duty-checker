@@ -1,0 +1,68 @@
+{
+  "sheet1": [
+    {
+      "No": 1,
+      "Trim_Level": "NA",
+      "Year_of_Manufacture": 2010,
+      "Make": "PEUGEOT",
+      "Model": "4007",
+      "HDV": 29677.02,
+      "Currency": "USD",
+      "Origin_Code": "AU",
+      "HS_Code": 8703232000,
+      "Exchange_Rate": 5.7224,
+      "Receipt_Date": "24/12/2020",
+      "Assessment_Date": "23/12/2020",
+      "CIF_NCY": 65500.02,
+      "Total_Tax": 22804.65
+    },
+    {
+      "No": 1,
+      "Trim_Level": "NA",
+      "Year_of_Manufacture": 2011,
+      "Make": "PEUGEOT",
+      "Model": "4007",
+      "HDV": 21361.47,
+      "Currency": "EUR",
+      "Origin_Code": "IT",
+      "HS_Code": 8703322000,
+      "Exchange_Rate": 13.2537,
+      "Receipt_Date": "",
+      "Assessment_Date": "27/07/2026",
+      "CIF_NCY": 154070.81,
+      "Total_Tax": 87652.47
+    },
+    {
+      "No": 2,
+      "Trim_Level": "NA",
+      "Year_of_Manufacture": 2011,
+      "Make": "PEUGEOT",
+      "Model": "4007",
+      "HDV": 24259.5,
+      "Currency": "EUR",
+      "Origin_Code": "BE",
+      "HS_Code": 8703322000,
+      "Exchange_Rate": 7.6642,
+      "Receipt_Date": "44810",
+      "Assessment_Date": "44810",
+      "CIF_NCY": 91443.19,
+      "Total_Tax": 37547.5
+    },
+    {
+      "No": 1,
+      "Trim_Level": "NIL",
+      "Year_of_Manufacture": 2012,
+      "Make": "PEUGEOT",
+      "Model": "4007",
+      "HDV": 32562,
+      "Currency": "EUR",
+      "Origin_Code": "DE",
+      "HS_Code": 8703322000,
+      "Exchange_Rate": 12.3384,
+      "Receipt_Date": "31/10/2022",
+      "Assessment_Date": "17/10/2022",
+      "CIF_NCY": 194599.15,
+      "Total_Tax": 70187.44
+    }
+  ]
+}
