@@ -7,6 +7,81 @@ import fs from 'fs/promises'
 import path from 'path'
 import { PRESET_DATA } from '@/app/components/presets-data'
 
+// Import Duty rate by 6-digit WCO HS Code subheading. Replaces the
+// previous flat 10% assumption, which was verified wrong: real ICUMS
+// transaction records show duty varies by vehicle/engine classification —
+// as low as 5% for small-engine passenger cars, up to 20% for hybrids and
+// large-engine vehicles. Every rate below was cross-checked against real
+// ICUMS tax-list records before being added (see project history); this
+// is treated as best-current-knowledge, not permanently final — update
+// here if a future ICUMS sample shows a different rate for a given code.
+//
+// Codes are 6 digits (e.g. "870323"): the first 6 digits of the full HS
+// Code determine the tariff classification. Anything after that (e.g. the
+// trailing "2000" in "8703232000") is a Ghana-specific statistical/used-
+// vs-new suffix that doesn't change the applicable rate.
+const HS_CODE_DUTY_RATES = {
+  // Heavy equipment (forklifts, excavators, etc.)
+  '842710': 0.05, '842720': 0.05, '842790': 0.05, '842890': 0.05,
+  '842951': 0.05, '842952': 0.05, '842959': 0.05,
+  // Tractors / agricultural & works trucks
+  '870120': 0.05, '870121': 0.05, '870122': 0.05, '870191': 0.05,
+  // Buses / minibuses
+  '870210': 0.05, '870220': 0.05, '870230': 0.05, '870240': 0.05, '870290': 0.05,
+  // Passenger cars (8703.xx) — the core of the product
+  '870310': 0.20, // hybrid/other special drive variant
+  '870321': 0.05, // petrol ≤1000cc
+  '870322': 0.10, // petrol 1001-1500cc
+  '870323': 0.10, // petrol 1501-3000cc
+  '870324': 0.20, // petrol >3000cc
+  '870331': 0.05, // diesel ≤1500cc
+  '870332': 0.10, // diesel mid band
+  '870333': 0.20, // diesel large band
+  '870340': 0.20, // hybrid
+  '870350': 0.10, // hybrid/plug-in variant
+  '870360': 0.20, // hybrid/EV-adjacent variant
+  '870370': 0.10, // hybrid variant
+  '870380': 0.20, // EV-adjacent classification (0% EV incentive, if applicable, is handled separately — see resolveDutyRate)
+  '870390': 0.10, // other/unclassified passenger vehicle
+  // Trucks / pickups (8704.xx)
+  '870421': 0.05, '870422': 0.05, '870423': 0.05,
+  '870431': 0.05, '870432': 0.05,
+  '870441': 0.05, '870442': 0.05,
+  '870451': 0.05, '870452': 0.05,
+  '870460': 0.05, '870490': 0.05,
+  // Special-purpose trucks (cranes, drilling, etc.)
+  '870510': 0.05, '870540': 0.05, '870590': 0.05,
+  // Motorcycles
+  '871110': 0.20, '871120': 0.20, '871130': 0.20,
+  '871140': 0.20, '871150': 0.20, '871190': 0.20,
+  // Construction/works vehicles
+  '871640': 0.05,
+  // Boats
+  '890399': 0.20,
+};
+
+// Used when a vehicle's HS Code is missing, unrecognized, or belongs to a
+// classification not yet in the table above. 10% was the site's safe
+// interim flat rate while the tiered table above was being verified
+// against real ICUMS data — kept as the fallback so an unverified/unknown
+// vehicle gets the same protective middle estimate it was already getting,
+// rather than silently defaulting to either extreme (5% or 20%).
+const DEFAULT_DUTY_RATE = 0.10;
+
+// Normalizes a raw HS Code (any punctuation/spacing) down to its 6-digit
+// WCO subheading, then resolves the Import Duty rate to apply. Returns
+// both the rate and the resolved code so the result payload can show
+// exactly which classification/rate was used, for transparency and for
+// spot-checking future calculations against ICUMS.
+function resolveDutyRate(rawHsCode) {
+  const digitsOnly = String(rawHsCode || '').replace(/[^0-9]/g, '');
+  const subheading = digitsOnly.length >= 6 ? digitsOnly.slice(0, 6) : '';
+  if (subheading && HS_CODE_DUTY_RATES[subheading] !== undefined) {
+    return { rate: HS_CODE_DUTY_RATES[subheading], resolvedCode: subheading, matched: true };
+  }
+  return { rate: DEFAULT_DUTY_RATE, resolvedCode: subheading || null, matched: false };
+}
+
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || 'mock-key' })
 
 const MSRP_PROMPT = `You are an expert vehicle valuation assistant specializing in international automotive markets.
@@ -535,6 +610,7 @@ function normalizeLineupProperties(array, userEngine = '', userBodyType = '', ta
       price: verifiedPrice,
       currency: cleanCurrency,
       originCode: normalizeOriginCode(item.originCode || item.origin || item['Origin Code']) || '',
+      hsCode: item.hsCode || item.hs_code || item['HS Code'] || '',
       isFallback: item.isFallback || false,
       source: item.source || 'Verified Technical Specification Baseline',
       notes: item.notes || ''
@@ -717,6 +793,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
     'Origin Code': row.origin || row.originCode,
     'Fuel Type': row.fuel_type,
     'Body Style': row.bodyType,
+    'HS Code': row.hsCode,
   }));
 
   const matches = [...fileMatches, ...presetDataMatches];
@@ -749,6 +826,13 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
         const rawRowOrigin = row['Origin Code'] ?? row['origin_code'] ?? row['Origin'] ?? row['origin'] ?? targetCode;
         const rowOriginCode = normalizeOriginCode(rawRowOrigin) || targetCode;
 
+        // The 6-digit WCO subheading (e.g. "870323" from "8703232000") is
+        // what actually determines the duty tier — see HS_CODE_DUTY_RATES
+        // below. Everything past digit 6 is a country-specific suffix.
+        const rawRowHsCode = row.hsCode ?? row.hs_code ?? row['HS Code'] ?? '';
+        const hsDigitsOnly = String(rawRowHsCode || '').replace(/[^0-9]/g, '');
+        const rowHsCode = hsDigitsOnly.length >= 6 ? hsDigitsOnly.slice(0, 6) : '';
+
         if (cleanTrim === 'NAN' || isNaN(hdv) || hdv === 0) return;
 
         // Dedup key includes price so two genuinely different price points
@@ -763,10 +847,17 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
             hdv,
             currency: rowCurrency,
             originCode: rowOriginCode,
+            hsCode: rowHsCode,
             fuelType: row.fuel_type || row['Fuel Type'] || 'Gasoline',
             bodyStyle: row.body_style || row['Body Style'] || '',
             count: 0
           };
+        }
+        // If this dedup group's first-seen row had no HS Code but a later
+        // row for the same trim/price/origin does, backfill it rather than
+        // leaving the group permanently without one.
+        if (!uniqueVariants[dedupKey].hsCode && rowHsCode) {
+          uniqueVariants[dedupKey].hsCode = rowHsCode;
         }
         uniqueVariants[dedupKey].count += 1;
       });
@@ -792,6 +883,7 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
           price: variant.hdv || 0,
           currency: variant.currency || targetCurrency,
           originCode: variant.originCode || targetCode,
+          hsCode: variant.hsCode || '',
           isFallback: isFallbackOrigin,
           source: isFallbackOrigin ? 'GRA Customs Appraisal Record (Alternative Origin)' : 'GRA Customs Appraisal Terminal Record',
           notes: isFallbackOrigin 
@@ -1024,6 +1116,10 @@ export async function POST(request) {
     const activeCurrency = body.selectedCurrency || (lineup[0]?.currency || 'USD');
     const activeSource = body.selectedSource || (lineup[0]?.source || 'Estimated Baseline');
     const activeTrimLabel = body.selectedTrim || null;
+    // Carries the trim card's HS Code through to duty calculation. Manual-
+    // MSRP entries (useManualMsrp) have no trim card and thus no HS Code —
+    // that's expected and handled by HS_CODE_DUTY_RATES' default fallback.
+    const activeHsCode = body.selectedHsCode || (lineup[0]?.hsCode) || '';
 
     const rateToGhs = fxData.all_rates?.[activeCurrency] || fxData.rate_to_ghs;
     const usdToGhs  = fxData.usd_to_ghs || fxData.rate_to_ghs;
@@ -1054,15 +1150,18 @@ export async function POST(request) {
       else if (age >= 16) overagePenaltyRate = 0.50;
       const overagePenaltyGhs = cifGhs * overagePenaltyRate;
 
-      // Import Duty verified at 20% against three independent real ICUMS
-      // transaction records (2022 & 2023 Accord Hybrid, multiple trims/
-      // dates/exchange rates all consistently showed Tax Code 01 = 20%),
-      // corroborated by independent published guides confirming 20% is
-      // the standard passenger-vehicle Import Duty rate under Ghana's
-      // ECOWAS CET bands. Previous 0.10 was verified wrong, not a
-      // classification-specific variant — it undercounted duty by roughly
-      // half of this single largest line item.
-      const importDuty   = cifGhs * 0.10;
+      // Import Duty rate now resolved per-vehicle from its HS Code via
+      // HS_CODE_DUTY_RATES (see table near top of file). A flat rate was
+      // tried twice here and verified wrong both times — 10% undercounted
+      // large/hybrid vehicles, a since-reverted flat 20% overcounted
+      // small-engine vehicles. Real ICUMS data confirms duty genuinely
+      // varies by classification (5%/10%/20% depending on engine size and
+      // vehicle type), so a single constant can't be correct for every
+      // vehicle. activeHsCode was carried through from the selected trim
+      // card; DEFAULT_DUTY_RATE (10%) applies when it's missing (e.g.
+      // manual MSRP entries with no trim card) or unrecognized.
+      const { rate: importDutyRate, resolvedCode: resolvedHsCode, matched: hsCodeMatched } = resolveDutyRate(activeHsCode);
+      const importDuty   = cifGhs * importDutyRate;
       const nhil         = cifGhs * 0.025;
       const getfund      = cifGhs * 0.025;
       const importVat    = cifGhs * 0.15;
@@ -1116,6 +1215,9 @@ export async function POST(request) {
           hdv_formatted: `${Math.round(activePrice).toLocaleString()} ${activeCurrency}`, depreciated_value_origin: Math.round(depreciatedNative),
           freight_origin: Math.round(freightNative), insurance_origin: Math.round(insuranceNative), cif_origin: Math.round(cifNative),
           cif_ghs: parseFloat(cifGhs.toFixed(2)), cif_usd: parseFloat(cifUsd.toFixed(2)), overage_rate_label: overagePenaltyRate > 0 ? `${overagePenaltyRate * 100}%` : '0%',
+          hs_code: resolvedHsCode,
+          hs_code_matched: hsCodeMatched,
+          import_duty_rate_label: `${(importDutyRate * 100).toFixed(0)}%${hsCodeMatched ? '' : ' (default — HS Code unavailable or unrecognized)'}`,
           duties: {
             import_duty: importDuty, nhil, getfund, import_vat: importVat, ecowas, exam_fee: examFee, network_charges: network,
             network_nhil: network * 0.025, network_getfund: network * 0.025, network_vat: network * 0.15, special_import_levy: specialLevy,

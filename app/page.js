@@ -428,6 +428,7 @@ export default function Home() {
           selectedCurrency: selectedOption.currency,
           selectedSource: selectedOption.source,
           selectedTrim: selectedOption.trim,
+          selectedHsCode: selectedOption.hsCode || null,
           isLineupQuery: false,
           isBackgroundSync: false 
         }),

@@ -160,6 +160,7 @@ try {
           const rawCurrency = getFlexibleValue(row, ['currency', 'curr']) ?? 'USD';
           const rawOrigin = getFlexibleValue(row, ['origin code', 'origin_code', 'origin', 'country', 'market']) ?? 'US';
           const rawBody = getFlexibleValue(row, ['body style', 'bodystyle', 'bodytype', 'body_style']) ?? 'Sedan';
+          const rawHsCode = getFlexibleValue(row, ['hs code', 'hscode', 'hs_code', 'tariff code']);
 
           let make = rawMake ? String(rawMake).trim() : filenameMake;
           if (make.toLowerCase() === 'mercedes_benz' || make.toLowerCase() === 'mercedes benz') {
@@ -182,6 +183,13 @@ try {
           const mappedOrigin = originMap[originCode] || originMap[originCode.replace(/[^A-Z]/g, '')] || 'USA';
           const numericHdv = Number(rawHdv);
 
+          // The 6-digit WCO subheading (e.g. "870323" from a raw code like
+          // "8703232000" or "8703.23.20.00") is what actually determines
+          // the duty tier — everything after the 6th digit is Ghana's own
+          // country-specific suffix and doesn't affect classification.
+          const hsDigitsOnly = String(rawHsCode || '').replace(/[^0-9]/g, '');
+          const hsCode = hsDigitsOnly.length >= 6 ? hsDigitsOnly.slice(0, 6) : '';
+
           if (year && !isNaN(Number(year)) && make && model && !isNaN(numericHdv) && numericHdv > 0) {
             const dedupKey = `${make}|${model}|${year}|${trimLevel}|${mappedOrigin}`.toUpperCase();
             if (!seenKeys.has(dedupKey)) {
@@ -195,7 +203,8 @@ try {
                 bodyType: String(rawBody).trim() || "Sedan",
                 origin: mappedOrigin,
                 hdv: numericHdv,
-                currency: currency
+                currency: currency,
+                hsCode: hsCode
               });
               fileAddedCount++;
             }
