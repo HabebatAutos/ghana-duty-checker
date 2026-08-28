@@ -268,9 +268,17 @@ export async function POST(request) {
     y -= 20;
     const d = result.duties || {};
 
+    // Import Duty rate is now resolved per-vehicle by HS Code on the
+    // calculate route (see result.import_duty_rate_label), not a flat
+    // 10% — this label previously stayed hardcoded even after that
+    // change, showing "10% CIF" regardless of the rate actually used.
+    const importDutyLabel = result.import_duty_rate_label
+      ? `Import Duty Base Parameter (${result.import_duty_rate_label} CIF)`
+      : 'Import Duty Base Parameter';
+
     // Full, single, unbroken list of every duty line item - this entire section stays on page 1
     const allDutyLines = [
-      ['Import Duty Base Parameter (10% CIF)', d.import_duty],
+      [importDutyLabel, d.import_duty],
       ['National Health Insurance Levy (NHIL 2.5%)', d.nhil],
       ['GETFund Allocation Levy (2.5%)', d.getfund],
       ['Import Value Added Tax (VAT 15%)', d.import_vat],
@@ -283,6 +291,7 @@ export async function POST(request) {
       ['Special Import Control Levy (2%)', d.special_import_levy],
       ['EXIM Bank Development Support Allocation (0.75%)', d.exim_levy],
       ['African Union Strategic Allocation (0.2%)', d.au_levy],
+      ['1% Withholding Tax on Import', d.withholding_tax],
       ['Vehicle Safety Certification Clearance Fee', d.cert_fee],
       ['Ghana Shippers Authority Standard Processing Fee', d.shippers_fee],
       ['Ministry of Trade e-ID System Processing integration', d.moti_fee],

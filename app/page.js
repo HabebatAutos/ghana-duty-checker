@@ -1173,6 +1173,7 @@ export default function Home() {
                       ['Special Import Levy (2%)', d.special_import_levy],
                       ['EXIM Bank Development Levy (0.75%)', d.exim_levy],
                       ['African Union Levy (0.2%)', d.au_levy],
+                      ['1% Withholding Tax on Import', d.withholding_tax],
                       ['Vehicle Inspection Certification Fee', d.cert_fee],
                       ['Ghana Shippers Authority Processing Fee', d.shippers_fee],
                       ['Ministry of Trade e-ID Integration Fee', d.moti_fee],

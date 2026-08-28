@@ -1172,20 +1172,25 @@ export async function POST(request) {
       const eximLevy     = cifGhs * 0.0075;
       const auLevy       = cifGhs * 0.002;
       const disinfection = 35 * usdToGhs;
-      // Was a flat GHC 0.50 — real ICUMS records show GRA's "Vehicle
-      // Certification" line item (Tax Code 16) as 0.5% of CIF, not a fixed
-      // fee. NOTE: the 1% COVID-19 Health Recovery Levy and its Network
-      // Charge counterpart are deliberately NOT included here — GRA
-      // abolished both effective 1 Jan 2026 (confirmed via GRA's published
-      // VAT reform notice), and since this calculator always computes
-      // duty as of today's date, adding them back would make the result
-      // wrong again in the opposite direction. Transactions in the local
-      // GRA dataset assessed before that date correctly still show them;
-      // that's expected historical variance, not something to replicate
-      // going forward.
-      const certFee      = cifGhs * 0.005;
+      // GHC 0.50 FLAT FEE — CORRECTED BACK from an earlier mistaken change
+      // to cifGhs * 0.005. That change was based on a single ambiguous
+      // early sample; two independent August 2026 ICUMS transactions
+      // (Toyota Camry, Toyota Corolla — different CIF bases) both show
+      // Vehicle Certification (Tax Code 16) as an identical flat 0.5,
+      // not a value that scales with CIF. Reverted to match reality.
+      const certFee      = 0.50;
+      // 1% of CIF — RE-ADDED. Was deliberately left out earlier because
+      // two ICUMS samples checked at the time didn't show it. Since then,
+      // two further independent August 2026 samples (Camry, Corolla) both
+      // consistently show Tax Code 56 "1% Withholding Tax on Import" at
+      // 1% of CIF, confirming it is currently active and should be
+      // included. Unlike the COVID-19 Health Recovery Levy (confirmed
+      // abolished via GRA's own published notice), there's no evidence
+      // this one was ever discontinued — it simply wasn't visible in the
+      // earlier, more limited sample set.
+      const withholdingTax = cifGhs * 0.01;
 
-      const totalDutyGhs = importDuty + nhil + getfund + importVat + ecowas + examFee + network + specialLevy + eximLevy + auLevy + certFee + 14.50 + disinfection + overagePenaltyGhs;
+      const totalDutyGhs = importDuty + nhil + getfund + importVat + ecowas + examFee + network + specialLevy + eximLevy + auLevy + certFee + withholdingTax + 14.50 + disinfection + overagePenaltyGhs;
       const dynamicExchangeLabel = `1 ${activeCurrency} = GHC ${rateToGhs.toLocaleString('en-US', { minimumFractionDigits: 4 })}`;
 
       // Trim labels built by fetchMsrpLineup already prepend the model name
@@ -1221,7 +1226,7 @@ export async function POST(request) {
           duties: {
             import_duty: importDuty, nhil, getfund, import_vat: importVat, ecowas, exam_fee: examFee, network_charges: network,
             network_nhil: network * 0.025, network_getfund: network * 0.025, network_vat: network * 0.15, special_import_levy: specialLevy,
-            exim_levy: eximLevy, au_levy: auLevy, cert_fee: certFee, shippers_fee: 9.00, moti_fee: 5.00, disinfection_fee: disinfection, overage_penalty: overagePenaltyGhs
+            exim_levy: eximLevy, au_levy: auLevy, cert_fee: certFee, withholding_tax: withholdingTax, shippers_fee: 9.00, moti_fee: 5.00, disinfection_fee: disinfection, overage_penalty: overagePenaltyGhs
           },
           total_duty_ghs: parseFloat(totalDutyGhs.toFixed(2)), total_duty_usd: parseFloat((totalDutyGhs / usdToGhs).toFixed(2)),
           purchase_price_usd: finalPurchasePriceUsd, freight_usd: freightUsd, insurance_usd: (insuranceNative / usdToOrigin),
