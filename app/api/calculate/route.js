@@ -68,6 +68,44 @@ const HS_CODE_DUTY_RATES = {
 // rather than silently defaulting to either extreme (5% or 20%).
 const DEFAULT_DUTY_RATE = 0.10;
 
+// Age-based depreciation bands, replacing the previous flat/coarse
+// 0% / 30% / 50% assumption. Verified against live ICUMS/Unipass output
+// (Aug 2026 Corolla sample: a ~4-year-old vehicle showed 40% depreciation,
+// not 30%) and cross-checked against GRA's published schedule:
+//   < 6 months            : 0%
+//   6 months  - 1.5 years : 15%
+//   1.5 years - 2.5 years : 30%
+//   2.5 years - 5 years   : 40%
+//   5+ years              : 50% (ceiling — separate over-age CIF penalty
+//                                 handles vehicles past 10 years, see
+//                                 overagePenaltyRate below)
+// These are step bands, not a continuous taper — a vehicle crosses
+// straight from one rate to the next at each boundary.
+const DEPRECIATION_BANDS = [
+  { maxYears: 0.5, rate: 0 },
+  { maxYears: 1.5, rate: 0.15 },
+  { maxYears: 2.5, rate: 0.30 },
+  { maxYears: 5,   rate: 0.40 },
+  { maxYears: Infinity, rate: 0.50 },
+];
+
+// Resolves the depreciation rate for a vehicle from its manufacture year
+// (and month, if known). Precision note: most input paths (trim cards, VIN
+// decode fallback) only reliably give us the model YEAR, not the exact
+// manufacture month, so the 6-month/1.5-year/2.5-year band boundaries
+// can't always be pinpointed exactly. When manufactureMonth is available,
+// use it; otherwise assume mid-year (July) manufacture as a reasonable
+// midpoint estimate rather than defaulting to Jan 1, which would
+// systematically overstate age (and understate value) by up to 6 months.
+function resolveDepreciationRate(manufactureYear, manufactureMonth = null) {
+  const now = new Date();
+  const assumedMonth = manufactureMonth !== null && manufactureMonth !== undefined ? manufactureMonth : 6; // 0-indexed; 6 = July
+  const manufactureDate = new Date(parseInt(manufactureYear), assumedMonth, 1);
+  const ageInYears = (now - manufactureDate) / (1000 * 60 * 60 * 24 * 365.25);
+  const band = DEPRECIATION_BANDS.find(b => ageInYears < b.maxYears) || DEPRECIATION_BANDS[DEPRECIATION_BANDS.length - 1];
+  return { rate: band.rate, ageInYears };
+}
+
 // Normalizes a raw HS Code (any punctuation/spacing) down to its 6-digit
 // WCO subheading, then resolves the Import Duty rate to apply. Returns
 // both the rate and the resolved code so the result payload can show
@@ -1020,7 +1058,15 @@ async function fetchRates(origin) {
 export async function POST(request) {
   try {
     const body = await request.json()
-    let { year, make, model, trim, engine, bodyType, origin, originCode, purchasePrice, freight, vin, condition, customPurchasePriceUsd, isBackgroundSync, useManualMsrp = false } = body
+    let { year, make, model, trim, engine, bodyType, origin, originCode, purchasePrice, freight, vin, condition, customPurchasePriceUsd, isBackgroundSync, useManualMsrp = false, applyWithholdingTax = true } = body
+    // WHT toggle: defaults to true (matches today's hardcoded-on behavior)
+    // so existing calls from page.js — before it's updated with the actual
+    // toggle UI — keep producing the same totals users see now. Once
+    // page.js sends an explicit applyWithholdingTax value from the new
+    // toggle, this default no longer matters for those requests. WHT is a
+    // user-side fact (tied to their taxpayer/registration status) that
+    // only the user can confirm, so this can never be inferred — it's
+    // either explicitly on, explicitly off, or defaults on.
     let extendedNhtsaData = null
 
     if (vin && vin.trim().length === 17) {
@@ -1136,8 +1182,12 @@ export async function POST(request) {
       // Compute calculations cleanly
       const usdToOrigin = activeCurrency === 'USD' ? 1 : usdToGhs / rateToGhs;
       const freightNative = freightUsd * usdToOrigin;
-      const age = 2026 - parseInt(year);
-      const depRate = age <= 2 ? 0 : age <= 4 ? 0.30 : 0.50;
+      // Integer-year age, used only for the over-age CIF penalty bands
+      // below (those are defined in whole-year cutoffs, e.g. "11 or 12
+      // years"). Previously hardcoded to 2026 — now derived from the
+      // actual current date so this doesn't silently go stale.
+      const age = new Date().getFullYear() - parseInt(year);
+      const { rate: depRate } = resolveDepreciationRate(year);
       const depreciatedNative = activePrice * (1 - depRate);
       const insuranceNative = depreciatedNative * 0.01;
       const cifNative = depreciatedNative + freightNative + insuranceNative;
@@ -1179,16 +1229,13 @@ export async function POST(request) {
       // Vehicle Certification (Tax Code 16) as an identical flat 0.5,
       // not a value that scales with CIF. Reverted to match reality.
       const certFee      = 0.50;
-      // 1% of CIF — RE-ADDED. Was deliberately left out earlier because
-      // two ICUMS samples checked at the time didn't show it. Since then,
-      // two further independent August 2026 samples (Camry, Corolla) both
-      // consistently show Tax Code 56 "1% Withholding Tax on Import" at
-      // 1% of CIF, confirming it is currently active and should be
-      // included. Unlike the COVID-19 Health Recovery Levy (confirmed
-      // abolished via GRA's own published notice), there's no evidence
-      // this one was ever discontinued — it simply wasn't visible in the
-      // earlier, more limited sample set.
-      const withholdingTax = cifGhs * 0.01;
+      // 1% of CIF. Confirmed active via ICUMS samples (Tax Code 56, "1%
+      // Withholding Tax on Import"), but it does NOT apply to every
+      // importer — it's tied to the importer's own taxpayer/registration
+      // status, which only the user can confirm. Controlled by the
+      // applyWithholdingTax toggle (default true, see note at body
+      // destructuring above) rather than always-on.
+      const withholdingTax = applyWithholdingTax ? cifGhs * 0.01 : 0;
 
       const totalDutyGhs = importDuty + nhil + getfund + importVat + ecowas + examFee + network + specialLevy + eximLevy + auLevy + certFee + withholdingTax + 14.50 + disinfection + overagePenaltyGhs;
       const dynamicExchangeLabel = `1 ${activeCurrency} = GHC ${rateToGhs.toLocaleString('en-US', { minimumFractionDigits: 4 })}`;
@@ -1217,6 +1264,7 @@ export async function POST(request) {
           exchange_rate: rateToGhs, exchange_rate_usd: usdToGhs,
           exchange_label: dynamicExchangeLabel, currency_code: activeCurrency,
           vehicle_age: age, depreciation_pct: depRate * 100, hdv_origin: Math.round(activePrice), hdv_currency: activeCurrency,
+          withholding_tax_applied: applyWithholdingTax,
           hdv_formatted: `${Math.round(activePrice).toLocaleString()} ${activeCurrency}`, depreciated_value_origin: Math.round(depreciatedNative),
           freight_origin: Math.round(freightNative), insurance_origin: Math.round(insuranceNative), cif_origin: Math.round(cifNative),
           cif_ghs: parseFloat(cifGhs.toFixed(2)), cif_usd: parseFloat(cifUsd.toFixed(2)), overage_rate_label: overagePenaltyRate > 0 ? `${overagePenaltyRate * 100}%` : '0%',

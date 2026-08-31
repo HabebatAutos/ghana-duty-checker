@@ -142,6 +142,12 @@ export default function Home() {
   const [vinError, setVinError] = useState('');
   const [purchasePrice, setPurchasePrice] = useState('');
   const [useManualMsrp, setUseManualMsrp] = useState(false);
+  // WHT is a user-side fact (tied to the importer's own taxpayer/
+  // registration status with GRA) — only the user can say whether it
+  // applies to them, so this can't be inferred from vehicle data. Defaults
+  // to true, matching the calculator's original always-on behavior, so
+  // nobody's estimate silently changes just because this toggle shipped.
+  const [applyWithholdingTax, setApplyWithholdingTax] = useState(true);
   const [freight, setFreight] = useState('1500');
   const [calcStatus, setCalcStatus] = useState('');
   const [calcError, setCalcError] = useState('');
@@ -190,6 +196,7 @@ export default function Home() {
           isBackgroundSync: !allowAIFallback,
           useManualMsrp: manualMsrpOptions?.useManualMsrp || false,
           purchasePrice: manualMsrpOptions?.purchasePrice || null,
+          applyWithholdingTax,
         }),
       });
       const data = await res.json();
@@ -315,7 +322,8 @@ export default function Home() {
           selectedTrim: `${fields.model} User-Provided MSRP`,
           useManualMsrp: true,
           isLineupQuery: false,
-          isBackgroundSync: false
+          isBackgroundSync: false,
+          applyWithholdingTax
         }),
       });
       
@@ -430,7 +438,8 @@ export default function Home() {
           selectedTrim: selectedOption.trim,
           selectedHsCode: selectedOption.hsCode || null,
           isLineupQuery: false,
-          isBackgroundSync: false 
+          isBackgroundSync: false,
+          applyWithholdingTax
         }),
       });
          
@@ -878,6 +887,19 @@ export default function Home() {
                   <input className="form-input premium-input-field" type="number" value={freight} onChange={e => setFreight(e.target.value)} style={{ padding: '10px 12px' }} />
                 </div>
               </div>
+              {/* WITHHOLDING TAX TOGGLE — user-side fact only the importer can confirm */}
+              <div className="form-group full" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px' }}>
+                <input
+                  type="checkbox"
+                  id="apply-wht-checkbox"
+                  checked={applyWithholdingTax}
+                  onChange={e => setApplyWithholdingTax(e.target.checked)}
+                  style={{ marginTop: '2px', cursor: 'pointer' }}
+                />
+                <label htmlFor="apply-wht-checkbox" style={{ fontSize: '12px', color: '#334155', cursor: 'pointer', margin: 0, lineHeight: '1.4' }}>
+                  <strong>Apply 1% Withholding Tax (WHT)</strong> — WHT doesn't apply to every importer. Turn this on only if you're a VAT/TIN-registered importer subject to withholding tax on this transaction. If you're unsure, leave it on to match the standard estimate, or check with your clearing agent.
+                </label>
+              </div>
               {/* REACTIVE CONTINENT & COUNTRY ORIGIN SELECTOR - PRESERVED EXACTLY */}
               <div className="form-group full" style={{ marginTop: 16 }}>
                 <label className="form-label" style={{ fontWeight: '700', color: '#1e293b', marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px', fontSize: '12px' }}>
@@ -1111,6 +1133,17 @@ export default function Home() {
                   </div>
                 </div>
               )}
+              {result.withholding_tax_applied === false && (
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#f0f9ff', borderLeft: '4px solid #38bdf8', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '16px' }}>ℹ️</span>
+                  <div>
+                    <h4 style={{ color: '#075985', margin: '0 0 2px 0', fontSize: '13px', fontWeight: '600' }}>Withholding Tax Excluded</h4>
+                    <p style={{ color: '#0369a1', margin: '0', fontSize: '12px', lineHeight: '1.4' }}>
+                      This estimate <strong>does not include</strong> the 1% Withholding Tax, based on your selection. If it turns out WHT applies to your import, add roughly 1% of the CIF value to this total.
+                    </p>
+                  </div>
+                </div>
+              )}
               {result.vehicle_age >= 11 && (
                 <div className="overage-warning-box" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#fff9e6', borderLeft: '4px solid #d97706', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
                   <span style={{ fontSize: '16px' }}>⚠️</span>
@@ -1173,7 +1206,7 @@ export default function Home() {
                       ['Special Import Levy (2%)', d.special_import_levy],
                       ['EXIM Bank Development Levy (0.75%)', d.exim_levy],
                       ['African Union Levy (0.2%)', d.au_levy],
-                      ['1% Withholding Tax on Import', d.withholding_tax],
+                      [`1% Withholding Tax on Import${result.withholding_tax_applied === false ? ' (not applied)' : ''}`, d.withholding_tax],
                       ['Vehicle Inspection Certification Fee', d.cert_fee],
                       ['Ghana Shippers Authority Processing Fee', d.shippers_fee],
                       ['Ministry of Trade e-ID Integration Fee', d.moti_fee],

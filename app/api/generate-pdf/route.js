@@ -69,6 +69,11 @@ export async function POST(request) {
     const borderPurple = rgb(0.93, 0.91, 0.98); // #ede9fe
     const textPurple = rgb(0.59, 0.46, 0.89);  // #9966dd
 
+    // WHT-excluded disclaimer colors (matches web result's blue info banner)
+    const bgBlue = rgb(0.94, 0.98, 1.0);       // #f0f9ff
+    const borderBlue = rgb(0.22, 0.74, 0.97);  // #38bdf8
+    const textBlue = rgb(0.01, 0.41, 0.63);    // #0369a1
+
     // --- LOAD & EMBED THE PNG LOGO IMAGE ---
     let embeddedLogo;
     try {
@@ -196,9 +201,10 @@ export async function POST(request) {
     page1.drawText('ESTIMATED LANDED COST', { x: 400, y: y + 34, size: 8, font: fontBold, color: pMuted });
     page1.drawText(fmtUsd(result.landed_cost_usd), { x: 400, y: y + 14, size: 11, font: fontBold, color: pDark });
 
-    // --- MSRP DISCLAIMER (if user-provided or AI-assisted) ---
+    // --- MSRP DISCLAIMER (if user-provided or AI-assisted) + WHT DISCLAIMER (if excluded) ---
     const msrpSourceType = result.msrp_source_type || 'gra_verified';
     y = 575;
+    let disclaimerDrawn = false;
 
     if (msrpSourceType === 'user_provided') {
       page1.drawRectangle({ x: 45, y: y - 60, width: 505, height: 55, color: bgYellow, borderColor: borderYellow, borderWidth: 1 });
@@ -225,6 +231,7 @@ export async function POST(request) {
       });
 
       y -= 65;
+      disclaimerDrawn = true;
     } else if (msrpSourceType === 'ai_assisted') {
       page1.drawRectangle({ x: 45, y: y - 60, width: 505, height: 55, color: bgPurple, borderColor: borderPurple, borderWidth: 1 });
 
@@ -250,7 +257,42 @@ export async function POST(request) {
       });
 
       y -= 65;
-    } else {
+      disclaimerDrawn = true;
+    }
+
+    // WHT disclaimer draws independently below any MSRP disclaimer (or at
+    // the top slot if none was shown), since the two are unrelated facts
+    // (price provenance vs. the importer's own tax status) and either or
+    // both can apply to a given report.
+    if (result.withholding_tax_applied === false) {
+      page1.drawRectangle({ x: 45, y: y - 60, width: 505, height: 55, color: bgBlue, borderColor: borderBlue, borderWidth: 1 });
+
+      page1.drawText('WITHHOLDING TAX EXCLUDED:', {
+        x: 60,
+        y: y - 25,
+        size: 10,
+        font: fontBold,
+        color: textBlue,
+      });
+
+      const whtText = 'This estimate does not include the 1% Withholding Tax, based on your selection at calculation time. If it turns out WHT applies to your import, add roughly 1% of the CIF value to this total.';
+      const whtLines = whtText.match(/.{1,80}/g) || [];
+
+      whtLines.forEach((line, idx) => {
+        page1.drawText(line, {
+          x: 60,
+          y: y - 38 - (idx * 9),
+          size: 8,
+          font: fontReg,
+          color: textBlue,
+        });
+      });
+
+      y -= 65;
+      disclaimerDrawn = true;
+    }
+
+    if (!disclaimerDrawn) {
       // No disclaimer shown, so don't leave a gap sized for one
       y -= 15;
     }
@@ -291,7 +333,7 @@ export async function POST(request) {
       ['Special Import Control Levy (2%)', d.special_import_levy],
       ['EXIM Bank Development Support Allocation (0.75%)', d.exim_levy],
       ['African Union Strategic Allocation (0.2%)', d.au_levy],
-      ['1% Withholding Tax on Import', d.withholding_tax],
+      [`1% Withholding Tax on Import${result.withholding_tax_applied === false ? ' (not applied)' : ''}`, d.withholding_tax],
       ['Vehicle Safety Certification Clearance Fee', d.cert_fee],
       ['Ghana Shippers Authority Standard Processing Fee', d.shippers_fee],
       ['Ministry of Trade e-ID System Processing integration', d.moti_fee],
