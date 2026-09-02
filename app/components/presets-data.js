@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-09-01
+// Generated on: 2026-09-02
 
 export const PRESET_DATA = [
   {
