@@ -148,6 +148,14 @@ export default function Home() {
   // to true, matching the calculator's original always-on behavior, so
   // nobody's estimate silently changes just because this toggle shipped.
   const [applyWithholdingTax, setApplyWithholdingTax] = useState(true);
+  // Optional real manufacture date (e.g. from a VIN door-jamb sticker,
+  // dealer invoice, or listing). Only a user-reported real date resolves
+  // the depreciation ambiguity for current/near-current model year
+  // vehicles -- there's no reliable way to infer it from model year alone
+  // (confirmed on two real 2026 Hondas: one built July 2025 that GRA
+  // depreciated 15%, another that came back a confirmed 0%). Left blank
+  // by default since most users won't have this on hand.
+  const [actualBuildDate, setActualBuildDate] = useState('');
   const [freight, setFreight] = useState('1500');
   const [calcStatus, setCalcStatus] = useState('');
   const [calcError, setCalcError] = useState('');
@@ -197,6 +205,7 @@ export default function Home() {
           useManualMsrp: manualMsrpOptions?.useManualMsrp || false,
           purchasePrice: manualMsrpOptions?.purchasePrice || null,
           applyWithholdingTax,
+          actualBuildDate: actualBuildDate || null,
         }),
       });
       const data = await res.json();
@@ -323,7 +332,8 @@ export default function Home() {
           useManualMsrp: true,
           isLineupQuery: false,
           isBackgroundSync: false,
-          applyWithholdingTax
+          applyWithholdingTax,
+          actualBuildDate: actualBuildDate || null
         }),
       });
       
@@ -439,7 +449,8 @@ export default function Home() {
           selectedHsCode: selectedOption.hsCode || null,
           isLineupQuery: false,
           isBackgroundSync: false,
-          applyWithholdingTax
+          applyWithholdingTax,
+          actualBuildDate: actualBuildDate || null
         }),
       });
          
@@ -887,6 +898,23 @@ export default function Home() {
                   <input className="form-input premium-input-field" type="number" value={freight} onChange={e => setFreight(e.target.value)} style={{ padding: '10px 12px' }} />
                 </div>
               </div>
+              {/* ACTUAL BUILD DATE — optional, resolves the depreciation ambiguity for
+                  current/near-current model year vehicles instead of guessing */}
+              <div className="form-group full" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px' }}>
+                <div style={{ flex: 1 }}>
+                  <label htmlFor="actual-build-date" style={{ fontSize: '12px', color: '#334155', display: 'block', marginBottom: '6px', lineHeight: '1.4' }}>
+                    <strong>Actual Manufacture Date (optional)</strong> — for a current or upcoming model year vehicle, depreciation can genuinely be 0% or 15% depending on when it was actually built, and we can't tell which without this. Check the door-jamb VIN sticker (shows a date like "07/25") or your invoice. Leave blank if you don't have it.
+                  </label>
+                  <input
+                    id="actual-build-date"
+                    className="form-input premium-input-field"
+                    type="month"
+                    value={actualBuildDate}
+                    onChange={e => setActualBuildDate(e.target.value)}
+                    style={{ padding: '10px 12px', maxWidth: '200px' }}
+                  />
+                </div>
+              </div>
               {/* WITHHOLDING TAX TOGGLE — user-side fact only the importer can confirm */}
               <div className="form-group full" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '12px' }}>
                 <input
@@ -1144,6 +1172,28 @@ export default function Home() {
                   </div>
                 </div>
               )}
+              {result.depreciation_confidence === 'uncertain' && (
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#fff9e6', borderLeft: '4px solid #d97706', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '16px' }}>⚠️</span>
+                  <div>
+                    <h4 style={{ color: '#92400e', margin: '0 0 2px 0', fontSize: '13px', fontWeight: '600' }}>Depreciation Not Confirmed</h4>
+                    <p style={{ color: '#b45309', margin: '0', fontSize: '12px', lineHeight: '1.4' }}>
+                      This vehicle's model year is recent enough that GRA's actual depreciation could be <strong>0% or 15%</strong> depending on exactly when it was built, and we have no way to know which without the real manufacture date. This estimate assumes 0%. If it turns out to be 15%, expect the duty total to run higher. Enter the actual manufacture date above (check the VIN door-jamb sticker) for an exact figure.
+                    </p>
+                  </div>
+                </div>
+              )}
+              {result.depreciation_confidence === 'confirmed' && (
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#f0fdf4', borderLeft: '4px solid #22c55e', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '16px' }}>✓</span>
+                  <div>
+                    <h4 style={{ color: '#166534', margin: '0 0 2px 0', fontSize: '13px', fontWeight: '600' }}>Depreciation Based on Confirmed Build Date</h4>
+                    <p style={{ color: '#15803d', margin: '0', fontSize: '12px', lineHeight: '1.4' }}>
+                      This estimate uses the manufacture date you provided rather than an assumption, so the {result.depreciation_pct}% depreciation applied here is exact, not estimated.
+                    </p>
+                  </div>
+                </div>
+              )}
               {result.vehicle_age >= 11 && (
                 <div className="overage-warning-box" style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', backgroundColor: '#fff9e6', borderLeft: '4px solid #d97706', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
                   <span style={{ fontSize: '16px' }}>⚠️</span>
@@ -1164,7 +1214,11 @@ export default function Home() {
                       <td className="td-value">{result.hdv_formatted}</td>
                     </tr>
                     <tr>
-                      <td className="td-label">Age Depreciation Discount ({result.depreciation_pct}%)</td>
+                      <td className="td-label">
+                        Age Depreciation Discount ({result.depreciation_pct}%)
+                        {result.depreciation_confidence === 'uncertain' && <span style={{ color: '#b45309', fontWeight: '600' }}> — unconfirmed</span>}
+                        {result.depreciation_confidence === 'confirmed' && <span style={{ color: '#15803d', fontWeight: '600' }}> — confirmed</span>}
+                      </td>
                       <td className="td-value">
                         {result.hdv_origin && result.depreciation_pct ? (result.hdv_origin * result.depreciation_pct / 100).toLocaleString() : '0'} {result.hdv_currency}
                       </td>

@@ -89,21 +89,53 @@ const DEPRECIATION_BANDS = [
   { maxYears: Infinity, rate: 0.50 },
 ];
 
-// Resolves the depreciation rate for a vehicle from its manufacture year
-// (and month, if known). Precision note: most input paths (trim cards, VIN
-// decode fallback) only reliably give us the model YEAR, not the exact
-// manufacture month, so the 6-month/1.5-year/2.5-year band boundaries
-// can't always be pinpointed exactly. When manufactureMonth is available,
-// use it; otherwise assume mid-year (July) manufacture as a reasonable
-// midpoint estimate rather than defaulting to Jan 1, which would
-// systematically overstate age (and understate value) by up to 6 months.
-function resolveDepreciationRate(manufactureYear, manufactureMonth = null) {
+// Resolves the depreciation rate for a vehicle. Two modes:
+//
+// 1. actualBuildDate supplied (e.g. from a VIN door-jamb sticker, dealer
+//    invoice, or listing like "07/25") -- use it directly. This is the
+//    only way to actually resolve the ambiguity described below, since it
+//    doesn't infer anything: the user is reporting a fact.
+// 2. No actualBuildDate -- fall back to assuming manufacture at mid-year
+//    (July 1) of the stated model year. This is a genuine guess, not a
+//    verified figure.
+//
+// Why we no longer try to be clever about mode 2 for recent model years:
+// we tried flooring the resulting 0% band to 15% on the theory that
+// "current model year" vehicles are usually already 6+ months old by the
+// time they're assessed (confirmed on a real 2026 Honda CR-V: GRA showed
+// 15%, not 0%). That floor was reverted after a second real record -- a
+// 2026 Honda Civic Sport Touring, same model year, same CA origin,
+// assessed weeks apart from the CR-V -- came back at a confirmed exact 0%
+// from GRA (and its VIN sticker separately confirmed a July 2025 build,
+// proving real build dates for the same model year and trim genuinely
+// spread across a 12-18 month window). There is no safe default in either
+// direction from year alone, so mode 2 no longer guesses which side to
+// lean on: the ageConfidence flag marks the result 'uncertain' whenever
+// it lands on the 0% band without a confirmed date, so callers can
+// disclose that instead of presenting it as settled.
+function resolveDepreciationRate(manufactureYear, actualBuildDate = null) {
   const now = new Date();
-  const assumedMonth = manufactureMonth !== null && manufactureMonth !== undefined ? manufactureMonth : 6; // 0-indexed; 6 = July
-  const manufactureDate = new Date(parseInt(manufactureYear), assumedMonth, 1);
+  let manufactureDate;
+  let confirmed = false;
+
+  if (actualBuildDate) {
+    const parsed = new Date(actualBuildDate);
+    if (!isNaN(parsed.getTime())) {
+      manufactureDate = parsed;
+      confirmed = true;
+    }
+  }
+
+  if (!confirmed) {
+    manufactureDate = new Date(parseInt(manufactureYear), 6, 1); // July 1 of stated model year
+  }
+
   const ageInYears = (now - manufactureDate) / (1000 * 60 * 60 * 24 * 365.25);
   const band = DEPRECIATION_BANDS.find(b => ageInYears < b.maxYears) || DEPRECIATION_BANDS[DEPRECIATION_BANDS.length - 1];
-  return { rate: band.rate, ageInYears };
+
+  const ageConfidence = confirmed ? 'confirmed' : (band.rate === 0 ? 'uncertain' : 'assumed');
+
+  return { rate: band.rate, ageInYears, ageConfidence };
 }
 
 // Normalizes a raw HS Code (any punctuation/spacing) down to its 6-digit
@@ -1058,7 +1090,12 @@ async function fetchRates(origin) {
 export async function POST(request) {
   try {
     const body = await request.json()
-    let { year, make, model, trim, engine, bodyType, origin, originCode, purchasePrice, freight, vin, condition, customPurchasePriceUsd, isBackgroundSync, useManualMsrp = false, applyWithholdingTax = true } = body
+    let { year, make, model, trim, engine, bodyType, origin, originCode, purchasePrice, freight, vin, condition, customPurchasePriceUsd, isBackgroundSync, useManualMsrp = false, applyWithholdingTax = true, actualBuildDate = null } = body
+    // actualBuildDate: optional, user-supplied real manufacture date (e.g.
+    // from a VIN door-jamb sticker, invoice, or listing showing "07/25").
+    // Only a real reported date resolves the depreciation ambiguity
+    // described at resolveDepreciationRate -- there is no reliable way to
+    // infer it from model year alone.
     // WHT toggle: defaults to true (matches today's hardcoded-on behavior)
     // so existing calls from page.js — before it's updated with the actual
     // toggle UI — keep producing the same totals users see now. Once
@@ -1187,7 +1224,7 @@ export async function POST(request) {
       // years"). Previously hardcoded to 2026 — now derived from the
       // actual current date so this doesn't silently go stale.
       const age = new Date().getFullYear() - parseInt(year);
-      const { rate: depRate } = resolveDepreciationRate(year);
+      const { rate: depRate, ageConfidence } = resolveDepreciationRate(year, actualBuildDate);
       const depreciatedNative = activePrice * (1 - depRate);
       const insuranceNative = depreciatedNative * 0.01;
       const cifNative = depreciatedNative + freightNative + insuranceNative;
@@ -1263,7 +1300,7 @@ export async function POST(request) {
           msrp_source_type: msrp_source_type,
           exchange_rate: rateToGhs, exchange_rate_usd: usdToGhs,
           exchange_label: dynamicExchangeLabel, currency_code: activeCurrency,
-          vehicle_age: age, depreciation_pct: depRate * 100, hdv_origin: Math.round(activePrice), hdv_currency: activeCurrency,
+          vehicle_age: age, depreciation_pct: depRate * 100, depreciation_confidence: ageConfidence, hdv_origin: Math.round(activePrice), hdv_currency: activeCurrency,
           withholding_tax_applied: applyWithholdingTax,
           hdv_formatted: `${Math.round(activePrice).toLocaleString()} ${activeCurrency}`, depreciated_value_origin: Math.round(depreciatedNative),
           freight_origin: Math.round(freightNative), insurance_origin: Math.round(insuranceNative), cif_origin: Math.round(cifNative),

@@ -74,6 +74,19 @@ export async function POST(request) {
     const borderBlue = rgb(0.22, 0.74, 0.97);  // #38bdf8
     const textBlue = rgb(0.01, 0.41, 0.63);    // #0369a1
 
+    // Depreciation-unconfirmed disclaimer colors (matches web result's
+    // amber over-age warning style, reused since this is also a genuine
+    // caution rather than neutral info)
+    const bgAmber = rgb(1.0, 0.98, 0.90);      // #fff9e6
+    const borderAmber = rgb(0.85, 0.47, 0.02); // #d97706
+    const textAmber = rgb(0.57, 0.25, 0.02);   // #92400e
+
+    // Depreciation-confirmed note colors (matches web result's green
+    // confirmation style)
+    const bgConfirmGreen = rgb(0.94, 0.99, 0.96); // #f0fdf4
+    const borderConfirmGreen = rgb(0.13, 0.77, 0.37); // #22c55e
+    const textConfirmGreen = rgb(0.09, 0.39, 0.20); // #166534
+
     // --- LOAD & EMBED THE PNG LOGO IMAGE ---
     let embeddedLogo;
     try {
@@ -285,6 +298,63 @@ export async function POST(request) {
           size: 8,
           font: fontReg,
           color: textBlue,
+        });
+      });
+
+      y -= 65;
+      disclaimerDrawn = true;
+    }
+
+    // Depreciation-confidence disclaimer stacks below WHT/MSRP the same
+    // way -- an unrelated fact again (vehicle age evidence, not price
+    // provenance or tax status), so it doesn't replace either, it adds.
+    if (result.depreciation_confidence === 'uncertain') {
+      page1.drawRectangle({ x: 45, y: y - 60, width: 505, height: 55, color: bgAmber, borderColor: borderAmber, borderWidth: 1 });
+
+      page1.drawText('DEPRECIATION NOT CONFIRMED:', {
+        x: 60,
+        y: y - 25,
+        size: 10,
+        font: fontBold,
+        color: textAmber,
+      });
+
+      const depText = `This vehicle's model year is recent enough that GRA's actual depreciation could be 0% or 15% depending on when it was really built. This estimate assumes 0%; the real figure may be 15%, which would raise the duty total.`;
+      const depLines = depText.match(/.{1,80}/g) || [];
+
+      depLines.forEach((line, idx) => {
+        page1.drawText(line, {
+          x: 60,
+          y: y - 38 - (idx * 9),
+          size: 8,
+          font: fontReg,
+          color: textAmber,
+        });
+      });
+
+      y -= 65;
+      disclaimerDrawn = true;
+    } else if (result.depreciation_confidence === 'confirmed') {
+      page1.drawRectangle({ x: 45, y: y - 60, width: 505, height: 55, color: bgConfirmGreen, borderColor: borderConfirmGreen, borderWidth: 1 });
+
+      page1.drawText('DEPRECIATION BASED ON CONFIRMED BUILD DATE:', {
+        x: 60,
+        y: y - 25,
+        size: 10,
+        font: fontBold,
+        color: textConfirmGreen,
+      });
+
+      const confText = `This estimate uses the manufacture date you provided rather than an assumption, so the ${result.depreciation_pct}% depreciation applied is exact, not estimated.`;
+      const confLines = confText.match(/.{1,80}/g) || [];
+
+      confLines.forEach((line, idx) => {
+        page1.drawText(line, {
+          x: 60,
+          y: y - 38 - (idx * 9),
+          size: 8,
+          font: fontReg,
+          color: textConfirmGreen,
         });
       });
 
