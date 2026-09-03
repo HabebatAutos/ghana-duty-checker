@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-09-02
+// Generated on: 2026-09-03
 
 export const PRESET_DATA = [
   {
@@ -91179,6 +91179,126 @@ export const PRESET_DATA = [
     "hsCode": "870322"
   },
   {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "EX-L",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Canada",
+    "hdv": 36900,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "SPORT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Canada",
+    "hdv": 37130,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "EX-L",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 36900,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "Touring",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 42550,
+    "currency": "USD",
+    "hsCode": "870340"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "EX-L",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 36900,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "LX",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 32420,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "HYBRID SPORT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Canada",
+    "hdv": 37130,
+    "currency": "USD",
+    "hsCode": "870340"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "TRAILSPORT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 38800,
+    "currency": "USD",
+    "hsCode": "870340"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "SPORT TOURING",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Canada",
+    "hdv": 42550,
+    "currency": "USD",
+    "hsCode": "870340"
+  },
+  {
+    "year": "2026",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "EXL AWD",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 36900,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
     "year": "2025",
     "make": "HONDA",
     "model": "CR-V",
@@ -91309,6 +91429,18 @@ export const PRESET_DATA = [
     "hdv": 34650,
     "currency": "USD",
     "hsCode": "870340"
+  },
+  {
+    "year": "2025",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 36500,
+    "currency": "USD",
+    "hsCode": "870322"
   },
   {
     "year": "2025",
@@ -91631,6 +91763,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "USA",
     "hdv": 32350,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2025",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 20050,
     "currency": "USD",
     "hsCode": "870322"
   },
@@ -92214,6 +92358,18 @@ export const PRESET_DATA = [
     "year": "2024",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 32010,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2024",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "EXL",
     "engine": "",
     "bodyType": "Sedan",
@@ -92483,6 +92639,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "Canada",
     "hdv": 35760,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2023",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 28410,
     "currency": "USD",
     "hsCode": "870322"
   },
@@ -93066,6 +93234,18 @@ export const PRESET_DATA = [
     "year": "2023",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Australia",
+    "hdv": 29910,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2023",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "UTILITY SPORT",
     "engine": "",
     "bodyType": "Sedan",
@@ -93258,6 +93438,18 @@ export const PRESET_DATA = [
     "year": "2022",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 25750,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2022",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "Hybrid Touring",
     "engine": "",
     "bodyType": "Sedan",
@@ -93439,6 +93631,18 @@ export const PRESET_DATA = [
     "make": "HONDA",
     "model": "CR-V",
     "trim": "EX-L AWD",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 32350,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2022",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
     "engine": "",
     "bodyType": "Sedan",
     "origin": "USA",
@@ -93858,6 +94062,18 @@ export const PRESET_DATA = [
     "year": "2021",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 33650,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2021",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "LX AWD",
     "engine": "",
     "bodyType": "Sedan",
@@ -93923,6 +94139,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "China",
     "hdv": 25350,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2021",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 15500,
     "currency": "USD",
     "hsCode": "870322"
   },
@@ -94650,6 +94878,18 @@ export const PRESET_DATA = [
     "year": "2019",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 27350,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2019",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "EX-L AWD",
     "engine": "",
     "bodyType": "Sedan",
@@ -94935,6 +95175,18 @@ export const PRESET_DATA = [
     "hsCode": "870323"
   },
   {
+    "year": "2019",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 15500,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
     "year": "2018",
     "make": "HONDA",
     "model": "CR-V",
@@ -95094,6 +95346,18 @@ export const PRESET_DATA = [
     "year": "2018",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Canada",
+    "hdv": 28450,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2018",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "EXL",
     "engine": "",
     "bodyType": "Sedan",
@@ -95183,6 +95447,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "China",
     "hdv": 24632.89,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2018",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 30850,
     "currency": "USD",
     "hsCode": "870322"
   },
@@ -95293,6 +95569,18 @@ export const PRESET_DATA = [
     "hdv": 34050,
     "currency": "USD",
     "hsCode": "870323"
+  },
+  {
+    "year": "2018",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 23940,
+    "currency": "USD",
+    "hsCode": "870322"
   },
   {
     "year": "2018",
@@ -95670,6 +95958,18 @@ export const PRESET_DATA = [
     "year": "2017",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 28095,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2017",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "GT",
     "engine": "",
     "bodyType": "Sedan",
@@ -95934,6 +96234,30 @@ export const PRESET_DATA = [
     "year": "2016",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Canada",
+    "hdv": 25695,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2016",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 25845,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2016",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "EX 2.4L AWD",
     "engine": "",
     "bodyType": "Sedan",
@@ -96047,6 +96371,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "USA",
     "hdv": 27145,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2016",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 24395,
     "currency": "USD",
     "hsCode": "870323"
   },
@@ -96227,6 +96563,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "USA",
     "hdv": 29270,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2015",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 32770,
     "currency": "USD",
     "hsCode": "870323"
   },
@@ -96462,6 +96810,18 @@ export const PRESET_DATA = [
     "year": "2015",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Canada",
+    "hdv": 26670,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2015",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "I4",
     "engine": "",
     "bodyType": "Sedan",
@@ -96527,6 +96887,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "Canada",
     "hdv": 23320,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2015",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "UAE",
+    "hdv": 22651.97,
     "currency": "USD",
     "hsCode": "870323"
   },
@@ -96707,6 +97079,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "USA",
     "hdv": 26295,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2014",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 27695,
     "currency": "USD",
     "hsCode": "870323"
   },
@@ -96918,6 +97302,18 @@ export const PRESET_DATA = [
     "year": "2014",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Germany",
+    "hdv": 19026.9,
+    "currency": "EUR",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2014",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "LE",
     "engine": "",
     "bodyType": "Sedan",
@@ -96925,6 +97321,18 @@ export const PRESET_DATA = [
     "hdv": 35450,
     "currency": "USD",
     "hsCode": "870323"
+  },
+  {
+    "year": "2014",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "UK",
+    "hdv": 16394.73,
+    "currency": "EUR",
+    "hsCode": "870332"
   },
   {
     "year": "2014",
@@ -97314,6 +97722,30 @@ export const PRESET_DATA = [
     "year": "2013",
     "make": "HONDA",
     "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Belgium",
+    "hdv": 25216.37,
+    "currency": "EUR",
+    "hsCode": "870332"
+  },
+  {
+    "year": "2013",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Japan",
+    "hdv": 1980556,
+    "currency": "JPY",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2013",
+    "make": "HONDA",
+    "model": "CR-V",
     "trim": "TOURING AWD",
     "engine": "",
     "bodyType": "Sedan",
@@ -97452,6 +97884,18 @@ export const PRESET_DATA = [
     "origin": "USA",
     "hdv": 24045,
     "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2013",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 1500000,
+    "currency": "JPY",
     "hsCode": "870323"
   },
   {
@@ -97701,10 +98145,34 @@ export const PRESET_DATA = [
     "trim": "",
     "engine": "",
     "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 28295,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2012",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
     "origin": "South Korea",
     "hdv": 23959.68,
     "currency": "USD",
     "hsCode": "870323"
+  },
+  {
+    "year": "2012",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Japan",
+    "hdv": 3363428,
+    "currency": "JPY",
+    "hsCode": "870322"
   },
   {
     "year": "2012",
@@ -97847,6 +98315,18 @@ export const PRESET_DATA = [
     "bodyType": "Sedan",
     "origin": "USA",
     "hdv": 27045,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2012",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "South Korea",
+    "hdv": 22057.38,
     "currency": "USD",
     "hsCode": "870323"
   },
@@ -98433,6 +98913,18 @@ export const PRESET_DATA = [
     "trim": "",
     "engine": "",
     "bodyType": "Sedan",
+    "origin": "Canada",
+    "hdv": 25095,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2010",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
     "origin": "UK",
     "hdv": 20241.9,
     "currency": "EUR",
@@ -98448,6 +98940,18 @@ export const PRESET_DATA = [
     "origin": "UK",
     "hdv": 22795,
     "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2010",
+    "make": "HONDA",
+    "model": "CR-V",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Japan",
+    "hdv": 2226000,
+    "currency": "JPY",
     "hsCode": "870323"
   },
   {
