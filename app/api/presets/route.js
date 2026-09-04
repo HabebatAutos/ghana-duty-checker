@@ -1,4 +1,19 @@
 // app/api/presets/route.js
+
+// Without this, Next.js tries to prerender this route at build time using
+// a synthetic request with no real URL. `new URL(request.url)` below then
+// throws Next's internal "Dynamic server usage" signal -- the normal
+// mechanism Next.js uses to detect a route needs per-request handling.
+// The broad try/catch further down was swallowing that internal error
+// along with real ones, so Next.js never saw it escape and concluded this
+// route had no dynamic dependency, marking it static (see build log: this
+// was the only API route showing as (Static) instead of (Dynamic)) and
+// freezing in whatever the emergency fallback returned during that one
+// build-time call. Every real request in production was then served that
+// same frozen response regardless of the actual make/model/year queried.
+// Forcing dynamic here removes the ambiguity Next.js was resolving wrong.
+export const dynamic = 'force-dynamic'
+
 import { PRESET_DATA } from '../../config/presets'
 import fs from 'fs/promises'
 import path from 'path'
