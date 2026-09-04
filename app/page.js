@@ -543,17 +543,8 @@ export default function Home() {
       setLeadSubmitting(false);
     }
   }
-  // Statistical price outliers (flagged server-side via IQR, see route.js
-  // tagPriceOutliersByTrim) are hidden from the default browsing grid so a
-  // trim name that legitimately has one unusual real transaction price
-  // (e.g. a Touring recorded at 25,750 among a cluster of 34,750-37,800)
-  // doesn't clutter the results alongside its normal-priced variants. They
-  // are NOT deleted from masterLineup — dropdownTrims (built separately,
-  // above) still lists every trim name, and if the user explicitly
-  // searches for a trim, outliers matching that search are still shown,
-  // so nothing is permanently hidden from someone who wants to see it.
   const displayedLineupCards = masterLineup.filter(item => {
-    if (!fields.trim) return !item.isPriceOutlier;
+    if (!fields.trim) return true;
     const itemTrimUpper = item.trim.toUpperCase();
     const searchTrimUpper = fields.trim.toUpperCase();
     return itemTrimUpper.includes(searchTrimUpper) || searchTrimUpper.includes(itemTrimUpper);
@@ -1097,11 +1088,6 @@ export default function Home() {
                   <p style={{ margin: 0, fontSize: '12px', color: '#64748b' }}>
                     Showing {displayedLineupCards.length} official GRA variants recorded for origin code: <strong>{getOriginCode(origin)} ({origin})</strong>.
                   </p>
-                  {!fields.trim && masterLineup.some(item => item.isPriceOutlier) && (
-                    <p style={{ margin: '4px 0 0 0', fontSize: '11px', color: '#94a3b8' }}>
-                      A few unusual-priced records were left out of this view. Type a trim name above to search all recorded variants, including those.
-                    </p>
-                  )}
                 </div>
               )}
               <div className="responsive-two-cols">

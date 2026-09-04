@@ -1869,21 +1869,6 @@
         "currency": "USD",
         "source": "Verified Technical Specification Baseline",
         "notes": ""
-      }
-    ],
-    "cachedAt": "2026-06-20T16:28:50.273Z"
-  },
-  "2015-kia-forte-20lmultipointinjection": {
-    "lineup": [
-      {
-        "trim": "LX",
-        "body_style": "Sedan",
-        "engine": "2.0L Multi-Point Injection",
-        "fuel_type": "Gasoline",
-        "price": 16900,
-        "currency": "USD",
-        "source": "Verified Technical Specification Baseline",
-        "notes": ""
       },
       {
         "trim": "LX",

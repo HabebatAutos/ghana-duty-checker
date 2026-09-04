@@ -682,7 +682,6 @@ function normalizeLineupProperties(array, userEngine = '', userBodyType = '', ta
       originCode: normalizeOriginCode(item.originCode || item.origin || item['Origin Code']) || '',
       hsCode: item.hsCode || item.hs_code || item['HS Code'] || '',
       isFallback: item.isFallback || false,
-      isPriceOutlier: item.isPriceOutlier || false,
       source: item.source || 'Verified Technical Specification Baseline',
       notes: item.notes || ''
     };
@@ -737,62 +736,6 @@ function getPresetDataMatches(year, make, model, targetCode) {
   }
 
   return { matches, availableOrigins, isFallbackOrigin };
-}
-
-// Linear-interpolation percentile, same method used by most spreadsheet
-// PERCENTILE functions — sortedArr must already be sorted ascending.
-function percentile(sortedArr, p) {
-  const idx = (p / 100) * (sortedArr.length - 1);
-  const lower = Math.floor(idx);
-  const upper = Math.ceil(idx);
-  if (lower === upper) return sortedArr[lower];
-  const weight = idx - lower;
-  return sortedArr[lower] * (1 - weight) + sortedArr[upper] * weight;
-}
-
-// Mutates each trim object in `lineup` to add isPriceOutlier: true/false.
-// Groups by trim name (the same trim can legitimately have several real
-// prices from different transactions), then flags any price falling
-// outside 1.5x the interquartile range for that trim's price distribution
-// — the standard, well-established box-plot outlier rule. Requires at
-// least MIN_SAMPLE_SIZE distinct prices for a trim before attempting this;
-// below that there's no statistically meaningful "cluster" to be outside
-// of, so everything is left untagged (never treated as an outlier).
-//
-// Nothing is removed here — outliers stay in the lineup so the trim
-// search dropdown still finds them, only the default card-grid view (built
-// client-side by filtering on isPriceOutlier) hides them.
-function tagPriceOutliersByTrim(lineup) {
-  const MIN_SAMPLE_SIZE = 4;
-  const groups = {};
-
-  for (const item of lineup) {
-    const key = item.trim;
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(item);
-  }
-
-  for (const key of Object.keys(groups)) {
-    const group = groups[key];
-    for (const item of group) {
-      item.isPriceOutlier = false;
-    }
-
-    if (group.length < MIN_SAMPLE_SIZE) continue;
-
-    const prices = group.map(v => v.price).sort((a, b) => a - b);
-    const q1 = percentile(prices, 25);
-    const q3 = percentile(prices, 75);
-    const iqr = q3 - q1;
-    const lowerBound = q1 - 1.5 * iqr;
-    const upperBound = q3 + 1.5 * iqr;
-
-    for (const item of group) {
-      if (item.price < lowerBound || item.price > upperBound) {
-        item.isPriceOutlier = true;
-      }
-    }
-  }
 }
 
 async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userBodyType = '', isBackgroundSync = false, originCode = '', vin = '') {
@@ -1018,19 +961,6 @@ async function fetchMsrpLineup(year, make, model, origin, userEngine = '', userB
             : `Verified GRA record for origin [${targetCode}].`
         };
       }).sort((a, b) => a.price - b.price);
-
-      // Real GRA transaction data legitimately contains price outliers for a
-      // given trim name — e.g. a "Touring" trim recorded at 25,750 USD
-      // sitting among a cluster of Touring transactions at 34,750-37,800.
-      // These aren't bugs or duplicates, they're genuine (if unusual) real
-      // transactions, but showing every one as its own trim card overwhelms
-      // the results grid (a Civic CA lineup had 55+ cards, mostly the same
-      // trim at wildly different prices). Rather than deleting this data,
-      // flag statistical outliers per trim name using the IQR method so the
-      // frontend can show a clean default view while still keeping outliers
-      // reachable (e.g. via the trim search dropdown) for anyone who needs
-      // to see the full picture.
-      tagPriceOutliersByTrim(compiledPresetLineup);
 
       if (compiledPresetLineup.length > 0) {
         return {
