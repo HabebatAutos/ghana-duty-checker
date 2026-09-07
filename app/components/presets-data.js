@@ -78807,6 +78807,54 @@ export const PRESET_DATA = [
     "hsCode": "870421"
   },
   {
+    "year": "2024",
+    "make": "GEELY",
+    "model": "BINYUE",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 9000,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2021",
+    "make": "GEELY",
+    "model": "BINYUE",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 14453.7,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2020",
+    "make": "GEELY",
+    "model": "BINYUE",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 19800,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2019",
+    "make": "GEELY",
+    "model": "JIAJI",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 18500,
+    "currency": "USD",
+    "hsCode": "870360"
+  },
+  {
     "year": "2025",
     "make": "HONDA",
     "model": "ACCORD",
