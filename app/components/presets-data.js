@@ -431485,5 +431485,77 @@ export const PRESET_DATA = [
     "hdv": 149800,
     "currency": "CNY",
     "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "ZOTYE",
+    "model": "T700 1.8T",
+    "trim": "ELITE MT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 106800,
+    "currency": "CNY",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "ZOTYE",
+    "model": "T700 1.8T",
+    "trim": "LUXURY MT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 116800,
+    "currency": "CNY",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "ZOTYE",
+    "model": "T700 1.8T",
+    "trim": "ELITE DCT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 119800,
+    "currency": "CNY",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "ZOTYE",
+    "model": "T700 1.8T",
+    "trim": "LUXURY DCT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 129800,
+    "currency": "CNY",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "ZOTYE",
+    "model": "T700 1.8T",
+    "trim": "PREMIUM DCT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 139800,
+    "currency": "CNY",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "ZOTYE",
+    "model": "T700 1.8T",
+    "trim": "FLAGSHIP DCT",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 149800,
+    "currency": "CNY",
+    "hsCode": "870323"
   }
 ];
