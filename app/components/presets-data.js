@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-09-07
+// Generated on: 2026-09-08
 
 export const PRESET_DATA = [
   {
@@ -171445,6 +171445,114 @@ export const PRESET_DATA = [
     "hdv": 46975,
     "currency": "USD",
     "hsCode": "870323"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "2.0T AWD Luxury",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 24000,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "2.0TD AWD Cross PRO",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 23500,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "2.0TD AWD Discovery Plus",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 18448.1,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "2.0TD AWD Cross",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 22365,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "1.5TD 7DCT Discovery Edition",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 16317,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "2.0T AWD Luxury Plus",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "UAE",
+    "hdv": 36500,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "1.5TD 7DCT Pro Edition",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 20749.3,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "2.0TD AWD Discovery PRO",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 22972.4,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2025",
+    "make": "JETOUR",
+    "model": "TRAVELLER T2",
+    "trim": "1.5TD i-DM Base Hybrid",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 18500,
+    "currency": "USD",
+    "hsCode": "870322"
   },
   {
     "year": "2017",
