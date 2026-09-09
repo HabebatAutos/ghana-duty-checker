@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-09-08
+// Generated on: 2026-09-09
 
 export const PRESET_DATA = [
   {
@@ -352897,6 +352897,18 @@ export const PRESET_DATA = [
     "hdv": 25090,
     "currency": "USD",
     "hsCode": "870340"
+  },
+  {
+    "year": "2021",
+    "make": "TOYOTA",
+    "model": "COROLLA",
+    "trim": "1.2T S-CVT Pioneer Edition",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 11500,
+    "currency": "USD",
+    "hsCode": "870322"
   },
   {
     "year": "2021",
