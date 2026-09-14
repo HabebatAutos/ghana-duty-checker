@@ -171534,7 +171534,7 @@ export const PRESET_DATA = [
     "year": "2022",
     "make": "JETOUR",
     "model": "X70 PLUS",
-    "trim": "",
+    "trim": "1.5-liter Turbocharged (1.5T)",
     "engine": "",
     "bodyType": "Sedan",
     "origin": "China",
