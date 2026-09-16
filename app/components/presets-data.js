@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-09-14
+// Generated on: 2026-09-16
 
 export const PRESET_DATA = [
   {
@@ -355254,7 +355254,7 @@ export const PRESET_DATA = [
     "year": "2016",
     "make": "TOYOTA",
     "model": "COROLLA",
-    "trim": "",
+    "trim": "1.6L CVT GL",
     "engine": "",
     "bodyType": "Sedan",
     "origin": "China",
