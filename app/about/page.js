@@ -71,7 +71,7 @@ export default function AboutPage() {
         </h2>
         <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '20px' }}>
           
-          {/* Agyeman Adom Ernest */}
+          {/* Agyemang-Adom Ernest */}
           <div style={{
             background: '#ffffff',
             border: '1px solid #e5e7eb',
@@ -85,7 +85,7 @@ export default function AboutPage() {
           }}>
             <img
               src="/team/adom ernest.jpg"
-              alt="Agyeman Adom Ernest"
+              alt="Agyemang-Adom Ernest"
               style={{
                 width: '84px',
                 height: '84px',
@@ -110,7 +110,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Gifty Kuadudze */}
+          {/* Gifty Kpeglah */}
           <div style={{
             background: '#ffffff',
             border: '1px solid #e5e7eb',
@@ -124,7 +124,7 @@ export default function AboutPage() {
           }}>
             <img
               src="/team/gifty kuadudze.jpg"
-              alt="Gifty Kuadudze"
+              alt="Gifty Kpeglah"
               style={{
                 width: '84px',
                 height: '84px',
