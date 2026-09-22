@@ -97,7 +97,7 @@ export default function AboutPage() {
             />
             <div>
               <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#111827', marginBottom: '2px' }}>
-                Agyeman Adom Ernest
+                Agyemang-Adom Ernest
               </h3>
               <p style={{ fontSize: '13px', fontWeight: '600', color: '#05643c', marginBottom: '14px' }}>
                 Chief Executive Officer
@@ -136,7 +136,7 @@ export default function AboutPage() {
             />
             <div>
               <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#111827', marginBottom: '2px' }}>
-                Gifty Kuadudze
+                Gifty Kpeglah
               </h3>
               <p style={{ fontSize: '13px', fontWeight: '600', color: '#05643c', marginBottom: '14px' }}>
                 Manager
