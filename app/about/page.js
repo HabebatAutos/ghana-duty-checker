@@ -24,6 +24,33 @@ export default function AboutPage() {
 
       <hr style={{ border: 'none', borderTop: '1px solid #e5e7eb', margin: '32px 0' }} />
 
+      {/* Registered Business Credentials */}
+      <section style={{
+        background: '#f0fdf4',
+        border: '1px solid #bbf7d0',
+        borderRadius: '12px',
+        padding: '24px 28px',
+        marginBottom: '40px',
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '24px',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }}>
+        <div>
+          <h2 style={{ fontSize: '16px', fontWeight: '700', color: '#166534', marginBottom: '4px' }}>
+            Registered Business
+          </h2>
+          <p style={{ fontSize: '14px', color: '#15803d', margin: 0 }}>
+            CediDuty is operated by <strong>CediDuty Technologies</strong>, registered with the Office of the Registrar of Companies, Republic of Ghana, under the Registration of Business Names Act, 1962 (Act 151).
+          </p>
+        </div>
+        <div style={{ fontSize: '13px', color: '#166534', lineHeight: '1.8', whiteSpace: 'nowrap' }}>
+          <div><strong>Reg. No.:</strong> BN092150826</div>
+          <div><strong>TIN:</strong> P006771305X</div>
+        </div>
+      </section>
+
       {/* Our Purpose */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#111827', marginBottom: '12px' }}>
@@ -35,6 +62,49 @@ export default function AboutPage() {
         <p style={{ fontSize: '15px', lineHeight: '1.7', color: '#4b5563' }}>
           CediDuty was built to bridge this gap. By combining official customs tariff frameworks with real-time exchange rate updates, we give you clear financial clarity before committing money to purchase or ship a vehicle.
         </p>
+      </section>
+
+      {/* Team */}
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#111827', marginBottom: '16px' }}>
+          Team
+        </h2>
+        <div style={{
+          background: '#ffffff',
+          border: '1px solid #e5e7eb',
+          borderRadius: '12px',
+          padding: '24px',
+          maxWidth: '420px',
+          display: 'flex',
+          gap: '18px',
+          alignItems: 'flex-start'
+        }}>
+          <img
+            src="/team/sampson-dorkenoo.jpg"
+            alt="Sampson Dorkenoo"
+            style={{
+              width: '84px',
+              height: '84px',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              flexShrink: 0,
+              border: '2px solid #e5e7eb'
+            }}
+          />
+          <div>
+            <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#111827', marginBottom: '2px' }}>
+              Sampson Dorkenoo
+            </h3>
+            <p style={{ fontSize: '13px', fontWeight: '600', color: '#05643c', marginBottom: '14px' }}>
+              Marketing Director
+            </p>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', color: '#4b5563', lineHeight: '2' }}>
+              <li><strong>Education:</strong> BA Social Work &amp; Sociology, University of Ghana, Legon</li>
+              <li><strong>Background:</strong> Coursework Consultant</li>
+              <li><strong>Location:</strong> Accra, Ghana</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       {/* Verified Agent Leads & Support Desk */}
