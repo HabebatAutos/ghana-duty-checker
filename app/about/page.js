@@ -69,7 +69,7 @@ export default function AboutPage() {
         <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#111827', marginBottom: '16px' }}>
           Team
         </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '20px' }}>
           
           {/* Agyeman Adom Ernest */}
           <div style={{
@@ -78,6 +78,7 @@ export default function AboutPage() {
             borderRadius: '12px',
             padding: '24px',
             maxWidth: '420px',
+            flex: '1 1 300px',
             display: 'flex',
             gap: '18px',
             alignItems: 'flex-start'
@@ -116,6 +117,7 @@ export default function AboutPage() {
             borderRadius: '12px',
             padding: '24px',
             maxWidth: '420px',
+            flex: '1 1 300px',
             display: 'flex',
             gap: '18px',
             alignItems: 'flex-start'
@@ -154,6 +156,7 @@ export default function AboutPage() {
             borderRadius: '12px',
             padding: '24px',
             maxWidth: '420px',
+            flex: '1 1 300px',
             display: 'flex',
             gap: '18px',
             alignItems: 'flex-start'
