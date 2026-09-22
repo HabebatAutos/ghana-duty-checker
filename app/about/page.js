@@ -64,46 +64,127 @@ export default function AboutPage() {
         </p>
       </section>
 
-      {/* Team */}
+     {/* Team */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#111827', marginBottom: '16px' }}>
           Team
         </h2>
-        <div style={{
-          background: '#ffffff',
-          border: '1px solid #e5e7eb',
-          borderRadius: '12px',
-          padding: '24px',
-          maxWidth: '420px',
-          display: 'flex',
-          gap: '18px',
-          alignItems: 'flex-start'
-        }}>
-          <img
-            src="/team/sampson-dorkenoo.jpg"
-            alt="Sampson Dorkenoo"
-            style={{
-              width: '84px',
-              height: '84px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              flexShrink: 0,
-              border: '2px solid #e5e7eb'
-            }}
-          />
-          <div>
-            <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#111827', marginBottom: '2px' }}>
-              Sampson Dorkenoo
-            </h3>
-            <p style={{ fontSize: '13px', fontWeight: '600', color: '#05643c', marginBottom: '14px' }}>
-              Marketing Director
-            </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', color: '#4b5563', lineHeight: '2' }}>
-              <li><strong>Education:</strong> BA Social Work &amp; Sociology, University of Ghana, Legon</li>
-              <li><strong>Background:</strong> Coursework Consultant</li>
-              <li><strong>Location:</strong> Accra, Ghana</li>
-            </ul>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          {/* Agyeman Adom Ernest */}
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #e5e7eb',
+            borderRadius: '12px',
+            padding: '24px',
+            maxWidth: '420px',
+            display: 'flex',
+            gap: '18px',
+            alignItems: 'flex-start'
+          }}>
+            <img
+              src="/team/adom ernest.jpg"
+              alt="Agyeman Adom Ernest"
+              style={{
+                width: '84px',
+                height: '84px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                flexShrink: 0,
+                border: '2px solid #e5e7eb'
+              }}
+            />
+            <div>
+              <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#111827', marginBottom: '2px' }}>
+                Agyeman Adom Ernest
+              </h3>
+              <p style={{ fontSize: '13px', fontWeight: '600', color: '#05643c', marginBottom: '14px' }}>
+                Chief Executive Officer
+              </p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', color: '#4b5563', lineHeight: '2' }}>
+                <li><strong>Education:</strong> BSc Software Engineering, Edinburgh Napier University (UK)</li>
+                <li><strong>Background:</strong> Cybersecurity Expert</li>
+                <li><strong>Location:</strong> Hertfordshire, England</li>
+              </ul>
+            </div>
           </div>
+
+          {/* Gifty Kuadudze */}
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #e5e7eb',
+            borderRadius: '12px',
+            padding: '24px',
+            maxWidth: '420px',
+            display: 'flex',
+            gap: '18px',
+            alignItems: 'flex-start'
+          }}>
+            <img
+              src="/team/gifty kuadudze.jpg"
+              alt="Gifty Kuadudze"
+              style={{
+                width: '84px',
+                height: '84px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                flexShrink: 0,
+                border: '2px solid #e5e7eb'
+              }}
+            />
+            <div>
+              <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#111827', marginBottom: '2px' }}>
+                Gifty Kuadudze
+              </h3>
+              <p style={{ fontSize: '13px', fontWeight: '600', color: '#05643c', marginBottom: '14px' }}>
+                Manager
+              </p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', color: '#4b5563', lineHeight: '2' }}>
+                <li><strong>Education:</strong> BSc Computer Science, University of Suffolk (UK)</li>
+                <li><strong>Background:</strong> Website Developer</li>
+                <li><strong>Location:</strong> Glasgow, Scotland</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Sampson Dorkenoo */}
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #e5e7eb',
+            borderRadius: '12px',
+            padding: '24px',
+            maxWidth: '420px',
+            display: 'flex',
+            gap: '18px',
+            alignItems: 'flex-start'
+          }}>
+            <img
+              src="/team/sampson-dorkenoo.jpg"
+              alt="Sampson Dorkenoo"
+              style={{
+                width: '84px',
+                height: '84px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                flexShrink: 0,
+                border: '2px solid #e5e7eb'
+              }}
+            />
+            <div>
+              <h3 style={{ fontSize: '17px', fontWeight: '700', color: '#111827', marginBottom: '2px' }}>
+                Sampson Dorkenoo
+              </h3>
+              <p style={{ fontSize: '13px', fontWeight: '600', color: '#05643c', marginBottom: '14px' }}>
+                Marketing Director
+              </p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: '14px', color: '#4b5563', lineHeight: '2' }}>
+                <li><strong>Education:</strong> BA Social Work &amp; Sociology, University of Ghana, Legon</li>
+                <li><strong>Background:</strong> Coursework Consultant</li>
+                <li><strong>Location:</strong> Accra, Ghana</li>
+              </ul>
+            </div>
+          </div>
+
         </div>
       </section>
 
