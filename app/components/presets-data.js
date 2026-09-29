@@ -945,6 +945,18 @@ export const PRESET_DATA = [
     "trim": "BASE",
     "engine": "",
     "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 37600,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2020",
+    "make": "ACURA",
+    "model": "RDX",
+    "trim": "BASE",
+    "engine": "",
+    "bodyType": "Sedan",
     "origin": "China",
     "hdv": 37600,
     "currency": "USD",
