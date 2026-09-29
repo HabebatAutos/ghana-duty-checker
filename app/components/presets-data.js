@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-09-16
+// Generated on: 2026-09-29
 
 export const PRESET_DATA = [
   {
@@ -942,7 +942,7 @@ export const PRESET_DATA = [
     "year": "2020",
     "make": "ACURA",
     "model": "RDX",
-    "trim": "",
+    "trim": "BASE",
     "engine": "",
     "bodyType": "Sedan",
     "origin": "China",
