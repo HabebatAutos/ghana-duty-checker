@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-09-29
+// Generated on: 2026-10-02
 
 export const PRESET_DATA = [
   {
@@ -43285,6 +43285,174 @@ export const PRESET_DATA = [
     "hdv": 26495,
     "currency": "USD",
     "hsCode": "870324"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "LX",
+    "trim": "LX",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 21500,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "RX",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 22500,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "STELLAR 400T",
+    "trim": "BASE",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 24400,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "TX",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 25494,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "VX",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 23500,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "VX",
+    "trim": "NL",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 35241.1,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "VX 400T",
+    "trim": "VX",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 33000,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "YAO GUANG",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 26500,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "YAO GUANG",
+    "trim": "BASE",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 22500,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "Yaoguang",
+    "trim": "BASE",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 22525,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "YAOGUANG",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 29800,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "YAOGUANG",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 24800,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "YAOGUANG",
+    "trim": "400 T",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 26702,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2023",
+    "make": "EXEED",
+    "model": "YAOGUANG",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 23490,
+    "currency": "USD",
+    "hsCode": "870323"
   },
   {
     "year": "2013",
