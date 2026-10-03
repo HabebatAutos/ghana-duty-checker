@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-10-02
+// Generated on: 2026-10-03
 
 export const PRESET_DATA = [
   {
@@ -315360,6 +315360,18 @@ export const PRESET_DATA = [
     "origin": "Japan",
     "hdv": 1193569,
     "currency": "JPY",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2012",
+    "make": "NISSAN",
+    "model": "NOTE",
+    "trim": "N-TEC+",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "UK",
+    "hdv": 14950,
+    "currency": "EUR",
     "hsCode": "870322"
   },
   {
