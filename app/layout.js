@@ -4,6 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 import { TokenProvider } from './Context/TokenContext'
 import Navbar from './components/Navbar'
 import './globals.css'
+
 export const metadata = {
   metadataBase: new URL('https://www.cediduty.com'),
   title: 'GhanaDuty — Vehicle Import Duty Calculator',
@@ -16,8 +17,25 @@ export const metadata = {
     title: 'GhanaDuty — Ghana Vehicle Import Duty Calculator',
     description: 'Calculate Ghana Customs import duty for any vehicle. Live MSRP + Bank of Ghana rates.',
     type: 'website',
+    url: 'https://www.cediduty.com',
+    siteName: 'CediDuty',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'CediDuty — Ghana Vehicle Import Duty Calculator',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GhanaDuty — Ghana Vehicle Import Duty Calculator',
+    description: 'Calculate Ghana Customs import duty for any vehicle. Live MSRP + Bank of Ghana rates.',
+    images: ['/og-image.jpg'],
   },
 };
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
