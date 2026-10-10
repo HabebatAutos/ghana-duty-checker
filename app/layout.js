@@ -21,7 +21,7 @@ export const metadata = {
     siteName: 'CediDuty',
     images: [
       {
-        url: '/og-image-V2.jpg',
+        url: '/og-image-v3.jpg',
         width: 1200,
         height: 630,
         alt: 'CediDuty — Ghana Vehicle Import Duty Calculator',
@@ -32,7 +32,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'GhanaDuty — Ghana Vehicle Import Duty Calculator',
     description: 'Calculate Ghana Customs import duty for any vehicle. Live MSRP + Bank of Ghana rates.',
-    images: ['/og-image-V2.jpg'],
+    images: ['/og-image-v3.jpg'],
   },
 };
 
