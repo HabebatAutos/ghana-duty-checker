@@ -335979,6 +335979,18 @@ export const PRESET_DATA = [
     "hsCode": "870321"
   },
   {
+    "year": "2010",
+    "make": "SUZUKI",
+    "model": "WAGON R",
+    "trim": "STINGRAY LIMITED",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Japan",
+    "hdv": 1296750,
+    "currency": "JPY",
+    "hsCode": "870321"
+  },
+  {
     "year": "2014",
     "make": "TOYOTA",
     "model": "_AVALON",
