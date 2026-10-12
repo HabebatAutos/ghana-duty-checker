@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-10-03
+// Generated on: 2026-10-12
 
 export const PRESET_DATA = [
   {
@@ -335965,6 +335965,18 @@ export const PRESET_DATA = [
     "hdv": 17415,
     "currency": "EUR",
     "hsCode": "870322"
+  },
+  {
+    "year": "2015",
+    "make": "SUZUKI",
+    "model": "WAGON R",
+    "trim": "STINGRAY LIMITED",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "Japan",
+    "hdv": 1296750,
+    "currency": "JPY",
+    "hsCode": "870321"
   },
   {
     "year": "2014",

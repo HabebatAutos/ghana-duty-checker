@@ -1,0 +1,20 @@
+{
+    "Sheet1": [
+        {
+            "No.": 3,
+            "Trim Level": "STINGRAY LIMITED",
+            "Year of Manufacture": 2015,
+            "Make": "SUZUKI",
+            "Model": "WAGON R",
+            "HDV": 1296750,
+            "Currency": "JPY",
+            "Origin Code": "JP",
+            "HS Code": 8703212000,
+            "Exchange Rate": 0.0242,
+            "Receipt Date": 46366,
+            "Assessment Date": 46366,
+            "CIF NCY": 31381.35,
+            "Total Tax": 11297.28
+        }
+    ]
+}
