@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-10-15
+// Generated on: 2026-10-18
 
 export const PRESET_DATA = [
   {
@@ -167569,6 +167569,198 @@ export const PRESET_DATA = [
     "hdv": 72150,
     "currency": "USD",
     "hsCode": "870324"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "CSC5072TQZPWV",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 20500,
+    "currency": "USD",
+    "hsCode": "870590"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "ELF",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 24252,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "ELF 600P",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 31780,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "ELF 700P",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 26500,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "ELF KV600",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 25000,
+    "currency": "USD",
+    "hsCode": "870422"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "FVR",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 20500,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "FVR34J2",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 24252,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "FVZ",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 26726,
+    "currency": "USD",
+    "hsCode": "870422"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "FYP",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 18500,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "LINGTUO",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 20473,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "NKR77LLPACJAY",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 24252,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "QINGLING T17",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 23432,
+    "currency": "USD",
+    "hsCode": "870431"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "QL1250DTFZY",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 36000,
+    "currency": "USD",
+    "hsCode": "870422"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "QL1250WTFZY",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 23054,
+    "currency": "USD",
+    "hsCode": "870421"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "QL5250XXYDTFZ1J",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 36000,
+    "currency": "USD",
+    "hsCode": "870422"
+  },
+  {
+    "year": "2018",
+    "make": "ISUZU",
+    "model": "QL5250XXYWTFZJ",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 25000,
+    "currency": "USD",
+    "hsCode": "870422"
   },
   {
     "year": "2014",
