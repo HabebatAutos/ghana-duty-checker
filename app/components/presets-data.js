@@ -171912,7 +171912,7 @@ export const PRESET_DATA = [
     "origin": "China",
     "hdv": 19750,
     "currency": "USD",
-    "hsCode": "870323"
+    "hsCode": "870360"
   },
   {
     "year": "2025",
