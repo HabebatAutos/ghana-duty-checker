@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-10-19
+// Generated on: 2026-10-22
 
 export const PRESET_DATA = [
   {
@@ -432913,6 +432913,30 @@ export const PRESET_DATA = [
     "hdv": 15000,
     "currency": "USD",
     "hsCode": "870322"
+  },
+  {
+    "year": "2026",
+    "make": "ZEEKR",
+    "model": "8X",
+    "trim": "Ultra 6-Seat",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 73400,
+    "currency": "USD",
+    "hsCode": "870360"
+  },
+  {
+    "year": "2026",
+    "make": "ZEEKR",
+    "model": "9X",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 65500,
+    "currency": "USD",
+    "hsCode": "870360"
   },
   {
     "year": "2018",

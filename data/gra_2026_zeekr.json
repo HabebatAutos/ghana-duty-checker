@@ -1,0 +1,52 @@
+{
+    "Sheet1": [
+        {
+            "No.": NaN,
+            "Trim Level": NaN,
+            "Year of Manufacture": NaN,
+            "Make": NaN,
+            "Model": NaN,
+            "HDV": NaN,
+            "Currency": NaN,
+            "Origin Code": NaN,
+            "HS Code": NaN,
+            "Excange Rate": NaN,
+            "Receipt Date": NaN,
+            "Assessment Date": NaN,
+            "CIF NCY": NaN,
+            "Total Tax": NaN
+        },
+        {
+            "No.": 1.0,
+            "Trim Level": NaN,
+            "Year of Manufacture": 2026.0,
+            "Make": "ZEEKR",
+            "Model": "9X",
+            "HDV": 65500.0,
+            "Currency": "USD",
+            "Origin Code": "CN",
+            "HS Code": 8703602000.0,
+            "Excange Rate": 11.1256,
+            "Receipt Date": "28/08/2026",
+            "Assessment Date": "30/09/2026",
+            "CIF NCY": 525346.27,
+            "Total Tax": 262232.76
+        },
+        {
+            "No.": 2.0,
+            "Trim Level": "Ultra 6-Seat",
+            "Year of Manufacture": 2026.0,
+            "Make": "ZEEKR",
+            "Model": "8X",
+            "HDV": 73400.0,
+            "Currency": "USD",
+            "Origin Code": "CN",
+            "HS Code": 8703602000.0,
+            "Excange Rate": 11.1256,
+            "Receipt Date": "28/08/2027",
+            "Assessment Date": "30/09/2027",
+            "CIF NCY": 816619.04,
+            "Total Tax": 408309.52
+        }
+    ]
+}
