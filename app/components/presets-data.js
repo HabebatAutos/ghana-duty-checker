@@ -1,5 +1,5 @@
 // Auto-generated vehicle presets registry
-// Generated on: 2026-10-22
+// Generated on: 2026-10-26
 
 export const PRESET_DATA = [
   {
@@ -290533,6 +290533,126 @@ export const PRESET_DATA = [
     "hdv": 40350,
     "currency": "USD",
     "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "ASTOR",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 18000,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "ASTOR",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 15366,
+    "currency": "USD",
+    "hsCode": "870321"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "GS",
+    "trim": "1.5-Liter Turbocharged (1.5T)",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 19150,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "GS",
+    "trim": "2WD Luxury Edition",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 24500,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "HS",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 15500,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "MG3",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 14500,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2022",
+    "make": "MG",
+    "model": "ONE",
+    "trim": "Starter Edition",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 17640,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "RUITENG",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 21500,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "RUIXING",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 15619,
+    "currency": "USD",
+    "hsCode": "870322"
+  },
+  {
+    "year": "2017",
+    "make": "MG",
+    "model": "ZS",
+    "trim": "",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 16695,
+    "currency": "USD",
+    "hsCode": "870322"
   },
   {
     "year": "2022",
