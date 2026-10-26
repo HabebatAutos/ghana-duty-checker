@@ -184134,6 +184134,18 @@ export const PRESET_DATA = [
     "year": "2022",
     "make": "KIA",
     "model": "SORENTO",
+    "trim": "DIESEL PRESTIGE 4WD",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "South Korea",
+    "hdv": 27837,
+    "currency": "USD",
+    "hsCode": "870323"
+  },
+  {
+    "year": "2022",
+    "make": "KIA",
+    "model": "SORENTO",
     "trim": "",
     "engine": "",
     "bodyType": "Sedan",
