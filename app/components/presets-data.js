@@ -433061,6 +433061,18 @@ export const PRESET_DATA = [
   {
     "year": "2026",
     "make": "ZEEKR",
+    "model": "8X",
+    "trim": "Ultra 6-Seat",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "China",
+    "hdv": 83600,
+    "currency": "USD",
+    "hsCode": "870360"
+  },
+  {
+    "year": "2026",
+    "make": "ZEEKR",
     "model": "9X",
     "trim": "",
     "engine": "",
