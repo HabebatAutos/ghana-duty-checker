@@ -433066,7 +433066,7 @@ export const PRESET_DATA = [
     "engine": "",
     "bodyType": "Sedan",
     "origin": "China",
-    "hdv": 83600,
+    "hdv": 81416,
     "currency": "USD",
     "hsCode": "870360"
   },
