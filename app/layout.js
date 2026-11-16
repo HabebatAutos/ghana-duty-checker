@@ -23,7 +23,7 @@ export const metadata = {
       {
         url: '/og-image-V2.jpg',
         width: 1200,
-        height: 630,
+        height: 634,
         alt: 'CediDuty — Ghana Vehicle Import Duty Calculator',
       },
     ],
