@@ -200838,6 +200838,18 @@ export const PRESET_DATA = [
     "year": "2025",
     "make": "LEXUS",
     "model": "LX 700H",
+    "trim": "700h Ultra Luxury",
+    "engine": "",
+    "bodyType": "Sedan",
+    "origin": "USA",
+    "hdv": 171613,
+    "currency": "USD",
+    "hsCode": "870340"
+  },
+  {
+    "year": "2025",
+    "make": "LEXUS",
+    "model": "LX 700H",
     "trim": "HYBRID OVERTRAIL",
     "engine": "",
     "bodyType": "Sedan",
