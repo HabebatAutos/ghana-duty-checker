@@ -48752,22 +48752,6 @@
         "Total Tax":69642.79
     },
     {
-        "No.":"No.",
-        "Trim Level":"Trim Level",
-        "Year of Manufacture":"Year of Manufacture",
-        "Make":"Make",
-        "Model":"Model",
-        "HDV":"HDV",
-        "Currency":"Currency",
-        "Origin Code":"Origin Code",
-        "HS Code":"HS Code",
-        "Excange Rate":"Excange Rate",
-        "Receipt Date":"Receipt Date",
-        "Assessment Date":"Assessment Date",
-        "CIF NCY":"CIF NCY",
-        "Total Tax":"Total Tax"
-    },
-    {
         "No.":1,
         "Trim Level":"LIMITED",
         "Year of Manufacture":2020,
@@ -48801,7 +48785,7 @@
     },
     {
         "No.":3,
-        "Trim Level":null,
+        "Trim Level":SE,
         "Year of Manufacture":2020,
         "Make":"HYUNDAI",
         "Model":"SONATA",
@@ -49313,7 +49297,7 @@
     },
     {
         "No.":35,
-        "Trim Level":null,
+        "Trim Level":SE,
         "Year of Manufacture":2020,
         "Make":"HYUNDAI",
         "Model":"SONATA",
@@ -49521,7 +49505,7 @@
     },
     {
         "No.":48,
-        "Trim Level":"NIL",
+        "Trim Level":"SE",
         "Year of Manufacture":2020,
         "Make":"HYUNDAI",
         "Model":"SONATA",
@@ -49537,7 +49521,7 @@
     },
     {
         "No.":49,
-        "Trim Level":"NIL",
+        "Trim Level":"SE",
         "Year of Manufacture":2020,
         "Make":"HYUNDAI",
         "Model":"SONATA",
@@ -49598,22 +49582,6 @@
         "Assessment Date":45819,
         "CIF NCY":151669.01,
         "Total Tax":59140.08
-    },
-    {
-        "No.":53,
-        "Trim Level":"GL",
-        "Year of Manufacture":2020,
-        "Make":"HYUNDAI",
-        "Model":"SONATA",
-        "HDV":0,
-        "Currency":"USD",
-        "Origin Code":"US",
-        "HS Code":8703232000,
-        "Excange Rate":5.7351,
-        "Receipt Date":"30\/12\/2020",
-        "Assessment Date":"21\/12\/2020",
-        "CIF NCY":56675.52,
-        "Total Tax":20298.53
     },
     {
         "No.":54,

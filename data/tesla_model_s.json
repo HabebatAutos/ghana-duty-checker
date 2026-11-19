@@ -1,0 +1,52 @@
+{
+    "Sheet1": [
+        {
+            "No.": NaN,
+            "Trim Level": NaN,
+            "Year of Manufacture": NaN,
+            "Make": NaN,
+            "Model": NaN,
+            "HDV": NaN,
+            "Currency": NaN,
+            "Origin Code": NaN,
+            "HS Code": NaN,
+            "Excange Rate": NaN,
+            "Receipt Date": NaN,
+            "Assessment Date": NaN,
+            "CIF NCY": NaN,
+            "Total Tax": NaN
+        },
+        {
+            "No.": 1.0,
+            "Trim Level": "4LHD",
+            "Year of Manufacture": 2024.0,
+            "Make": "TESLA",
+            "Model": "MODEL S",
+            "HDV": 89990.0,
+            "Currency": "USD",
+            "Origin Code": "US",
+            "HS Code": 8703802000.0,
+            "Excange Rate": 15.5378,
+            "Receipt Date": 45780.0,
+            "Assessment Date": 45719.0,
+            "CIF NCY": 1213718.31,
+            "Total Tax": 621507.34
+        },
+        {
+            "No.": 2.0,
+            "Trim Level": NaN,
+            "Year of Manufacture": 2024.0,
+            "Make": "TESLA",
+            "Model": "MODEL S",
+            "HDV": 74990.0,
+            "Currency": "USD",
+            "Origin Code": "CA",
+            "HS Code": 8703802000.0,
+            "Excange Rate": 14.9771,
+            "Receipt Date": 45543.0,
+            "Assessment Date": 45543.0,
+            "CIF NCY": 975842.99,
+            "Total Tax": 499694.37
+        }
+    ]
+}
