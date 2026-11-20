@@ -173,9 +173,9 @@ export default function Home() {
   const [leadTargetType, setLeadTargetType] = useState('');  
   const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadError, setLeadError] = useState('');
-  const [leadForm, setLeadForm] = useState({ name: '', phone: '', email: '', notes: '' });
+  const [leadForm, setLeadForm] = useState({ name: '', phone: '', email: '', notes: '', pickup: '', method: 'RoRo', timeline: 'Ready to ship now' });
   const [clearingAgentLeadSent, setClearingAgentLeadSent] = useState(false);
-  const [inspectionLeadSent, setInspectionLeadSent] = useState(false);
+  const [shippingLeadSent, setShippingLeadSent] = useState(false);
   async function fetchLineupForFields(targetFields, targetOrigin, allowAIFallback, vinOverride = null, manualMsrpOptions = null) {
     if (!targetFields.year || !targetFields.make || !targetFields.model) return;
     setLineupLoading(true);
@@ -245,7 +245,7 @@ export default function Home() {
     setOrigin(newOrigin);
     setResult(null);
     setClearingAgentLeadSent(false);
-    setInspectionLeadSent(false);
+    setShippingLeadSent(false);
     if (fields.year && fields.make && fields.model) {
       fetchLineupForFields(fields, newOrigin, false, vinData?.vin || null);
     }
@@ -273,7 +273,7 @@ export default function Home() {
     setCalcError('');
     setResult(null);
     setClearingAgentLeadSent(false);
-    setInspectionLeadSent(false);
+    setShippingLeadSent(false);
 
     // Quick Presets used to manufacture a single fake trim entry directly
     // from payload.hdv (one price, no variant choice). That diverged from
@@ -294,7 +294,7 @@ export default function Home() {
     }
     setResult(null);
     setClearingAgentLeadSent(false);
-    setInspectionLeadSent(false);
+    setShippingLeadSent(false);
     fetchLineupForFields(fields, origin, true, vinData?.vin || null);
   }
   async function runCalculationWithUserMsrp() {
@@ -305,7 +305,7 @@ export default function Home() {
     
     setResult(null);
     setClearingAgentLeadSent(false);
-    setInspectionLeadSent(false);
+    setShippingLeadSent(false);
     setCalcStatus('Calculating itemized customs duty and port clearing taxes...');
     
     try {
@@ -367,7 +367,7 @@ export default function Home() {
     setMasterLineup([]);
     setDropdownTrims([]);
     setClearingAgentLeadSent(false);
-    setInspectionLeadSent(false);
+    setShippingLeadSent(false);
     try {
       const res = await fetch(`/api/decode-vin?vin=${v}`);
       const data = await res.json();
@@ -478,7 +478,7 @@ export default function Home() {
         body: JSON.stringify({
           result,
           vehicleData: { ...fields, origin, originCode: getOriginCode(origin), vin: vinData?.vin || null },
-          isLeadSubmitted: clearingAgentLeadSent || inspectionLeadSent
+          isLeadSubmitted: clearingAgentLeadSent || shippingLeadSent
         }),
       });
       if (!res.ok) throw new Error('PDF generation failed');
@@ -507,7 +507,7 @@ export default function Home() {
   function triggerOpenLeadModal(serviceTypeString) {
     setLeadTargetType(serviceTypeString);
     setLeadError('');
-    setLeadForm({ name: '', phone: '', email: '', notes: '' });
+    setLeadForm({ name: '', phone: '', email: '', notes: '', pickup: '', method: 'RoRo', timeline: 'Ready to ship now' });
     setIsLeadModalOpen(true);
   }
   async function executeLeadFormSubmission(e) {
@@ -515,11 +515,18 @@ export default function Home() {
     setLeadError('');
     setLeadSubmitting(true);
     try {
+      // For shipping requests, fold the shipping-specific answers into the notes
+      // so they reach whoever receives the lead without needing a route change.
+      const isShippingLead = leadTargetType === 'Shipping Services';
+      const shippingSummary = isShippingLead
+        ? `Pickup location: ${leadForm.pickup || 'Not provided'} | Method: ${leadForm.method} | Timeline: ${leadForm.timeline}`
+        : '';
+      const combinedNotes = [shippingSummary, leadForm.notes].filter(Boolean).join('\n');
       const response = await fetch('/api/send-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          leadDetails: { ...leadForm, type: leadTargetType },
+          leadDetails: { ...leadForm, notes: combinedNotes, type: leadTargetType },
           vehicleContext: { ...fields, origin, originCode: getOriginCode(origin), vin: vinData?.vin || null },
           calculationResult: result
         }),
@@ -533,7 +540,7 @@ export default function Home() {
       if (leadTargetType === 'Clearing Agent Support') {
         setClearingAgentLeadSent(true);
       } else {
-        setInspectionLeadSent(true);
+        setShippingLeadSent(true);
       }
       setIsLeadModalOpen(false);
       alert('Request sent successfully! An agent will get in touch with you shortly.');
@@ -896,6 +903,13 @@ export default function Home() {
                 <div className="form-group">
                   <label className="form-label" style={{ fontSize: '12px', fontWeight: '700', color: '#334155', display: 'block', marginBottom: '6px' }}>Freight Shipping Cost (USD)</label>
                   <input className="form-input premium-input-field" type="number" value={freight} onChange={e => setFreight(e.target.value)} style={{ padding: '10px 12px' }} />
+                  <button
+                    type="button"
+                    onClick={() => triggerOpenLeadModal('Shipping Services')}
+                    style={{ background: 'none', border: 'none', padding: 0, marginTop: '4px', fontSize: '11px', color: '#05643c', fontWeight: '600', textDecoration: 'underline', cursor: 'pointer', textAlign: 'left' }}
+                  >
+                    Not sure of your shipping cost? Get a real quote
+                  </button>
                 </div>
               </div>
               {/* ACTUAL BUILD DATE — optional, resolves the depreciation ambiguity for
@@ -1301,7 +1315,7 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
-              <div className="report-section-title">💼 Need Help Clearing Your Car?</div>
+              <div className="report-section-title">💼 Need Help Clearing or Shipping Your Car?</div>
               <div className="responsive-two-cols" style={{ marginTop: '12px' }}>
                 
                 <div className="marketplace-card">
@@ -1326,20 +1340,20 @@ export default function Home() {
                 <div className="marketplace-card">
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '10px', fontWeight: '800', background: '#fef3c7', color: '#b45309', padding: '2px 6px', borderRadius: '4px' }}>VALUATION REVIEW</span>
+                      <span style={{ fontSize: '10px', fontWeight: '800', background: '#fef3c7', color: '#b45309', padding: '2px 6px', borderRadius: '4px' }}>SHIPPING</span>
                       <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: '600' }}>● Active</span>
                     </div>
-                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>Vehicle Valuation & Inspection</h4>
+                    <h4 style={{ margin: '8px 0 4px 0', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>Car Shipping to Tema & Takoradi</h4>
                     <p style={{ margin: 0, fontSize: '11px', color: '#64748b', lineHeight: '1.4' }}>
-                      Request a physical condition check or dispute an over-estimated valuation at the port.
+                      Get shipping quotes from partner logistics companies for RoRo or container shipping to Ghana.
                     </p>
                   </div>
-                  <button 
-                    onClick={() => triggerOpenLeadModal('Valuation & Inspection Review')}
-                    disabled={inspectionLeadSent}
-                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: inspectionLeadSent ? '#e2e8f0' : '#0f172a', color: inspectionLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: inspectionLeadSent ? 'default' : 'pointer' }}
+                  <button
+                    onClick={() => triggerOpenLeadModal('Shipping Services')}
+                    disabled={shippingLeadSent}
+                    style={{ width: '100%', padding: '10px', borderRadius: '6px', border: 'none', background: shippingLeadSent ? '#e2e8f0' : '#0f172a', color: shippingLeadSent ? '#64748b' : '#ffffff', fontWeight: '700', fontSize: '12px', cursor: shippingLeadSent ? 'default' : 'pointer' }}
                   >
-                    {inspectionLeadSent ? '✓ Request Submitted' : 'Request Inspection & Review'}
+                    {shippingLeadSent ? '✓ Request Submitted' : 'Get Shipping Quotes'}
                   </button>
                 </div>
               </div>
@@ -1386,7 +1400,7 @@ export default function Home() {
               </div>
               <div>
                 <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>4. Connect with Agents</strong>
-                Connect with licensed clearing agents or request a physical car inspection at Tema or Takoradi port.
+                Connect with licensed clearing agents, or get shipping quotes to bring your car to Tema or Takoradi port.
               </div>
               <div>
                 <strong style={{ color: '#05643c', display: 'block', marginBottom: '2px' }}>Need Help?</strong>
@@ -1413,7 +1427,7 @@ export default function Home() {
           <div className="modal-inner-surface">
             <div style={{ backgroundColor: '#05643c', padding: '16px 20px', color: '#ffffff', position: 'relative' }}>
               <h3 style={{ margin: 0, fontSize: '15px', fontWeight: '700', letterSpacing: '0.02em' }}>
-                🚀 Request Port Support
+                {leadTargetType === 'Shipping Services' ? '🚢 Request Shipping Quotes' : '🚀 Request Port Support'}
               </h3>
               <p style={{ margin: '4px 0 0 0', fontSize: '12px', opacity: 0.9 }}>
                 Service Requested: {leadTargetType}
@@ -1462,6 +1476,53 @@ export default function Home() {
                   style={{ padding: '10px', fontSize: '13px' }}
                 />
               </div>
+              {leadTargetType === 'Shipping Services' && (
+                <>
+                  <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.4', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '8px 10px' }}>
+                    CediDuty connects you with partner logistics companies, who will send you their quotes directly. Your vehicle and duty details are shared with them to prepare the quote.
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Pickup Location (city, auction yard or port)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Baltimore, MD or Copart Dallas"
+                      value={leadForm.pickup}
+                      onChange={e => setLeadForm(prev => ({ ...prev, pickup: e.target.value }))}
+                      className="premium-input-field"
+                      style={{ padding: '10px', fontSize: '13px' }}
+                    />
+                  </div>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', flex: 1 }}>
+                      <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Shipping Method</label>
+                      <select
+                        value={leadForm.method}
+                        onChange={e => setLeadForm(prev => ({ ...prev, method: e.target.value }))}
+                        className="premium-input-field"
+                        style={{ padding: '10px', fontSize: '13px' }}
+                      >
+                        <option>RoRo</option>
+                        <option>Container</option>
+                        <option>Not sure</option>
+                      </select>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', flex: 1 }}>
+                      <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>When is the car ready?</label>
+                      <select
+                        value={leadForm.timeline}
+                        onChange={e => setLeadForm(prev => ({ ...prev, timeline: e.target.value }))}
+                        className="premium-input-field"
+                        style={{ padding: '10px', fontSize: '13px' }}
+                      >
+                        <option>Ready to ship now</option>
+                        <option>Within 2 weeks</option>
+                        <option>In a month or more</option>
+                        <option>Still deciding</option>
+                      </select>
+                    </div>
+                  </div>
+                </>
+              )}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <label style={{ fontSize: '12px', fontWeight: '700', color: '#334155' }}>Special Instructions or Questions (Optional)</label>
                 <textarea 
