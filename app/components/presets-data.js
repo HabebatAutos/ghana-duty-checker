@@ -24291,6 +24291,18 @@ export const PRESET_DATA = [
     "hsCode": "870332"
   },
   {
+    "year": "2015",
+    "make": "BMW",
+    "model": "520D GT",
+    "trim": "GT",
+    "engine": "1995CC",
+    "bodyType": "Sedan",
+    "origin": "SOUTH KOREA",
+    "hdv": 55500,
+    "currency": "USD",
+    "hsCode": "870332"
+  },
+  {
     "year": "2020",
     "make": "BMW",
     "model": "X7 XDRIVE 40i",
