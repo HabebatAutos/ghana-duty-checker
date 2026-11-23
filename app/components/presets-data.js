@@ -24315,6 +24315,18 @@ export const PRESET_DATA = [
     "hsCode": "870323"
   },
   {
+    "year": "2014",
+    "make": "BMW",
+    "model": "535D",
+    "trim": "XDRIVE",
+    "engine": "2993CC",
+    "bodyType": "Sedan",
+    "origin": "GERMANY",
+    "hdv": 53613,
+    "currency": "EUR",
+    "hsCode": "870333"
+  },
+  {
     "year": "2020",
     "make": "BMW",
     "model": "X7 XDRIVE40I",
