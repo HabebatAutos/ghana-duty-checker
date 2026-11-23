@@ -24322,7 +24322,7 @@ export const PRESET_DATA = [
     "engine": "2993CC",
     "bodyType": "Sedan",
     "origin": "GERMANY",
-    "hdv": 53613,
+    "hdv": 51429,
     "currency": "EUR",
     "hsCode": "870333"
   },
