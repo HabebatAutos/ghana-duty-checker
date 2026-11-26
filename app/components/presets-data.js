@@ -198318,18 +198318,6 @@ export const PRESET_DATA = [
     "year": "2019",
     "make": "MITSUBISHI",
     "model": "OUTLANDER",
-    "trim": "2.0L 2WD Comfort Edition (5-Seater)",
-    "engine": "2.0L",
-    "bodyType": "SUV",
-    "origin": "China",
-    "hdv": 25019.55,
-    "currency": "USD",
-    "hsCode": "870323"
-  },
-  {
-    "year": "2019",
-    "make": "MITSUBISHI",
-    "model": "OUTLANDER",
     "trim": "SPORTS",
     "engine": "",
     "bodyType": "Sedan",
