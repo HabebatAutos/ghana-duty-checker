@@ -305307,6 +305307,31 @@ export const PRESET_DATA = [
     "hsCode": "870360"
   },
   {
+    "year": "2026",
+    "make": "ZEEKR",
+    "model": "9X",
+    "trim": "Hyper",
+    "seating": "6-seater",
+    "engine": "2.0L Turbo PHEV",
+    "bodyType": "SUV",
+    "origin": "China",
+    "hdv": 78715,
+    "currency": "USD",
+    "hsCode": "8703602000"
+  },
+  {
+    "year": "2026",
+    "make": "ZEEKR",
+    "model": "9X",
+    "trim": "Ultra",
+    "engine": "2.0L Turbo PHEV",
+    "bodyType": "SUV",
+    "origin": "China",
+    "hdv": 70421,
+    "currency": "USD",
+    "hsCode": "8703602000"
+  },
+  {
     "year": "2018",
     "make": "ZOTYE",
     "model": "T700 1.8T",
